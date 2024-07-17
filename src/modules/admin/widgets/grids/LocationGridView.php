@@ -6,6 +6,8 @@ use davidhirtz\yii2\location\models\Location;
 use davidhirtz\yii2\location\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\helpers\Html;
 use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\GridView;
+use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\traits\StatusGridViewTrait;
+use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\traits\TypeGridViewTrait;
 use davidhirtz\yii2\skeleton\widgets\fontawesome\Icon;
 use davidhirtz\yii2\timeago\TimeagoColumn;
 use Yii;
@@ -18,11 +20,15 @@ use yii\data\ActiveDataProvider;
 class LocationGridView extends GridView
 {
     use ModuleTrait;
+    use StatusGridViewTrait;
+    use TypeGridViewTrait;
 
     public function init(): void
     {
         if (!$this->columns) {
             $this->columns = [
+                $this->statusColumn(),
+                $this->typeColumn(),
                 $this->nameColumn(),
                 $this->updatedAtColumn(),
                 $this->buttonsColumn(),
@@ -37,13 +43,20 @@ class LocationGridView extends GridView
         $this->header ??= [
             [
                 [
+                    'content' => $this->statusDropdown(),
+                    'options' => ['class' => 'col-12 col-md-3'],
+                ],
+                [
+                    'content' => $this->typeDropdown(),
+                    'visible' => count($this->getModel()::getTypes()) > 1,
+                    'options' => ['class' => 'col-12 col-md-3'],
+                ],
+                [
                     'content' => $this->getSearchInput(),
                     'options' => ['class' => 'col-12 col-md-6'],
                 ],
                 'options' => [
-                    'class' => $this->getModel()::getTypes()
-                        ? 'justify-content-between'
-                        : 'justify-content-end',
+                    'class' => 'justify-content-between',
                 ],
             ],
         ];

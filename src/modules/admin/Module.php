@@ -3,7 +3,6 @@
 namespace davidhirtz\yii2\location\modules\admin;
 
 use davidhirtz\yii2\location\models\Location;
-use davidhirtz\yii2\location\modules\admin\controllers\FolderController;
 use davidhirtz\yii2\location\modules\admin\controllers\LocationController;
 use davidhirtz\yii2\skeleton\helpers\ArrayHelper;
 use davidhirtz\yii2\skeleton\modules\admin\ModuleInterface;
@@ -27,7 +26,7 @@ class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInte
         return [
             'location' => [
                 'class' => LocationController::class,
-                'viewPath' => '@media/modules/admin/views/location',
+                'viewPath' => '@location/modules/admin/views/location',
             ],
         ];
     }

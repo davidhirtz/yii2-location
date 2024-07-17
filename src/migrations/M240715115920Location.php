@@ -29,13 +29,17 @@ class M240715115920Location extends Migration
             'postal_code' => $this->string()->null(),
             'district' => $this->string()->null(),
             'state' => $this->string()->null(),
-            'country' => $this->string()->null(),
+            'country_code' => $this->string(2)->null(),
             'lat' => $this->decimal(10, 8)->null(),
             'lng' => $this->decimal(11, 8)->null(),
+            'provider_id' => $this->text()->null(),
             'updated_by_user_id' => $this->integer()->unsigned()->null(),
             'updated_at' => $this->dateTime(),
             'created_at' => $this->dateTime()->notNull(),
         ]);
+
+        $this->createIndex('name', Location::tableName(), ['name', 'status', 'type']);
+        $this->createIndex('formatted_address', Location::tableName(), ['formatted_address', 'status', 'type']);
 
         $auth = Yii::$app->getAuthManager();
         $admin = $auth->getRole(User::AUTH_ROLE_ADMIN);

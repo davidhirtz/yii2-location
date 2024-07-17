@@ -37,6 +37,7 @@ class LocationActiveDataProvider extends ActiveDataProvider
                 'or',
                 ['like', 'name', $search],
                 ['like', 'formatted_address', $search],
+                'provider_id' => $search,
             ]);
         }
 

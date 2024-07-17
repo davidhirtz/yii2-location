@@ -16,6 +16,7 @@ use davidhirtz\yii2\skeleton\models\traits\DraftStatusAttributeTrait;
 use davidhirtz\yii2\skeleton\models\traits\I18nAttributesTrait;
 use davidhirtz\yii2\skeleton\models\traits\TypeAttributeTrait;
 use davidhirtz\yii2\skeleton\models\traits\UpdatedByUserTrait;
+use davidhirtz\yii2\skeleton\validators\DynamicRangeValidator;
 use Yii;
 
 /**
@@ -32,8 +33,8 @@ use Yii;
  * @property string|null $postal_code
  * @property string|null $district
  * @property string|null $state
- * @property string|null $country
- * @property string|null $google_places_id
+ * @property string|null $country_code
+ * @property string|null $provider_id
  * @property DateTime|null $updated_at
  * @property DateTime $created_at
  */
@@ -61,11 +62,18 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
     public function rules(): array
     {
         return [
-            ...parent::rules(),
             [
-                ['name', 'formatted_address', 'street', 'house_number', 'locality', 'postal_code', 'district', 'state', 'country'],
+                ['status', 'type', 'country_code'],
+                DynamicRangeValidator::class,
+            ],
+            [
+                ['name', 'formatted_address', 'street', 'house_number', 'locality', 'postal_code', 'district', 'state'],
                 'string',
                 'max' => 255,
+            ],
+            [
+                ['provider_id'],
+                'string',
             ],
             [
                 ['lat', 'lng'],
@@ -129,22 +137,27 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
         return $this->id ? $this->getAdminRoute() : false;
     }
 
+    public static function getCountryCodes(): array
+    {
+        return require(Yii::getAlias('@skeleton/messages/') . Yii::$app->language . '/countries.php');
+    }
+
     public function attributeLabels(): array
     {
         return [
             ...parent::attributeLabels(),
             'name' => Yii::t('location', 'Name'),
-            'formatted_address' => Yii::t('location', 'Formatted Address'),
+            'formatted_address' => Yii::t('location', 'Formatted address'),
             'street' => Yii::t('location', 'Street'),
-            'house_number' => Yii::t('location', 'House Number'),
+            'house_number' => Yii::t('location', 'House number'),
             'locality' => Yii::t('location', 'City'),
-            'postal_code' => Yii::t('location', 'Postal Code'),
+            'postal_code' => Yii::t('location', 'Postal code'),
             'district' => Yii::t('location', 'District'),
             'state' => Yii::t('location', 'State'),
-            'country' => Yii::t('location', 'Country'),
+            'country_code' => Yii::t('location', 'Country'),
             'lat' => Yii::t('location', 'Latitude'),
             'lng' => Yii::t('location', 'Longitude'),
-            'google_places_id' => Yii::t('location', 'Google Places ID'),
+            'provider_id' => Yii::t('location', 'Provider ID'),
         ];
     }
 

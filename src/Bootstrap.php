@@ -18,7 +18,7 @@ class Bootstrap implements BootstrapInterface
 
         $app->extendComponent('i18n', [
             'translations' => [
-                'media' => [
+                'location' => [
                     'class' => PhpMessageSource::class,
                     'basePath' => '@location/messages',
                 ],
@@ -33,9 +33,8 @@ class Bootstrap implements BootstrapInterface
                     ],
                 ],
             ],
-            'media' => [
+            'location' => [
                 'class' => Module::class,
-                'uploadPath' => 'uploads'
             ],
         ]);
 

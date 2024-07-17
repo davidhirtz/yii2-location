@@ -21,7 +21,7 @@ class Submenu extends \davidhirtz\yii2\skeleton\widgets\fontawesome\Submenu
 
             $this->items = [
                 [
-                    'label' => Yii::t('location', 'Addresses'),
+                    'label' => Yii::t('location', 'Locations'),
                     'url' => ['location/index'],
                     'visible' => $user->can(Location::AUTH_LOCATION_CREATE),
                     'active' => ['location/'],

@@ -11,8 +11,8 @@ class CoordinateValidator extends FilterValidator
      */
     public function init(): void
     {
-        $this->filter = fn ($attribute): string => $attribute
-            ? number_format($attribute, 8, '.', '')
+        $this->filter = fn ($attribute): ?string => $attribute
+            ? number_format((float)$attribute, 8, '.', '')
             : null;
 
         parent::init();
