@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace davidhirtz\yii2\location\tests\support;
 
-use Codeception\Actor;
-
 /**
  * Inherited Methods
  * @method void wantTo($text)
@@ -20,18 +18,12 @@ use Codeception\Actor;
  * @method void pause($vars = [])
  *
  * @SuppressWarnings(PHPMD)
- */
-class FunctionalTester extends Actor
+*/
+class FunctionalTester extends \Codeception\Actor
 {
     use _generated\FunctionalTesterActions;
 
-    public function seeValidationError(string $message): void
-    {
-        $this->see($message, '.alert-error');
-    }
-
-    public function dontSeeValidationError(string $message): void
-    {
-        $this->dontSee($message, '.alert-error');
-    }
+    /**
+     * Define custom actions here
+     */
 }

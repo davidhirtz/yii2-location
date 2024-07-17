@@ -9,8 +9,8 @@ use Yii;
 use yii\db\Migration;
 
 /**
-* @noinspection PhpUnused
-*/
+ * @noinspection PhpUnused
+ */
 class M240715115920Location extends Migration
 {
     use MigrationTrait;
