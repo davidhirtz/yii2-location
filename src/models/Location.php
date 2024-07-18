@@ -59,6 +59,16 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
         ];
     }
 
+    public function fields(): array
+    {
+        return [
+            'name',
+            'formatted_address',
+            'lat',
+            'lng',
+        ];
+    }
+
     public function rules(): array
     {
         return [
@@ -90,6 +100,18 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
         ]);
 
         return parent::beforeSave($insert);
+    }
+
+    public function afterSave($insert, $changedAttributes): void
+    {
+        static::getModule()->invalidatePageCache();
+        parent::afterSave($insert, $changedAttributes);
+    }
+
+    public function afterDelete(): void
+    {
+        static::getModule()->invalidatePageCache();
+        parent::afterDelete();
     }
 
     /**

@@ -21,6 +21,8 @@ class LocationActiveForm extends ActiveForm
     public function init(): void
     {
         $this->fields ??= [
+            'provider_id',
+            '-',
             'status',
             'type',
             'name',
@@ -62,5 +64,14 @@ class LocationActiveForm extends ActiveForm
     protected function getCountyCodeItems(): array
     {
         return $this->model::getCountryCodes();
+    }
+
+    /**
+     * @noinspection PhpUnused {@see self::renderFields()}
+     */
+    public function providerIdField(array $options = []): ActiveField|string
+    {
+        return $this->field($this->model, 'provider_id')
+            ->widget(AutocompleteInputWidget::class, $options);
     }
 }

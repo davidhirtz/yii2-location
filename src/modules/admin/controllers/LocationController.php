@@ -5,6 +5,7 @@ namespace davidhirtz\yii2\location\modules\admin\controllers;
 use davidhirtz\yii2\location\models\Location;
 use davidhirtz\yii2\location\modules\admin\controllers\traits\LocationTrait;
 use davidhirtz\yii2\location\modules\admin\data\LocationActiveDataProvider;
+use davidhirtz\yii2\location\modules\admin\Module;
 use davidhirtz\yii2\location\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\web\Controller;
 use Yii;
@@ -28,7 +29,7 @@ class LocationController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'update'],
+                        'actions' => ['autocomplete', 'index', 'update'],
                         'roles' => [Location::AUTH_LOCATION_UPDATE],
                     ],
                     [
@@ -111,5 +112,14 @@ class LocationController extends Controller
 
         $errors = $location->getFirstErrors();
         throw new ServerErrorHttpException(reset($errors));
+    }
+
+    public function actionAutocomplete(string $term): Response
+    {
+        /** @var Module $module */
+        $module = Yii::$app->getModule('admin')->getModule('location');
+        $autocomplete = $module->getAutocomplete();
+
+        return $this->asJson($autocomplete?->getResults($term) ?? []);
     }
 }

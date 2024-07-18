@@ -35,6 +35,7 @@ return [
     'New Location' => '',
     'Postal code' => '',
     'Provider ID' => '',
+    'Search for a location ...' => '',
     'State' => '',
     'Street' => '',
     'The location was created.' => '',

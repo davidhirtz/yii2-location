@@ -1,0 +1,15 @@
+{
+	"private": true,
+	"type": "module",
+	"browserslist": [
+		"defaults"
+	],
+	"scripts": {
+		"build": "esbuild ./src/modules/admin/assets/autocomplete/src/index.ts --bundle --minify --outfile=./src/modules/admin/assets/autocomplete/dist/autocomplete.min.js",
+		"watch": "esbuild ./src/modules/admin/assets/autocomplete/src/index.ts --bundle --minify --watch --outfile=./src/modules/admin/assets/autocomplete/dist/autocomplete.min.js"
+	},
+	"devDependencies": {
+		"@types/jqueryui": "^1.12.23",
+		"esbuild": "^0.23.0"
+	}
+}
