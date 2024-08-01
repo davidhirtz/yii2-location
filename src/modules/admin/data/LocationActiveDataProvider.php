@@ -6,7 +6,6 @@ use davidhirtz\yii2\location\models\Location;
 use davidhirtz\yii2\location\models\LocationTag;
 use davidhirtz\yii2\location\models\queries\LocationQuery;
 use davidhirtz\yii2\location\models\Tag;
-use davidhirtz\yii2\skeleton\db\ActiveQuery;
 use davidhirtz\yii2\skeleton\data\ActiveDataProvider;
 
 /**
@@ -36,7 +35,7 @@ class LocationActiveDataProvider extends ActiveDataProvider
     public function initQuery(): void
     {
         if ($this->tag) {
-            $this->whereTag();
+            $this->query->andWhereTagId($this->tag->id);
         }
 
         $this->query->andFilterWhere([
@@ -57,14 +56,5 @@ class LocationActiveDataProvider extends ActiveDataProvider
 
         $this->setPagination(['defaultPageSize' => $this->defaultPageSize]);
         $this->setSort(['defaultOrder' => ['updated_at' => SORT_DESC]]);
-    }
-
-    protected function whereTag(): void
-    {
-        $this->query->innerJoinWith([
-            'locationTag' => function (ActiveQuery $query) {
-                $query->onCondition([LocationTag::tableName() . '.[[tag_id]]' => $this->tag->id]);
-            }
-        ], false);
     }
 }

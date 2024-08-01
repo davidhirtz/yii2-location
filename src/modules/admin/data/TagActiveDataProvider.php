@@ -3,6 +3,7 @@
 namespace davidhirtz\yii2\location\modules\admin\data;
 
 use davidhirtz\yii2\location\models\Location;
+use davidhirtz\yii2\location\models\LocationTag;
 use davidhirtz\yii2\location\models\queries\TagQuery;
 use davidhirtz\yii2\location\models\Tag;
 use davidhirtz\yii2\skeleton\data\ActiveDataProvider;
@@ -28,6 +29,14 @@ class TagActiveDataProvider extends ActiveDataProvider
     {
         parent::init();
         $this->initQuery();
+
+        if ($this->location && $this->sort) {
+            $this->sort->attributes['locationTag.updated_at'] ??= [
+                'asc' => [LocationTag::tableName() . '.[[updated_at]]' => SORT_ASC],
+                'desc' => [LocationTag::tableName() . '.[[updated_at]]' => SORT_DESC],
+                'default' => SORT_DESC,
+            ];
+        }
     }
 
     public function initQuery(): void

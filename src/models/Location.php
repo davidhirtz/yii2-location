@@ -4,6 +4,7 @@ namespace davidhirtz\yii2\location\models;
 
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
+use davidhirtz\yii2\location\models\collections\TagCollection;
 use davidhirtz\yii2\location\models\queries\LocationQuery;
 use davidhirtz\yii2\location\models\queries\TagQuery;
 use davidhirtz\yii2\location\modules\ModuleTrait;
@@ -13,6 +14,7 @@ use davidhirtz\yii2\skeleton\behaviors\TimestampBehavior;
 use davidhirtz\yii2\skeleton\behaviors\TrailBehavior;
 use davidhirtz\yii2\skeleton\db\ActiveQuery;
 use davidhirtz\yii2\skeleton\db\ActiveRecord;
+use davidhirtz\yii2\skeleton\helpers\ArrayHelper;
 use davidhirtz\yii2\skeleton\models\interfaces\DraftStatusAttributeInterface;
 use davidhirtz\yii2\skeleton\models\interfaces\TypeAttributeInterface;
 use davidhirtz\yii2\skeleton\models\traits\DraftStatusAttributeTrait;
@@ -73,6 +75,9 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
         return [
             'name',
             'formatted_address',
+            'tags' => static::getModule()->enableTags
+                ? fn (self $location) => $location->getTagNames()
+                : null,
             'lat',
             'lng',
         ];
@@ -156,6 +161,13 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
         $this->tag_count = count($tagIds);
 
         return $this;
+    }
+
+    public function getTagNames(): array
+    {
+        return $this->tag_count
+            ? ArrayHelper::getColumn(TagCollection::getByLocation($this), $this->getI18nAttributeName('name'), false)
+            : [];
     }
 
     /**

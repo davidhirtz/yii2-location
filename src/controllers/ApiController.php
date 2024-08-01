@@ -4,7 +4,8 @@ namespace davidhirtz\yii2\location\controllers;
 
 
 use davidhirtz\yii2\location\models\Location;
-use davidhirtz\yii2\skeleton\db\ActiveQuery;
+use davidhirtz\yii2\location\models\queries\LocationQuery;
+use davidhirtz\yii2\location\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\filters\PageCache;
 use Yii;
 use yii\web\BadRequestHttpException;
@@ -18,6 +19,8 @@ use yii\web\Response;
  */
 class ApiController extends Controller
 {
+    use ModuleTrait;
+
     public array $allowedFormats = ['geojson', 'json'];
     public bool $allowAllTypes = true;
     public bool $enablePageCache = true;
@@ -30,6 +33,12 @@ class ApiController extends Controller
             $behaviors['PageCache'] = [
                 'class' => PageCache::class,
                 'disableForUsers' => false,
+                'only' => [],
+                'params' => [
+                    'action',
+                    'format',
+                    'tag',
+                ],
             ];
         }
 
@@ -59,7 +68,7 @@ class ApiController extends Controller
         return parent::runAction($id, $params);
     }
 
-    public function actionIndex(string $format, ?int $type = null): array
+    public function actionIndex(string $format, ?int $type = null, ?int $tag = null): array
     {
         if (!in_array($format, $this->allowedFormats)) {
             throw new BadRequestHttpException();
@@ -69,12 +78,17 @@ class ApiController extends Controller
             throw new NotFoundHttpException();
         }
 
-        return $this->getLocationQuery()
-            ->andFilterWhere(['type' => $type])
-            ->all();
+        $query = $this->getLocationQuery()
+            ->andFilterWhere(['type' => $type]);
+
+        if ($tag && static::getModule()->enableTags) {
+            $query->andWhereTagId($tag);
+        }
+
+        return $query->all();
     }
 
-    protected function getLocationQuery(): ActiveQuery
+    protected function getLocationQuery(): LocationQuery
     {
         $status = Yii::$app->getRequest()->getIsDraft() ? Location::STATUS_DRAFT : Location::STATUS_ENABLED;
 

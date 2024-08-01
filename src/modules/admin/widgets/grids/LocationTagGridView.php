@@ -6,6 +6,7 @@ use davidhirtz\yii2\location\models\Tag;
 use davidhirtz\yii2\skeleton\helpers\Html;
 use davidhirtz\yii2\skeleton\widgets\fontawesome\Icon;
 use davidhirtz\yii2\timeago\TimeagoColumn;
+use Yii;
 
 class LocationTagGridView extends TagGridView
 {
@@ -52,6 +53,7 @@ class LocationTagGridView extends TagGridView
             'contentOptions' => ['class' => 'text-right text-nowrap'],
             'content' => function (Tag $tag): string {
                 $route = [
+                    ...Yii::$app->getRequest()->getQueryParams(),
                     $tag->locationTag ? 'delete' : 'create',
                     'location' => $this->dataProvider->location->id,
                     'tag' => $tag->id,
