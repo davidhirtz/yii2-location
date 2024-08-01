@@ -11,8 +11,6 @@ use davidhirtz\yii2\skeleton\behaviors\TimestampBehavior;
 use davidhirtz\yii2\skeleton\behaviors\TrailBehavior;
 use davidhirtz\yii2\skeleton\db\ActiveQuery;
 use davidhirtz\yii2\skeleton\db\ActiveRecord;
-use davidhirtz\yii2\skeleton\models\interfaces\DraftStatusAttributeInterface;
-use davidhirtz\yii2\skeleton\models\interfaces\TypeAttributeInterface;
 use davidhirtz\yii2\skeleton\models\traits\DraftStatusAttributeTrait;
 use davidhirtz\yii2\skeleton\models\traits\I18nAttributesTrait;
 use davidhirtz\yii2\skeleton\models\traits\TypeAttributeTrait;
@@ -22,30 +20,16 @@ use Yii;
 
 /**
  * @property int $id
- * @property int $status
- * @property int $type
  * @property string $name
- * @property string|null $formatted_address
- * @property float|null $lat
- * @property float|null $lng
- * @property string|null $street
- * @property string|null $house_number
- * @property string|null $locality
- * @property string|null $postal_code
- * @property string|null $district
- * @property string|null $state
- * @property string|null $country_code
- * @property string|null $provider_id
- * @property array|null $group_ids
- * @property int $group_count
+ * @property int $location_count
  * @property DateTime|null $updated_at
  * @property DateTime $created_at
  *
  * @property-read LocationGroup[] $locationGroups {@see static::getLocationGroups()}
  * @property-read LocationGroup $locationGroup {@see static::getLocationGroup()}
- * @property-read Group[] $groups {@see static::getGroups()}
+ * @property-read Location[] $locations {@see static::getLocations()}
  */
-class Location extends ActiveRecord implements DraftStatusAttributeInterface, TypeAttributeInterface
+class Group extends ActiveRecord
 {
     use DraftStatusAttributeTrait;
     use I18nAttributesTrait;
@@ -53,9 +37,9 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
     use TypeAttributeTrait;
     use UpdatedByUserTrait;
 
-    public const AUTH_LOCATION_CREATE = 'locationCreate';
-    public const AUTH_LOCATION_DELETE = 'locationDelete';
-    public const AUTH_LOCATION_UPDATE = 'locationUpdate';
+    public const AUTH_GROUP_CREATE = 'groupCreate';
+    public const AUTH_GROUP_DELETE = 'groupDelete';
+    public const AUTH_GROUP_UPDATE = 'groupUpdate';
 
     public function behaviors(): array
     {
@@ -80,21 +64,13 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
     {
         return [
             [
-                ['status', 'type', 'country_code'],
+                ['status', 'type'],
                 DynamicRangeValidator::class,
             ],
             [
-                ['name', 'formatted_address', 'street', 'house_number', 'locality', 'postal_code', 'district', 'state'],
+                ['name'],
                 'string',
                 'max' => 255,
-            ],
-            [
-                ['provider_id'],
-                'string',
-            ],
-            [
-                ['lat', 'lng'],
-                CoordinateValidator::class,
             ],
         ];
     }
@@ -121,32 +97,30 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
         parent::afterDelete();
     }
 
-    public function getGroups(): ActiveQuery
+    public function getLocations(): ActiveQuery
     {
-        return $this->hasMany(Location::class, ['id' => 'group_id'])
+        return $this->hasMany(Location::class, ['id' => 'location_id'])
             ->via('locationGroups');
     }
 
     public function getLocationGroup(): ActiveQuery
     {
         return $this->hasOne(LocationGroup::class, ['group_id' => 'id'])
-            ->inverseOf('location');
+            ->inverseOf('group');
     }
 
     public function getLocationGroups(): ActiveQuery
     {
         return $this->hasMany(LocationGroup::class, ['group_id' => 'id'])
-            ->inverseOf('location');
+            ->inverseOf('group');
     }
 
-    public function recalculateGroupIds(): static
+    public function recalculateLocationCount(): static
     {
-        $this->group_ids = $this->getLocationGroups()->select('group_id')->column();
-        $this->group_count = count($this->group_ids);
-
+        $this->location_count = (int)$this->getEntryGroups()->count();
         return $this;
     }
-
+    
     /**
      * @noinspection PhpUnused
      */
@@ -176,12 +150,12 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
 
     public function getTrailModelType(): string
     {
-        return Yii::t('location', 'Location');
+        return Yii::t('location', 'Group');
     }
 
     public function getAdminRoute(): array
     {
-        return ['/admin/location/update', 'id' => $this->id];
+        return ['/admin/group/update', 'id' => $this->id];
     }
 
     /**
@@ -192,38 +166,21 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
         return $this->id ? $this->getAdminRoute() : false;
     }
 
-    public static function getCountryCodes(): array
-    {
-        return require(Yii::getAlias('@skeleton/messages/') . Yii::$app->language . '/countries.php');
-    }
-
     public function attributeLabels(): array
     {
         return [
             ...parent::attributeLabels(),
             'name' => Yii::t('location', 'Name'),
-            'formatted_address' => Yii::t('location', 'Formatted address'),
-            'street' => Yii::t('location', 'Street'),
-            'house_number' => Yii::t('location', 'House number'),
-            'locality' => Yii::t('location', 'City'),
-            'postal_code' => Yii::t('location', 'Postal code'),
-            'district' => Yii::t('location', 'District'),
-            'state' => Yii::t('location', 'State'),
-            'country_code' => Yii::t('location', 'Country'),
-            'lat' => Yii::t('location', 'Latitude'),
-            'lng' => Yii::t('location', 'Longitude'),
-            'provider_id' => Yii::t('location', 'Provider ID'),
-            'group_count' => Yii::t('location', 'Groups'),
         ];
     }
 
     public function formName(): string
     {
-        return 'Location';
+        return 'Group';
     }
 
     public static function tableName(): string
     {
-        return static::getModule()->getTableName('location');
+        return static::getModule()->getTableName('group');
     }
 }
