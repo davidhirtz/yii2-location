@@ -12,6 +12,16 @@ class Module extends \davidhirtz\yii2\skeleton\base\Module
 {
     use ModuleTrait;
 
+    /**
+     * @var bool whether to enable location tags.
+     */
+    public bool $enableTags = true;
+
+    /**
+     * @var int|null
+     */
+    public ?int $tagCachedQueryDuration = 60;
+
     public function invalidatePageCache(): void
     {
         if ($cache = $this->getCache()) {

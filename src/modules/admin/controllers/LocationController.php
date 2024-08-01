@@ -3,6 +3,7 @@
 namespace davidhirtz\yii2\location\modules\admin\controllers;
 
 use davidhirtz\yii2\location\models\Location;
+use davidhirtz\yii2\location\models\Tag;
 use davidhirtz\yii2\location\modules\admin\controllers\traits\LocationTrait;
 use davidhirtz\yii2\location\modules\admin\data\LocationActiveDataProvider;
 use davidhirtz\yii2\location\modules\admin\Module;
@@ -54,12 +55,13 @@ class LocationController extends Controller
         ];
     }
 
-    public function actionIndex(?int $status = null, ?int $type = null, ?string $q = null): Response|string
+    public function actionIndex(?int $tag = null, ?int $status = null, ?int $type = null, ?string $q = null): Response|string
     {
         $provider = Yii::$container->get(LocationActiveDataProvider::class, [], [
-            'status' => $status,
-            'type' => $type,
             'search' => $q,
+            'status' => $status,
+            'tag' => Tag::findOne($tag),
+            'type' => $type,
         ]);
 
         return $this->render('index', [

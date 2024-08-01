@@ -19,7 +19,9 @@ use davidhirtz\yii2\skeleton\widgets\forms\DeleteActiveForm;
 $this->setTitle(Yii::t('location', 'Edit Location'));
 ?>
 
-<?= Submenu::widget(); ?>
+<?= Submenu::widget([
+    'location' => $location,
+]); ?>
 
 <?= Html::errorSummary($location); ?>
 

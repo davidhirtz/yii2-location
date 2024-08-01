@@ -4,6 +4,8 @@ namespace davidhirtz\yii2\location\models;
 
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
+use davidhirtz\yii2\location\models\queries\LocationQuery;
+use davidhirtz\yii2\location\models\queries\TagQuery;
 use davidhirtz\yii2\location\modules\ModuleTrait;
 use davidhirtz\yii2\location\validators\CoordinateValidator;
 use davidhirtz\yii2\skeleton\behaviors\BlameableBehavior;
@@ -42,7 +44,7 @@ use Yii;
  * @property DateTime $created_at
  *
  * @property-read LocationTag[] $locationTags {@see static::getLocationTags()}
- * @property-read LocationTag $locationTag {@see static::getLocationTag()}
+ * @property-read LocationTag|null $locationTag {@see static::getLocationTag()}
  * @property-read Tag[] $tags {@see static::getTags()}
  */
 class Location extends ActiveRecord implements DraftStatusAttributeInterface, TypeAttributeInterface
@@ -121,28 +123,37 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
         parent::afterDelete();
     }
 
-    public function getTags(): ActiveQuery
+    public function getTags(): TagQuery
     {
-        return $this->hasMany(Location::class, ['id' => 'tag_id'])
+        /** @var TagQuery $query */
+        $query = $this->hasMany(Tag::class, ['id' => 'tag_id'])
             ->via('locationTags');
+
+        return $query;
     }
 
     public function getLocationTag(): ActiveQuery
     {
-        return $this->hasOne(LocationTag::class, ['tag_id' => 'id'])
+        return $this->hasOne(LocationTag::class, ['location_id' => 'id'])
             ->inverseOf('location');
     }
 
     public function getLocationTags(): ActiveQuery
     {
-        return $this->hasMany(LocationTag::class, ['tag_id' => 'id'])
+        return $this->hasMany(LocationTag::class, ['location_id' => 'id'])
             ->inverseOf('location');
+    }
+
+    public static function find(): LocationQuery
+    {
+        return Yii::createObject(LocationQuery::class, [static::class]);
     }
 
     public function recalculateTagIds(): static
     {
-        $this->tag_ids = $this->getLocationTags()->select('tag_id')->column();
-        $this->tag_count = count($this->tag_ids);
+        $tagIds = $this->getLocationTags()->select('tag_id')->column();
+        $this->tag_ids = $tagIds ?: null;
+        $this->tag_count = count($tagIds);
 
         return $this;
     }
@@ -153,6 +164,8 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
     public function getTrailAttributes(): array
     {
         return array_diff($this->attributes(), [
+            'tag_ids',
+            'tag_count',
             'updated_by_user_id',
             'updated_at',
             'created_at',
@@ -195,6 +208,11 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
     public static function getCountryCodes(): array
     {
         return require(Yii::getAlias('@skeleton/messages/') . Yii::$app->language . '/countries.php');
+    }
+
+    public function hasTagsEnabled(): bool
+    {
+        return static::getModule()->enableTags;
     }
 
     public function attributeLabels(): array

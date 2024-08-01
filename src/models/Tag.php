@@ -4,13 +4,17 @@ namespace davidhirtz\yii2\location\models;
 
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
+use davidhirtz\yii2\location\models\collections\TagCollection;
+use davidhirtz\yii2\location\models\queries\LocationQuery;
+use davidhirtz\yii2\location\models\queries\TagQuery;
 use davidhirtz\yii2\location\modules\ModuleTrait;
-use davidhirtz\yii2\location\validators\CoordinateValidator;
 use davidhirtz\yii2\skeleton\behaviors\BlameableBehavior;
 use davidhirtz\yii2\skeleton\behaviors\TimestampBehavior;
 use davidhirtz\yii2\skeleton\behaviors\TrailBehavior;
 use davidhirtz\yii2\skeleton\db\ActiveQuery;
 use davidhirtz\yii2\skeleton\db\ActiveRecord;
+use davidhirtz\yii2\skeleton\models\interfaces\DraftStatusAttributeInterface;
+use davidhirtz\yii2\skeleton\models\interfaces\TypeAttributeInterface;
 use davidhirtz\yii2\skeleton\models\traits\DraftStatusAttributeTrait;
 use davidhirtz\yii2\skeleton\models\traits\I18nAttributesTrait;
 use davidhirtz\yii2\skeleton\models\traits\TypeAttributeTrait;
@@ -26,10 +30,10 @@ use Yii;
  * @property DateTime $created_at
  *
  * @property-read LocationTag[] $locationTags {@see static::getLocationTags()}
- * @property-read LocationTag $locationTag {@see static::getLocationTag()}
+ * @property-read LocationTag|null $locationTag {@see static::getLocationTag()}
  * @property-read Location[] $locations {@see static::getLocations()}
  */
-class Tag extends ActiveRecord
+class Tag extends ActiveRecord implements DraftStatusAttributeInterface, TypeAttributeInterface
 {
     use DraftStatusAttributeTrait;
     use I18nAttributesTrait;
@@ -87,20 +91,23 @@ class Tag extends ActiveRecord
 
     public function afterSave($insert, $changedAttributes): void
     {
-        static::getModule()->invalidatePageCache();
+        $this->invalidateCache();
         parent::afterSave($insert, $changedAttributes);
     }
 
     public function afterDelete(): void
     {
-        static::getModule()->invalidatePageCache();
+        $this->invalidateCache();
         parent::afterDelete();
     }
 
-    public function getLocations(): ActiveQuery
+    public function getLocations(): LocationQuery
     {
-        return $this->hasMany(Location::class, ['id' => 'location_id'])
+        /** @var LocationQuery $query */
+        $query = $this->hasMany(Location::class, ['id' => 'location_id'])
             ->via('locationTags');
+
+        return $query;
     }
 
     public function getLocationTag(): ActiveQuery
@@ -115,18 +122,30 @@ class Tag extends ActiveRecord
             ->inverseOf('tag');
     }
 
+    public static function find(): TagQuery
+    {
+        return Yii::createObject(TagQuery::class, [static::class]);
+    }
+
+    public function invalidateCache(): void
+    {
+        static::getModule()->invalidatePageCache();
+        TagCollection::invalidateCache();
+    }
+
     public function recalculateLocationCount(): static
     {
-        $this->location_count = (int)$this->getEntryTags()->count();
+        $this->location_count = (int)$this->getLocationTags()->count();
         return $this;
     }
-    
+
     /**
      * @noinspection PhpUnused
      */
     public function getTrailAttributes(): array
     {
         return array_diff($this->attributes(), [
+            'location_count',
             'updated_by_user_id',
             'updated_at',
             'created_at',
@@ -166,11 +185,17 @@ class Tag extends ActiveRecord
         return $this->id ? $this->getAdminRoute() : false;
     }
 
+    public function hasTagsEnabled(): bool
+    {
+        return static::getModule()->enableTags;
+    }
+
     public function attributeLabels(): array
     {
         return [
             ...parent::attributeLabels(),
             'name' => Yii::t('location', 'Name'),
+            'location_count' => Yii::t('location', 'Locations'),
         ];
     }
 

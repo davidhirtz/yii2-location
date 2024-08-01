@@ -25,8 +25,8 @@ class M240731193312Tag extends Migration
         $this->i18nTablesCallback(function () {
             $this->createTable(Tag::tableName(), [
                 'id' => $this->primaryKey()->unsigned(),
-                'status' => $this->smallInteger()->notNull()->defaultValue(Location::STATUS_DEFAULT),
-                'type' => $this->smallInteger()->notNull()->defaultValue(Location::TYPE_DEFAULT),
+                'status' => $this->smallInteger()->notNull()->defaultValue(Tag::STATUS_DEFAULT),
+                'type' => $this->smallInteger()->notNull()->defaultValue(Tag::TYPE_DEFAULT),
                 'name' => $this->string()->notNull(),
                 'location_count' => $this->integer()->unsigned()->notNull()->defaultValue(0),
                 'updated_by_user_id' => $this->integer()->unsigned()->null(),
@@ -44,10 +44,11 @@ class M240731193312Tag extends Migration
             $this->createTable(LocationTag::tableName(), [
                 'location_id' => $this->integer()->unsigned()->notNull(),
                 'tag_id' => $this->integer()->unsigned()->notNull(),
-                'position' => $this->integer()->unsigned()->notNull()->defaultValue(0),
                 'updated_by_user_id' => $this->integer()->unsigned()->null(),
                 'updated_at' => $this->dateTime(),
             ]);
+
+            $this->addPrimaryKey('entry_id', LocationTag::tableName(), ['location_id', 'tag_id']);
 
             $this->addColumn(Location::tableName(), 'tag_ids', $this->json()
                 ->null()

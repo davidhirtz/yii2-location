@@ -17,10 +17,17 @@ trait LocationTrait
             throw new NotFoundHttpException();
         }
 
-        if ($permissionName && !Yii::$app->getUser()->can($permissionName, ['location' => $location])) {
-            throw new ForbiddenHttpException();
+        if ($permissionName) {
+            $this->checkLocationPermission($location, $permissionName);
         }
 
         return $location;
+    }
+
+    protected function checkLocationPermission($location, $permissionName): void
+    {
+        if (!Yii::$app->getUser()->can($permissionName, ['location' => $location])) {
+            throw new ForbiddenHttpException();
+        }
     }
 }

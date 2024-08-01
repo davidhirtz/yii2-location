@@ -4,6 +4,8 @@ namespace davidhirtz\yii2\location\modules\admin;
 
 use davidhirtz\yii2\location\models\Location;
 use davidhirtz\yii2\location\modules\admin\controllers\LocationController;
+use davidhirtz\yii2\location\modules\admin\controllers\LocationTagController;
+use davidhirtz\yii2\location\modules\admin\controllers\TagController;
 use davidhirtz\yii2\location\modules\admin\interfaces\AutocompleteInterface;
 use davidhirtz\yii2\skeleton\helpers\ArrayHelper;
 use davidhirtz\yii2\skeleton\modules\admin\ModuleInterface;
@@ -36,12 +38,12 @@ class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInte
                 'viewPath' => '@location/modules/admin/views/location',
             ],
             'location-tag' => [
-                'class' => LocationController::class,
-                'viewPath' => '@location/modules/admin/views/location',
+                'class' => LocationTagController::class,
+                'viewPath' => '@location/modules/admin/views/location-tag',
             ],
             'tag' => [
-                'class' => LocationController::class,
-                'viewPath' => '@location/modules/admin/views/location',
+                'class' => TagController::class,
+                'viewPath' => '@location/modules/admin/views/tag',
             ],
         ];
     }
@@ -66,9 +68,13 @@ class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInte
         return [
             'location' => [
                 'label' => $this->getName(),
-                'icon' => 'images',
+                'icon' => 'map-marker-alt',
                 'url' => $this->getRoute(),
-                'active' => ['admin/location'],
+                'active' => [
+                    'admin/location/',
+                    'admin/location-tag/',
+                    'admin/tag/'
+                ],
                 'roles' => [
                     Location::AUTH_LOCATION_UPDATE,
                 ],

@@ -7,20 +7,20 @@ use davidhirtz\yii2\location\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\behaviors\BlameableBehavior;
 use davidhirtz\yii2\skeleton\behaviors\TimestampBehavior;
 use davidhirtz\yii2\skeleton\behaviors\TrailBehavior;
+use davidhirtz\yii2\skeleton\db\ActiveQuery;
 use davidhirtz\yii2\skeleton\db\ActiveRecord;
 use davidhirtz\yii2\skeleton\models\traits\UpdatedByUserTrait;
-use davidhirtz\yii2\skeleton\validators\RelationValidator;
+use davidhirtz\yii2\skeleton\validators\UniqueValidator;
 use Yii;
 
 /**
  * @property int $location_id
  * @property int $tag_id
- * @property int $position
  * @property int|null $updated_by_user_id
  * @property DateTime|null $updated_at
  *
- * @property-read Tag $tag {@see static::getTag()}
- * @property-read Location $location {@see static::getLocation()}
+ * @property-read Tag|null $tag {@see static::getTag()}
+ * @property-read Location|null $location {@see static::getLocation()}
  *
  * @mixin TrailBehavior
  */
@@ -41,21 +41,33 @@ class LocationTag extends ActiveRecord
     {
         return array_merge(parent::rules(), [
             [
+                ['location_id'],
+                $this->validateLocationId(...),
+            ],
+            [
                 ['tag_id'],
-                RelationValidator::class,
-                'required' => true,
+                $this->validateTagId(...),
             ],
             [
                 ['location_id'],
-                RelationValidator::class,
-                'required' => true,
-            ],
-            [
-                ['location_id'],
-                'unique',
+                UniqueValidator::class,
                 'targetAttribute' => ['location_id', 'tag_id'],
             ],
         ]);
+    }
+
+    protected function validateLocationId(): void
+    {
+        if (!$this->location?->hasTagsEnabled()) {
+            $this->addInvalidAttributeError('location_id');
+        }
+    }
+
+    protected function validateTagId(): void
+    {
+        if (!$this->tag?->hasTagsEnabled()) {
+            $this->addInvalidAttributeError('tag_id');
+        }
     }
 
     public function beforeSave($insert): bool
@@ -67,8 +79,6 @@ class LocationTag extends ActiveRecord
                 'createdAtAttribute' => null,
             ],
         ]);
-
-        $this->position ??= $this->getMaxPosition() + 1;
 
         return parent::beforeSave($insert);
     }
@@ -100,6 +110,22 @@ class LocationTag extends ActiveRecord
         parent::afterDelete();
     }
 
+    public function getLocation(): ActiveQuery
+    {
+        return $this->hasOne(Location::class, ['id' => 'location_id']);
+    }
+
+    public function getTag(): ActiveQuery
+    {
+        return $this->hasOne(Tag::class, ['id' => 'tag_id']);
+    }
+
+    public function populateLocationRelation(Location $location): void
+    {
+        $this->populateRelation('location', $location);
+        $this->location_id = $location->id;
+    }
+
     public function updateLocationTagIds(): bool|int
     {
         return $this->location->recalculateTagIds()->update();
@@ -108,11 +134,6 @@ class LocationTag extends ActiveRecord
     public function updateTagLocationCount(): bool|int
     {
         return $this->tag->recalculateLocationCount()->update();
-    }
-
-    public function getMaxPosition(): int
-    {
-        return (int)static::find()->where(['tag_id' => $this->tag_id])->max('[[position]]');
     }
 
     /**
