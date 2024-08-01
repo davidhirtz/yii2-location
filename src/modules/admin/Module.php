@@ -35,6 +35,14 @@ class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInte
                 'class' => LocationController::class,
                 'viewPath' => '@location/modules/admin/views/location',
             ],
+            'location-tag' => [
+                'class' => LocationController::class,
+                'viewPath' => '@location/modules/admin/views/location',
+            ],
+            'tag' => [
+                'class' => LocationController::class,
+                'viewPath' => '@location/modules/admin/views/location',
+            ],
         ];
     }
 

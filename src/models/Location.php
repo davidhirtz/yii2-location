@@ -36,14 +36,14 @@ use Yii;
  * @property string|null $state
  * @property string|null $country_code
  * @property string|null $provider_id
- * @property array|null $group_ids
- * @property int $group_count
+ * @property array|null $tag_ids
+ * @property int $tag_count
  * @property DateTime|null $updated_at
  * @property DateTime $created_at
  *
- * @property-read LocationGroup[] $locationGroups {@see static::getLocationGroups()}
- * @property-read LocationGroup $locationGroup {@see static::getLocationGroup()}
- * @property-read Group[] $groups {@see static::getGroups()}
+ * @property-read LocationTag[] $locationTags {@see static::getLocationTags()}
+ * @property-read LocationTag $locationTag {@see static::getLocationTag()}
+ * @property-read Tag[] $tags {@see static::getTags()}
  */
 class Location extends ActiveRecord implements DraftStatusAttributeInterface, TypeAttributeInterface
 {
@@ -121,28 +121,28 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
         parent::afterDelete();
     }
 
-    public function getGroups(): ActiveQuery
+    public function getTags(): ActiveQuery
     {
-        return $this->hasMany(Location::class, ['id' => 'group_id'])
-            ->via('locationGroups');
+        return $this->hasMany(Location::class, ['id' => 'tag_id'])
+            ->via('locationTags');
     }
 
-    public function getLocationGroup(): ActiveQuery
+    public function getLocationTag(): ActiveQuery
     {
-        return $this->hasOne(LocationGroup::class, ['group_id' => 'id'])
+        return $this->hasOne(LocationTag::class, ['tag_id' => 'id'])
             ->inverseOf('location');
     }
 
-    public function getLocationGroups(): ActiveQuery
+    public function getLocationTags(): ActiveQuery
     {
-        return $this->hasMany(LocationGroup::class, ['group_id' => 'id'])
+        return $this->hasMany(LocationTag::class, ['tag_id' => 'id'])
             ->inverseOf('location');
     }
 
-    public function recalculateGroupIds(): static
+    public function recalculateTagIds(): static
     {
-        $this->group_ids = $this->getLocationGroups()->select('group_id')->column();
-        $this->group_count = count($this->group_ids);
+        $this->tag_ids = $this->getLocationTags()->select('tag_id')->column();
+        $this->tag_count = count($this->tag_ids);
 
         return $this;
     }
@@ -213,7 +213,7 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
             'lat' => Yii::t('location', 'Latitude'),
             'lng' => Yii::t('location', 'Longitude'),
             'provider_id' => Yii::t('location', 'Provider ID'),
-            'group_count' => Yii::t('location', 'Groups'),
+            'tag_count' => Yii::t('location', 'Tags'),
         ];
     }
 

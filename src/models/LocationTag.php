@@ -14,17 +14,17 @@ use Yii;
 
 /**
  * @property int $location_id
- * @property int $group_id
+ * @property int $tag_id
  * @property int $position
  * @property int|null $updated_by_user_id
  * @property DateTime|null $updated_at
  *
- * @property-read Group $group {@see static::getGroup()}
+ * @property-read Tag $tag {@see static::getTag()}
  * @property-read Location $location {@see static::getLocation()}
  *
  * @mixin TrailBehavior
  */
-class LocationGroup extends ActiveRecord
+class LocationTag extends ActiveRecord
 {
     use ModuleTrait;
     use UpdatedByUserTrait;
@@ -41,7 +41,7 @@ class LocationGroup extends ActiveRecord
     {
         return array_merge(parent::rules(), [
             [
-                ['group_id'],
+                ['tag_id'],
                 RelationValidator::class,
                 'required' => true,
             ],
@@ -53,7 +53,7 @@ class LocationGroup extends ActiveRecord
             [
                 ['location_id'],
                 'unique',
-                'targetAttribute' => ['location_id', 'group_id'],
+                'targetAttribute' => ['location_id', 'tag_id'],
             ],
         ]);
     }
@@ -76,8 +76,8 @@ class LocationGroup extends ActiveRecord
     public function afterSave($insert, $changedAttributes): void
     {
         if ($insert) {
-            $this->updateLocationGroupIds();
-            $this->updateGroupLocationCount();
+            $this->updateLocationTagIds();
+            $this->updateTagLocationCount();
         }
 
         static::getModule()->invalidatePageCache();
@@ -88,11 +88,11 @@ class LocationGroup extends ActiveRecord
     public function afterDelete(): void
     {
         if (!$this->location->isDeleted()) {
-            $this->updateLocationGroupIds();
+            $this->updateLocationTagIds();
         }
 
-        if (!$this->group->isDeleted()) {
-            $this->updateGroupLocationCount();
+        if (!$this->tag->isDeleted()) {
+            $this->updateTagLocationCount();
         }
 
         static::getModule()->invalidatePageCache();
@@ -100,19 +100,19 @@ class LocationGroup extends ActiveRecord
         parent::afterDelete();
     }
 
-    public function updateLocationGroupIds(): bool|int
+    public function updateLocationTagIds(): bool|int
     {
-        return $this->location->recalculateGroupIds()->update();
+        return $this->location->recalculateTagIds()->update();
     }
 
-    public function updateGroupLocationCount(): bool|int
+    public function updateTagLocationCount(): bool|int
     {
-        return $this->group->recalculateLocationCount()->update();
+        return $this->tag->recalculateLocationCount()->update();
     }
 
     public function getMaxPosition(): int
     {
-        return (int)static::find()->where(['group_id' => $this->group_id])->max('[[position]]');
+        return (int)static::find()->where(['tag_id' => $this->tag_id])->max('[[position]]');
     }
 
     /**
@@ -120,7 +120,7 @@ class LocationGroup extends ActiveRecord
      */
     public function getTrailParents(): array
     {
-        return [$this->location, $this->group];
+        return [$this->location, $this->tag];
     }
 
     /**
@@ -128,7 +128,7 @@ class LocationGroup extends ActiveRecord
      */
     public function getTrailModelName(): string
     {
-        return Yii::t('location', 'Location–Group');
+        return Yii::t('location', 'Location–Tag');
     }
 
     /**
@@ -143,18 +143,18 @@ class LocationGroup extends ActiveRecord
     {
         return array_merge(parent::attributeLabels(), [
             'location_id' => Yii::t('location', 'Location'),
-            'group_id' => Yii::t('location', 'Group'),
+            'tag_id' => Yii::t('location', 'Tag'),
             'updated_at' => Yii::t('location', 'Added'),
         ]);
     }
 
     public function formName(): string
     {
-        return 'LocationGroup';
+        return 'LocationTag';
     }
 
     public static function tableName(): string
     {
-        return static::getModule()->getTableName('location_group');
+        return static::getModule()->getTableName('location_tag');
     }
 }

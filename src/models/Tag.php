@@ -25,11 +25,11 @@ use Yii;
  * @property DateTime|null $updated_at
  * @property DateTime $created_at
  *
- * @property-read LocationGroup[] $locationGroups {@see static::getLocationGroups()}
- * @property-read LocationGroup $locationGroup {@see static::getLocationGroup()}
+ * @property-read LocationTag[] $locationTags {@see static::getLocationTags()}
+ * @property-read LocationTag $locationTag {@see static::getLocationTag()}
  * @property-read Location[] $locations {@see static::getLocations()}
  */
-class Group extends ActiveRecord
+class Tag extends ActiveRecord
 {
     use DraftStatusAttributeTrait;
     use I18nAttributesTrait;
@@ -37,9 +37,9 @@ class Group extends ActiveRecord
     use TypeAttributeTrait;
     use UpdatedByUserTrait;
 
-    public const AUTH_GROUP_CREATE = 'groupCreate';
-    public const AUTH_GROUP_DELETE = 'groupDelete';
-    public const AUTH_GROUP_UPDATE = 'groupUpdate';
+    public const AUTH_TAG_CREATE = 'tagCreate';
+    public const AUTH_TAG_DELETE = 'tagDelete';
+    public const AUTH_TAG_UPDATE = 'tagUpdate';
 
     public function behaviors(): array
     {
@@ -100,24 +100,24 @@ class Group extends ActiveRecord
     public function getLocations(): ActiveQuery
     {
         return $this->hasMany(Location::class, ['id' => 'location_id'])
-            ->via('locationGroups');
+            ->via('locationTags');
     }
 
-    public function getLocationGroup(): ActiveQuery
+    public function getLocationTag(): ActiveQuery
     {
-        return $this->hasOne(LocationGroup::class, ['group_id' => 'id'])
-            ->inverseOf('group');
+        return $this->hasOne(LocationTag::class, ['tag_id' => 'id'])
+            ->inverseOf('tag');
     }
 
-    public function getLocationGroups(): ActiveQuery
+    public function getLocationTags(): ActiveQuery
     {
-        return $this->hasMany(LocationGroup::class, ['group_id' => 'id'])
-            ->inverseOf('group');
+        return $this->hasMany(LocationTag::class, ['tag_id' => 'id'])
+            ->inverseOf('tag');
     }
 
     public function recalculateLocationCount(): static
     {
-        $this->location_count = (int)$this->getEntryGroups()->count();
+        $this->location_count = (int)$this->getEntryTags()->count();
         return $this;
     }
     
@@ -150,12 +150,12 @@ class Group extends ActiveRecord
 
     public function getTrailModelType(): string
     {
-        return Yii::t('location', 'Group');
+        return Yii::t('location', 'Tag');
     }
 
     public function getAdminRoute(): array
     {
-        return ['/admin/group/update', 'id' => $this->id];
+        return ['/admin/tag/update', 'id' => $this->id];
     }
 
     /**
@@ -176,11 +176,11 @@ class Group extends ActiveRecord
 
     public function formName(): string
     {
-        return 'Group';
+        return 'Tag';
     }
 
     public static function tableName(): string
     {
-        return static::getModule()->getTableName('group');
+        return static::getModule()->getTableName('tag');
     }
 }
