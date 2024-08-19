@@ -1,3 +1,8 @@
+## 1.2.1 (Aug 19, 2024)
+
+- Changed `Bootstrap` to use `ApplicationTrait::addUrlManagerRules()` to prevent the initialization of the URL manager
+  before the bootstrap is completed
+
 ## 1.2.0 (Aug 1, 2024)
 
 - Added tag functionality
