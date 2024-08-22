@@ -13,9 +13,14 @@ class Module extends \davidhirtz\yii2\skeleton\base\Module
     use ModuleTrait;
 
     /**
+     * @var bool whether to enable the API route.
+     */
+    public bool $enableApiRoutes = true;
+
+    /**
      * @var bool whether to enable location tags.
      */
-    public bool $enableTags = true;
+    public bool $enableTags = false;
 
     /**
      * @var int|null

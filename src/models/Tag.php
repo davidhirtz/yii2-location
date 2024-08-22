@@ -20,6 +20,7 @@ use davidhirtz\yii2\skeleton\models\traits\I18nAttributesTrait;
 use davidhirtz\yii2\skeleton\models\traits\TypeAttributeTrait;
 use davidhirtz\yii2\skeleton\models\traits\UpdatedByUserTrait;
 use davidhirtz\yii2\skeleton\validators\DynamicRangeValidator;
+use davidhirtz\yii2\skeleton\validators\UniqueValidator;
 use Yii;
 
 /**
@@ -73,8 +74,16 @@ class Tag extends ActiveRecord implements DraftStatusAttributeInterface, TypeAtt
             ],
             [
                 ['name'],
+                'required',
+            ],
+            [
+                ['name'],
                 'string',
                 'max' => 255,
+            ],
+            [
+                ['name'],
+                UniqueValidator::class,
             ],
         ];
     }

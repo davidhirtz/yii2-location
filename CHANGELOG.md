@@ -1,3 +1,9 @@
+## 1.2.1 (in development)
+
+- Added `unqiue` validation rule for `Tag::$name`
+- Added `Module::$enableApiRoutes` flag to enable the API route, defaults to `true`
+- Changed default of `Module::$enableTags` to `false`
+
 ## 1.2.1 (Aug 19, 2024)
 
 - Changed `Bootstrap` to use `ApplicationTrait::addUrlManagerRules()` to prevent the initialization of the URL manager
