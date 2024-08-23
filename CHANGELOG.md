@@ -1,4 +1,4 @@
-## 1.2.1 (in development)
+## 1.2.2 (Aug 23, 2024)
 
 - Added `unqiue` validation rule for `Tag::$name`
 - Added `Module::$enableApiRoutes` flag to enable the API route, defaults to `true`
