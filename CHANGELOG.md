@@ -1,3 +1,7 @@
+## 1.2.3 (Oct 1, 2024)
+
+- Fixed misspelled Module parameter `Module::enableApiRoutes` in `Bootstrap`
+
 ## 1.2.2 (Aug 23, 2024)
 
 - Added `unqiue` validation rule for `Tag::$name`

@@ -40,10 +40,10 @@ class Bootstrap implements BootstrapInterface
         ]);
 
         /**
-         * @see Module::enableApiRoutes()
+         * @see Module::$enableApiRoutes
          * @see ApiController::actionIndex()
          */
-        if (Yii::$app->getModules()['location']['enableApiRules'] ?? true) {
+        if (Yii::$app->getModules()['location']['enableApiRoutes'] ?? true) {
             $app->addUrlManagerRules(['api/location/<action>.<format>' => 'location/api/<action>']);
         }
 
