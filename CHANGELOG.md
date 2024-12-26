@@ -1,3 +1,7 @@
+## 1.2.4 (in development)
+
+- Changed `Bootstrap` I18N configuration
+
 ## 1.2.3 (Oct 1, 2024)
 
 - Fixed misspelled Module parameter `Module::enableApiRoutes` in `Bootstrap`
