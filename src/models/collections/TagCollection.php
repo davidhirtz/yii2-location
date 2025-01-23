@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace davidhirtz\yii2\location\models\collections;
 
 use davidhirtz\yii2\location\models\Location;
@@ -28,7 +30,7 @@ class TagCollection
             $dependency = new TagDependency(['tags' => static::CACHE_KEY]);
             $duration = static::getModule()->tagCachedQueryDuration;
 
-            static::$_tags = $duration !== false
+            static::$_tags = (null !== $duration)
                 ? Yii::$app->getDb()->cache(static::findAll(...), $duration, $dependency)
                 : static::findAll();
         }
@@ -61,7 +63,7 @@ class TagCollection
 
     public static function invalidateCache(): void
     {
-        if (static::getModule()->tagCachedQueryDuration !== false) {
+        if (null !== static::getModule()->tagCachedQueryDuration) {
             TagDependency::invalidate(Yii::$app->getCache(), static::CACHE_KEY);
         }
     }

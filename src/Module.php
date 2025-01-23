@@ -22,9 +22,6 @@ class Module extends \davidhirtz\yii2\skeleton\base\Module
      */
     public bool $enableTags = false;
 
-    /**
-     * @var int|null
-     */
     public ?int $tagCachedQueryDuration = 60;
 
     public function invalidatePageCache(): void
