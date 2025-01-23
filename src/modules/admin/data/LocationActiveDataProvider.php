@@ -3,7 +3,6 @@
 namespace davidhirtz\yii2\location\modules\admin\data;
 
 use davidhirtz\yii2\location\models\Location;
-use davidhirtz\yii2\location\models\LocationTag;
 use davidhirtz\yii2\location\models\queries\LocationQuery;
 use davidhirtz\yii2\location\models\Tag;
 use davidhirtz\yii2\skeleton\data\ActiveDataProvider;

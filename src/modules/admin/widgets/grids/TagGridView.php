@@ -6,14 +6,13 @@ use davidhirtz\yii2\location\models\Tag;
 use davidhirtz\yii2\location\modules\admin\data\TagActiveDataProvider;
 use davidhirtz\yii2\location\modules\ModuleTrait;
 use davidhirtz\yii2\skeleton\helpers\Html;
+use davidhirtz\yii2\skeleton\html\Icon;
 use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\columns\CounterColumn;
 use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\GridView;
 use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\traits\StatusGridViewTrait;
 use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\traits\TypeGridViewTrait;
-use davidhirtz\yii2\skeleton\widgets\fontawesome\Icon;
 use davidhirtz\yii2\timeago\TimeagoColumn;
 use Yii;
-use yii\data\ActiveDataProvider;
 
 /**
  * @extends GridView<Tag>
@@ -55,7 +54,7 @@ class TagGridView extends GridView
                     'options' => ['class' => 'col-12 col-md-3'],
                 ],
                 [
-                    'content' => $this->getSearchInput(),
+                    'content' => $this->search->render(),
                     'options' => ['class' => 'col-12 col-md-6'],
                 ],
                 'options' => [
@@ -92,7 +91,7 @@ class TagGridView extends GridView
         return [
             'attribute' => 'name',
             'content' => function (Tag $tag) {
-                $name = Html::markKeywords($tag->getI18nAttribute('name'), $this->search);
+                $name = Html::markKeywords($tag->getI18nAttribute('name'), $this->search->getKeywords());
                 return Html::a($name, $tag->getAdminRoute(), ['class' => 'strong']);
             }
         ];
@@ -120,7 +119,7 @@ class TagGridView extends GridView
         return [
             'contentOptions' => ['class' => 'text-right text-nowrap'],
             'content' => function (Tag $tag): string {
-                $button = Html::a(Icon::tag('wrench'), $tag->getAdminRoute(), [
+                $button = Html::a((string)Icon::tag('wrench'), $tag->getAdminRoute(), [
                     'class' => 'btn btn-primary d-none d-md-inline-block',
                 ]);
 

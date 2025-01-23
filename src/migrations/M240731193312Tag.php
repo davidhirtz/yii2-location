@@ -3,9 +3,9 @@
 namespace davidhirtz\yii2\location\migrations;
 
 use davidhirtz\yii2\location\migrations\traits\I18nTablesTrait;
-use davidhirtz\yii2\location\models\Tag;
 use davidhirtz\yii2\location\models\Location;
 use davidhirtz\yii2\location\models\LocationTag;
+use davidhirtz\yii2\location\models\Tag;
 use davidhirtz\yii2\skeleton\db\traits\MigrationTrait;
 use davidhirtz\yii2\skeleton\models\User;
 use Yii;
