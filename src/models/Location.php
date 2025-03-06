@@ -87,7 +87,7 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
     {
         return [
             [
-                ['status', 'type', 'country_code'],
+                ['status', 'type'],
                 DynamicRangeValidator::class,
             ],
             [
@@ -102,6 +102,11 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
             [
                 ['lat', 'lng'],
                 CoordinateValidator::class,
+            ],
+            [
+                ['country_code'],
+                DynamicRangeValidator::class,
+                'integerOnly' => false,
             ],
         ];
     }
