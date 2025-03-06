@@ -1,3 +1,7 @@
+## 1.2.5 (Mar 6, 2025)
+
+- Fixed `Location::$location` validation rule
+
 ## 1.2.4 (Jan 23, 2025)
 
 - Changed `Bootstrap` I18N configuration
