@@ -1,3 +1,7 @@
+## 1.2.6 (in development)
+
+- Added validation for `Location::$lat` and `Location::$lng`
+
 ## 1.2.5 (Mar 6, 2025)
 
 - Fixed `Location::$location` validation rule

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace davidhirtz\yii2\location\models;
 
 use davidhirtz\yii2\datetime\DateTime;
@@ -61,6 +63,8 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
     public const AUTH_LOCATION_DELETE = 'locationDelete';
     public const AUTH_LOCATION_UPDATE = 'locationUpdate';
 
+    private static ?array $countryCodes;
+
     public function behaviors(): array
     {
         return [
@@ -102,6 +106,28 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
             [
                 ['lat', 'lng'],
                 CoordinateValidator::class,
+            ],
+            [
+                ['lat'],
+                'number',
+                'min' => -90,
+                'max' => 90,
+            ],
+            [
+                ['lng'],
+                'number',
+                'min' => -180,
+                'max' => 180,
+            ],
+            [
+                ['country_code'],
+                'in',
+                'range' => array_keys(static::getCountryCodes()),
+            ],
+            [
+                ['tag_ids'],
+                'each',
+                'rule' => ['integer'],
             ],
             [
                 ['country_code'],
@@ -168,6 +194,11 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
         return $this;
     }
 
+    public function getCountryName(): ?string
+    {
+        return static::getCountryCodes()[$this->country_code] ?? null;
+    }
+
     public function getTagNames(): array
     {
         return $this->tag_count
@@ -224,7 +255,7 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
 
     public static function getCountryCodes(): array
     {
-        return require(Yii::getAlias('@skeleton/messages/') . Yii::$app->language . '/countries.php');
+        return self::$countryCodes ??= require(Yii::getAlias('@skeleton/messages/') . Yii::$app->language . '/countries.php');
     }
 
     public function hasTagsEnabled(): bool
