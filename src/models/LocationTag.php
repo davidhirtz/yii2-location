@@ -129,6 +129,12 @@ class LocationTag extends ActiveRecord
         $this->location_id = $location->id;
     }
 
+    public function populateTagRelation(Tag $tag): void
+    {
+        $this->populateRelation('tag', $tag);
+        $this->tag_id = $tag->id;
+    }
+
     public function updateLocationTagIds(): bool|int
     {
         return $this->location->recalculateTagIds()->update();
