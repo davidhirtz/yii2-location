@@ -86,7 +86,10 @@ class LocationTag extends ActiveRecord
     public function afterSave($insert, $changedAttributes): void
     {
         if ($insert) {
-            $this->updateLocationTagIds();
+            if (!$this->getIsBatch()) {
+                $this->updateLocationTagIds();
+            }
+
             $this->updateTagLocationCount();
         }
 
@@ -97,7 +100,7 @@ class LocationTag extends ActiveRecord
 
     public function afterDelete(): void
     {
-        if (!$this->location->isDeleted()) {
+        if (!$this->location->isDeleted() && !$this->getIsBatch()) {
             $this->updateLocationTagIds();
         }
 

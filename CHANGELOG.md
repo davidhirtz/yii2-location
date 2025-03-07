@@ -1,6 +1,7 @@
 ## 1.2.6 (in development)
 
 - Added validation for `Location::$lat` and `Location::$lng`
+- Added `LocationTag::getIsBatch()` check for updating multiple tags at once
 
 ## 1.2.5 (Mar 6, 2025)
 
