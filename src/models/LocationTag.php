@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace davidhirtz\yii2\location\models;
 
 use davidhirtz\yii2\datetime\DateTime;
@@ -88,8 +90,8 @@ class LocationTag extends ActiveRecord
         if ($insert) {
             if (!$this->getIsBatch()) {
                 $this->updateLocationTagIds();
-            }
 
+            }
             $this->updateTagLocationCount();
         }
 
