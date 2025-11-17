@@ -8,6 +8,7 @@ use davidhirtz\yii2\location\modules\admin\controllers\LocationTagController;
 use davidhirtz\yii2\location\modules\admin\controllers\TagController;
 use davidhirtz\yii2\location\modules\admin\interfaces\AutocompleteInterface;
 use davidhirtz\yii2\skeleton\helpers\ArrayHelper;
+use davidhirtz\yii2\skeleton\modules\admin\config\MainMenuItemConfig;
 use davidhirtz\yii2\skeleton\modules\admin\ModuleInterface;
 use Yii;
 
@@ -18,6 +19,7 @@ use Yii;
 class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInterface
 {
     public $layout = '@skeleton/modules/admin/views/layouts/main';
+    public array|string $url = ['/admin/location/index'];
 
     public function init(): void
     {
@@ -58,27 +60,22 @@ class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInte
         return Yii::t('location', 'Locations');
     }
 
-    public function getRoute(): array
-    {
-        return ['/admin/location/index'];
-    }
-
-    public function getNavBarItems(): array
+    public function getMainMenuItems(): array
     {
         return [
-            'location' => [
-                'label' => $this->getName(),
-                'icon' => 'map-marker-alt',
-                'url' => $this->getRoute(),
-                'active' => [
+            'location' => new MainMenuItemConfig(
+                label: $this->getName(),
+                url: $this->url,
+                icon: 'map-marker-alt',
+                roles: [
+                    Location::AUTH_LOCATION_UPDATE,
+                ],
+                routes: [
                     'admin/location/',
                     'admin/location-tag/',
                     'admin/tag/'
                 ],
-                'roles' => [
-                    Location::AUTH_LOCATION_UPDATE,
-                ],
-            ],
+            ),
         ];
     }
 }
