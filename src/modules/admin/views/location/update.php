@@ -16,7 +16,7 @@ use davidhirtz\yii2\skeleton\web\View;
 use davidhirtz\yii2\skeleton\widgets\bootstrap\Panel;
 use davidhirtz\yii2\skeleton\widgets\forms\DeleteActiveForm;
 
-$this->setTitle(Yii::t('location', 'Edit Location'));
+$this->title(Yii::t('location', 'Edit Location'));
 ?>
 
 <?= Submenu::widget([

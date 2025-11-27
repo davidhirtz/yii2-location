@@ -12,7 +12,7 @@ use davidhirtz\yii2\location\modules\admin\widgets\navs\Submenu;
 use davidhirtz\yii2\skeleton\web\View;
 use davidhirtz\yii2\skeleton\widgets\bootstrap\Panel;
 
-$this->setTitle(Yii::t('location', 'Tags'));
+$this->title(Yii::t('location', 'Tags'));
 ?>
 
 <?= Submenu::widget([

@@ -14,7 +14,7 @@ use davidhirtz\yii2\skeleton\helpers\Html;
 use davidhirtz\yii2\skeleton\web\View;
 use davidhirtz\yii2\skeleton\widgets\bootstrap\Panel;
 
-$this->setTitle(Yii::t('location', 'Create New Location'));
+$this->title(Yii::t('location', 'Create New Location'));
 ?>
 
 <?= Submenu::widget(); ?>
