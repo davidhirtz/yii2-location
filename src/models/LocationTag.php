@@ -90,7 +90,6 @@ class LocationTag extends ActiveRecord
         if ($insert) {
             if (!$this->getIsBatch()) {
                 $this->updateLocationTagIds();
-
             }
             $this->updateTagLocationCount();
         }

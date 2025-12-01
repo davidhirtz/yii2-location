@@ -131,6 +131,9 @@ class Tag extends ActiveRecord implements DraftStatusAttributeInterface, TypeAtt
             ->inverseOf('tag');
     }
 
+    /**
+     * @return TagQuery<static>
+     */
     public static function find(): TagQuery
     {
         return Yii::createObject(TagQuery::class, [static::class]);

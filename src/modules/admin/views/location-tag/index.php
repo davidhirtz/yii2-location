@@ -8,7 +8,6 @@
 
 use davidhirtz\yii2\location\modules\admin\data\TagActiveDataProvider;
 use davidhirtz\yii2\location\modules\admin\widgets\grids\LocationTagGridView;
-use davidhirtz\yii2\location\modules\admin\widgets\grids\TagGridView;
 use davidhirtz\yii2\location\modules\admin\widgets\navs\Submenu;
 use davidhirtz\yii2\skeleton\web\View;
 use davidhirtz\yii2\skeleton\widgets\bootstrap\Panel;

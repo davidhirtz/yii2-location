@@ -3,9 +3,14 @@
 namespace davidhirtz\yii2\location\models\queries;
 
 use davidhirtz\yii2\location\models\LocationTag;
+use davidhirtz\yii2\location\models\Tag;
 use davidhirtz\yii2\skeleton\db\ActiveQuery;
 use davidhirtz\yii2\skeleton\db\I18nActiveQuery;
 
+/**
+ * @template T of Tag
+ * @extends I18nActiveQuery<T>
+ */
 class TagQuery extends I18nActiveQuery
 {
     public function selectSiteAttributes(): static

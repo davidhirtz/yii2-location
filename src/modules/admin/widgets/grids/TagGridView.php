@@ -13,7 +13,6 @@ use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\traits\TypeGridViewTrai
 use davidhirtz\yii2\skeleton\widgets\fontawesome\Icon;
 use davidhirtz\yii2\timeago\TimeagoColumn;
 use Yii;
-use yii\data\ActiveDataProvider;
 
 /**
  * @extends GridView<Tag>

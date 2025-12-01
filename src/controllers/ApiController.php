@@ -2,7 +2,6 @@
 
 namespace davidhirtz\yii2\location\controllers;
 
-
 use davidhirtz\yii2\location\models\Location;
 use davidhirtz\yii2\location\models\queries\LocationQuery;
 use davidhirtz\yii2\location\modules\ModuleTrait;
