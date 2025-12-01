@@ -3,6 +3,10 @@
 use davidhirtz\yii2\location\Bootstrap;
 
 return [
+    'aliases' => [
+        // This is a fix for the broken aliasing of `BaseMigrateController::getNamespacePath()`
+        '@davidhirtz/yii2/location' => __DIR__ . '/../../src/',
+    ],
     'bootstrap' => [
         Bootstrap::class,
     ],
