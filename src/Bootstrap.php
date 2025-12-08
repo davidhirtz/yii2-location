@@ -3,7 +3,7 @@
 namespace Hirtz\Location;
 
 use Hirtz\Location\controllers\ApiController;
-use Hirtz\Skeleton\web\Application;
+use Hirtz\Skeleton\Web\Application;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\i18n\PhpMessageSource;
@@ -19,7 +19,7 @@ class Bootstrap implements BootstrapInterface
 
         $app->getI18n()->translations['location'] ??= [
             'class' => PhpMessageSource::class,
-            'basePath' => '@location/messages',
+            'basePath' => '@location/../messages',
         ];
 
         $app->extendModules([
@@ -43,6 +43,6 @@ class Bootstrap implements BootstrapInterface
             $app->addUrlManagerRules(['api/location/<action>.<format>' => 'location/api/<action>']);
         }
 
-        $app->setMigrationNamespace('Hirtz\Location\migrations');
+        $app->setMigrationNamespace('Hirtz\Location\Migrations');
     }
 }

@@ -1,20 +1,20 @@
 <?php
 
-namespace Hirtz\Location\modules\admin\widgets\grids;
+namespace Hirtz\Location\Modules\Admin\Widgets\Grids;
 
 use Hirtz\Location\models\collections\TagCollection;
 use Hirtz\Location\models\Location;
 use Hirtz\Location\models\Tag;
-use Hirtz\Location\modules\admin\data\LocationActiveDataProvider;
+use Hirtz\Location\Modules\Admin\Data\LocationActiveDataProvider;
 use Hirtz\Location\modules\ModuleTrait;
-use Hirtz\Skeleton\helpers\Html;
-use Hirtz\Skeleton\helpers\Url;
-use Hirtz\Skeleton\modules\admin\widgets\grids\columns\CounterColumn;
-use Hirtz\Skeleton\modules\admin\widgets\grids\GridView;
-use Hirtz\Skeleton\modules\admin\widgets\grids\traits\StatusGridViewTrait;
-use Hirtz\Skeleton\modules\admin\widgets\grids\traits\TypeGridViewTrait;
-use Hirtz\Skeleton\widgets\bootstrap\ButtonDropdown;
-use Hirtz\Skeleton\widgets\fontawesome\Icon;
+use Hirtz\Skeleton\Helpers\Html;
+use Hirtz\Skeleton\Helpers\Url;
+use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Columns\CounterColumn;
+use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\GridView;
+use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Traits\StatusGridViewTrait;
+use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Traits\TypeGridViewTrait;
+use Hirtz\Skeleton\Widgets\Bootstrap\ButtonDropdown;
+use Hirtz\Skeleton\Widgets\Fontawesome\Icon;
 use Hirtz\Timeago\TimeagoColumn;
 use Yii;
 

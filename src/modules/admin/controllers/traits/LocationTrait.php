@@ -1,6 +1,6 @@
 <?php
 
-namespace Hirtz\Location\modules\admin\controllers\traits;
+namespace Hirtz\Location\Modules\Admin\Controllers\Traits;
 
 use Hirtz\Location\models\Location;
 use Yii;

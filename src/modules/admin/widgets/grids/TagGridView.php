@@ -1,16 +1,16 @@
 <?php
 
-namespace Hirtz\Location\modules\admin\widgets\grids;
+namespace Hirtz\Location\Modules\Admin\Widgets\Grids;
 
 use Hirtz\Location\models\Tag;
-use Hirtz\Location\modules\admin\data\TagActiveDataProvider;
+use Hirtz\Location\Modules\Admin\Data\TagActiveDataProvider;
 use Hirtz\Location\modules\ModuleTrait;
-use Hirtz\Skeleton\helpers\Html;
-use Hirtz\Skeleton\html\Icon;
-use Hirtz\Skeleton\modules\admin\widgets\grids\columns\CounterColumn;
-use Hirtz\Skeleton\modules\admin\widgets\grids\GridView;
-use Hirtz\Skeleton\modules\admin\widgets\grids\traits\StatusGridViewTrait;
-use Hirtz\Skeleton\modules\admin\widgets\grids\traits\TypeGridViewTrait;
+use Hirtz\Skeleton\Helpers\Html;
+use Hirtz\Skeleton\Html\Icon;
+use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Columns\CounterColumn;
+use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\GridView;
+use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Traits\StatusGridViewTrait;
+use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Traits\TypeGridViewTrait;
 use Hirtz\Timeago\TimeagoColumn;
 use Yii;
 

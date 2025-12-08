@@ -1,8 +1,8 @@
 <?php
 
-namespace Hirtz\Location\modules\admin\widgets\forms;
+namespace Hirtz\Location\Modules\Admin\Widgets\Forms;
 
-use Hirtz\Location\modules\admin\assets\AutocompleteAssetBundle;
+use Hirtz\Location\Modules\Admin\Assets\AutocompleteAssetBundle;
 use Yii;
 use yii\widgets\InputWidget;
 

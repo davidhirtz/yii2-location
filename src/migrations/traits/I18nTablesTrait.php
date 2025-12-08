@@ -1,6 +1,6 @@
 <?php
 
-namespace Hirtz\Location\migrations\traits;
+namespace Hirtz\Location\Migrations\Traits;
 
 use Hirtz\Location\modules\ModuleTrait;
 use Yii;

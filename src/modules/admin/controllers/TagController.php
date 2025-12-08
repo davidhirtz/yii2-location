@@ -1,12 +1,12 @@
 <?php
 
-namespace Hirtz\Location\modules\admin\controllers;
+namespace Hirtz\Location\Modules\Admin\Controllers;
 
 use Hirtz\Location\models\Tag;
-use Hirtz\Location\modules\admin\controllers\traits\TagTrait;
-use Hirtz\Location\modules\admin\data\TagActiveDataProvider;
+use Hirtz\Location\Modules\Admin\Controllers\Traits\TagTrait;
+use Hirtz\Location\Modules\Admin\Data\TagActiveDataProvider;
 use Hirtz\Location\modules\ModuleTrait;
-use Hirtz\Skeleton\web\Controller;
+use Hirtz\Skeleton\Web\Controller;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;

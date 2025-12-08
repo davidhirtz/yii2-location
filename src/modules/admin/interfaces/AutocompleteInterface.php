@@ -1,6 +1,6 @@
 <?php
 
-namespace Hirtz\Location\modules\admin\interfaces;
+namespace Hirtz\Location\Modules\Admin\Interfaces;
 
 interface AutocompleteInterface
 {

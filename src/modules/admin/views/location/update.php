@@ -8,13 +8,13 @@
  */
 
 use Hirtz\Location\models\Location;
-use Hirtz\Location\modules\admin\controllers\LocationController;
-use Hirtz\Location\modules\admin\widgets\forms\LocationActiveForm;
-use Hirtz\Location\modules\admin\widgets\navs\Submenu;
-use Hirtz\Skeleton\helpers\Html;
-use Hirtz\Skeleton\web\View;
-use Hirtz\Skeleton\widgets\bootstrap\Panel;
-use Hirtz\Skeleton\widgets\forms\DeleteActiveForm;
+use Hirtz\Location\Modules\Admin\Controllers\LocationController;
+use Hirtz\Location\Modules\Admin\Widgets\Forms\LocationActiveForm;
+use Hirtz\Location\Modules\Admin\Widgets\Navs\Submenu;
+use Hirtz\Skeleton\Helpers\Html;
+use Hirtz\Skeleton\Web\View;
+use Hirtz\Skeleton\Widgets\Bootstrap\Panel;
+use Hirtz\Skeleton\Widgets\Forms\DeleteActiveForm;
 
 $this->title(Yii::t('location', 'Edit Location'));
 ?>

@@ -8,13 +8,13 @@
  */
 
 use Hirtz\Location\models\Tag;
-use Hirtz\Location\modules\admin\controllers\TagController;
-use Hirtz\Location\modules\admin\widgets\forms\TagActiveForm;
-use Hirtz\Location\modules\admin\widgets\navs\Submenu;
-use Hirtz\Skeleton\helpers\Html;
-use Hirtz\Skeleton\web\View;
-use Hirtz\Skeleton\widgets\bootstrap\Panel;
-use Hirtz\Skeleton\widgets\forms\DeleteActiveForm;
+use Hirtz\Location\Modules\Admin\Controllers\TagController;
+use Hirtz\Location\Modules\Admin\Widgets\Forms\TagActiveForm;
+use Hirtz\Location\Modules\Admin\Widgets\Navs\Submenu;
+use Hirtz\Skeleton\Helpers\Html;
+use Hirtz\Skeleton\Web\View;
+use Hirtz\Skeleton\Widgets\Bootstrap\Panel;
+use Hirtz\Skeleton\Widgets\Forms\DeleteActiveForm;
 
 $this->title(Yii::t('location', 'Edit Tag'));
 ?>

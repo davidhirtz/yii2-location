@@ -1,11 +1,11 @@
 <?php
 
-namespace Hirtz\Location\modules\admin\data;
+namespace Hirtz\Location\Modules\Admin\Data;
 
 use Hirtz\Location\models\Location;
 use Hirtz\Location\models\queries\LocationQuery;
 use Hirtz\Location\models\Tag;
-use Hirtz\Skeleton\data\ActiveDataProvider;
+use Hirtz\Skeleton\Data\ActiveDataProvider;
 
 /**
  * @property LocationQuery $query

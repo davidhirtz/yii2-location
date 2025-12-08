@@ -3,8 +3,8 @@
 namespace Hirtz\Location\models\queries;
 
 use Hirtz\Location\models\LocationTag;
-use Hirtz\Skeleton\db\ActiveQuery;
-use Hirtz\Skeleton\db\I18nActiveQuery;
+use Hirtz\Skeleton\Db\ActiveQuery;
+use Hirtz\Skeleton\Db\I18nActiveQuery;
 
 class LocationQuery extends I18nActiveQuery
 {

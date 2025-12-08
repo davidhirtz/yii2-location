@@ -1,11 +1,11 @@
 <?php
 
-namespace Hirtz\Location\migrations;
+namespace Hirtz\Location\Migrations;
 
-use Hirtz\Location\migrations\traits\I18nTablesTrait;
+use Hirtz\Location\Migrations\Traits\I18nTablesTrait;
 use Hirtz\Location\models\Location;
-use Hirtz\Skeleton\db\traits\MigrationTrait;
-use Hirtz\Skeleton\models\User;
+use Hirtz\Skeleton\Db\Traits\MigrationTrait;
+use Hirtz\Skeleton\Models\User;
 use Yii;
 use yii\db\Migration;
 

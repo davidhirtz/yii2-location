@@ -1,14 +1,14 @@
 <?php
 
-namespace Hirtz\Location\modules\admin\controllers;
+namespace Hirtz\Location\Modules\Admin\Controllers;
 
 use Hirtz\Location\models\Location;
 use Hirtz\Location\models\Tag;
-use Hirtz\Location\modules\admin\controllers\traits\LocationTrait;
-use Hirtz\Location\modules\admin\data\LocationActiveDataProvider;
-use Hirtz\Location\modules\admin\Module;
+use Hirtz\Location\Modules\Admin\Controllers\Traits\LocationTrait;
+use Hirtz\Location\Modules\Admin\Data\LocationActiveDataProvider;
+use Hirtz\Location\Modules\Admin\Module;
 use Hirtz\Location\modules\ModuleTrait;
-use Hirtz\Skeleton\web\Controller;
+use Hirtz\Skeleton\Web\Controller;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;

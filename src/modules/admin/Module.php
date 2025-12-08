@@ -3,20 +3,20 @@
 namespace Hirtz\Location\modules\admin;
 
 use Hirtz\Location\models\Location;
-use Hirtz\Location\modules\admin\controllers\LocationController;
-use Hirtz\Location\modules\admin\controllers\LocationTagController;
-use Hirtz\Location\modules\admin\controllers\TagController;
-use Hirtz\Location\modules\admin\interfaces\AutocompleteInterface;
-use Hirtz\Skeleton\helpers\ArrayHelper;
-use Hirtz\Skeleton\modules\admin\config\MainMenuItemConfig;
-use Hirtz\Skeleton\modules\admin\ModuleInterface;
+use Hirtz\Location\Modules\Admin\Controllers\LocationController;
+use Hirtz\Location\Modules\Admin\Controllers\LocationTagController;
+use Hirtz\Location\Modules\Admin\Controllers\TagController;
+use Hirtz\Location\Modules\Admin\Interfaces\AutocompleteInterface;
+use Hirtz\Skeleton\Helpers\ArrayHelper;
+use Hirtz\Skeleton\Modules\Admin\Config\MainMenuItemConfig;
+use Hirtz\Skeleton\Modules\Admin\ModuleInterface;
 use Yii;
 
 /**
  * @property AutocompleteInterface|null $autocomplete
- * @property \Hirtz\Skeleton\modules\admin\Module $module
+ * @property \Hirtz\Skeleton\Modules\Admin\Module $module
  */
-class Module extends \Hirtz\Skeleton\base\Module implements ModuleInterface
+class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
 {
     public $layout = '@skeleton/modules/admin/views/layouts/main';
     public array|string $url = ['/admin/location/index'];

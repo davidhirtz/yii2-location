@@ -6,13 +6,13 @@ namespace Hirtz\Location\models;
 
 use davidhirtz\yii2\datetime\DateTime;
 use Hirtz\Location\modules\ModuleTrait;
-use Hirtz\Skeleton\behaviors\BlameableBehavior;
-use Hirtz\Skeleton\behaviors\TimestampBehavior;
-use Hirtz\Skeleton\behaviors\TrailBehavior;
-use Hirtz\Skeleton\db\ActiveQuery;
-use Hirtz\Skeleton\db\ActiveRecord;
-use Hirtz\Skeleton\models\traits\UpdatedByUserTrait;
-use Hirtz\Skeleton\validators\UniqueValidator;
+use Hirtz\Skeleton\Behaviors\BlameableBehavior;
+use Hirtz\Skeleton\Behaviors\TimestampBehavior;
+use Hirtz\Skeleton\Behaviors\TrailBehavior;
+use Hirtz\Skeleton\Db\ActiveQuery;
+use Hirtz\Skeleton\Db\ActiveRecord;
+use Hirtz\Skeleton\Models\Traits\UpdatedByUserTrait;
+use Hirtz\Skeleton\Validators\UniqueValidator;
 use Yii;
 
 /**

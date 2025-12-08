@@ -1,10 +1,10 @@
 <?php
 
-namespace Hirtz\Location\modules\admin\widgets\grids;
+namespace Hirtz\Location\Modules\Admin\Widgets\Grids;
 
 use Hirtz\Location\models\Tag;
-use Hirtz\Skeleton\helpers\Html;
-use Hirtz\Skeleton\widgets\fontawesome\Icon;
+use Hirtz\Skeleton\Helpers\Html;
+use Hirtz\Skeleton\Widgets\Fontawesome\Icon;
 use Hirtz\Timeago\TimeagoColumn;
 use Yii;
 
