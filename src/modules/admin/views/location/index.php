@@ -1,16 +1,16 @@
 <?php
 /**
- * @see \davidhirtz\yii2\location\modules\admin\controllers\LocationController::actionIndex()
+ * @see \Hirtz\Location\modules\admin\controllers\LocationController::actionIndex()
  *
  * @var View $this
  * @var LocationActiveDataProvider $provider
  */
 
-use davidhirtz\yii2\location\modules\admin\data\LocationActiveDataProvider;
-use davidhirtz\yii2\location\modules\admin\widgets\grids\LocationGridView;
-use davidhirtz\yii2\location\modules\admin\widgets\navs\Submenu;
-use davidhirtz\yii2\skeleton\web\View;
-use davidhirtz\yii2\skeleton\widgets\bootstrap\Panel;
+use Hirtz\Location\modules\admin\data\LocationActiveDataProvider;
+use Hirtz\Location\modules\admin\widgets\grids\LocationGridView;
+use Hirtz\Location\modules\admin\widgets\navs\Submenu;
+use Hirtz\Skeleton\web\View;
+use Hirtz\Skeleton\widgets\bootstrap\Panel;
 
 $this->title(Yii::t('location', 'Locations'));
 ?>

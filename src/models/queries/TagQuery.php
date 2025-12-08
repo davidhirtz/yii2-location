@@ -1,10 +1,10 @@
 <?php
 
-namespace davidhirtz\yii2\location\models\queries;
+namespace Hirtz\Location\models\queries;
 
-use davidhirtz\yii2\location\models\LocationTag;
-use davidhirtz\yii2\skeleton\db\ActiveQuery;
-use davidhirtz\yii2\skeleton\db\I18nActiveQuery;
+use Hirtz\Location\models\LocationTag;
+use Hirtz\Skeleton\db\ActiveQuery;
+use Hirtz\Skeleton\db\I18nActiveQuery;
 
 class TagQuery extends I18nActiveQuery
 {

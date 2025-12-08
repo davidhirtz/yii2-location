@@ -1,14 +1,14 @@
 <?php
 
-namespace davidhirtz\yii2\location;
+namespace Hirtz\Location;
 
-use davidhirtz\yii2\skeleton\filters\PageCache;
-use davidhirtz\yii2\skeleton\modules\ModuleTrait;
+use Hirtz\Skeleton\filters\PageCache;
+use Hirtz\Skeleton\modules\ModuleTrait;
 use Yii;
 use yii\caching\CacheInterface;
 use yii\caching\TagDependency;
 
-class Module extends \davidhirtz\yii2\skeleton\base\Module
+class Module extends \Hirtz\Skeleton\base\Module
 {
     use ModuleTrait;
 

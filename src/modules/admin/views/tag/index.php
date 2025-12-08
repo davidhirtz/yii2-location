@@ -1,16 +1,16 @@
 <?php
 /**
- * @see \davidhirtz\yii2\location\modules\admin\controllers\TagController::actionIndex()
+ * @see \Hirtz\Location\modules\admin\controllers\TagController::actionIndex()
  *
  * @var View $this
  * @var TagActiveDataProvider $provider
  */
 
-use davidhirtz\yii2\location\modules\admin\data\TagActiveDataProvider;
-use davidhirtz\yii2\location\modules\admin\widgets\grids\TagGridView;
-use davidhirtz\yii2\location\modules\admin\widgets\navs\Submenu;
-use davidhirtz\yii2\skeleton\web\View;
-use davidhirtz\yii2\skeleton\widgets\bootstrap\Panel;
+use Hirtz\Location\modules\admin\data\TagActiveDataProvider;
+use Hirtz\Location\modules\admin\widgets\grids\TagGridView;
+use Hirtz\Location\modules\admin\widgets\navs\Submenu;
+use Hirtz\Skeleton\web\View;
+use Hirtz\Skeleton\widgets\bootstrap\Panel;
 
 $this->title(Yii::t('location', 'Tags'));
 ?>

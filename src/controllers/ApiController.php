@@ -1,11 +1,11 @@
 <?php
 
-namespace davidhirtz\yii2\location\controllers;
+namespace Hirtz\Location\controllers;
 
-use davidhirtz\yii2\location\models\Location;
-use davidhirtz\yii2\location\models\queries\LocationQuery;
-use davidhirtz\yii2\location\modules\ModuleTrait;
-use davidhirtz\yii2\skeleton\filters\PageCache;
+use Hirtz\Location\models\Location;
+use Hirtz\Location\models\queries\LocationQuery;
+use Hirtz\Location\modules\ModuleTrait;
+use Hirtz\Skeleton\filters\PageCache;
 use Yii;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;

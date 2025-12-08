@@ -1,8 +1,8 @@
 <?php
 
-namespace davidhirtz\yii2\location\modules;
+namespace Hirtz\Location\modules;
 
-use davidhirtz\yii2\location\Module;
+use Hirtz\Location\Module;
 use Yii;
 
 trait ModuleTrait

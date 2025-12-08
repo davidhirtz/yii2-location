@@ -30,12 +30,12 @@
   },
   "autoload": {
     "psr-4": {
-      "davidhirtz\\yii2\\location\\": "src"
+      "Hirtz\\Location\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "davidhirtz\\yii2\\location\\tests\\": "tests"
+      "Hirtz\\Location\\tests\\": "tests"
     }
   },
   "config": {
@@ -45,7 +45,7 @@
     }
   },
   "extra": {
-    "bootstrap": "davidhirtz\\yii2\\location\\Bootstrap"
+    "bootstrap": "Hirtz\\Location\\Bootstrap"
   },
   "repositories": [
     {

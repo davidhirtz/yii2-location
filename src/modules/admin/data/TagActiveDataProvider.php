@@ -1,12 +1,12 @@
 <?php
 
-namespace davidhirtz\yii2\location\modules\admin\data;
+namespace Hirtz\Location\modules\admin\data;
 
-use davidhirtz\yii2\location\models\Location;
-use davidhirtz\yii2\location\models\LocationTag;
-use davidhirtz\yii2\location\models\queries\TagQuery;
-use davidhirtz\yii2\location\models\Tag;
-use davidhirtz\yii2\skeleton\data\ActiveDataProvider;
+use Hirtz\Location\models\Location;
+use Hirtz\Location\models\LocationTag;
+use Hirtz\Location\models\queries\TagQuery;
+use Hirtz\Location\models\Tag;
+use Hirtz\Skeleton\data\ActiveDataProvider;
 
 /**
  * @property TagQuery $query

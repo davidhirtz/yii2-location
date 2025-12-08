@@ -1,8 +1,8 @@
 <?php
 
-namespace davidhirtz\yii2\location\modules\admin\controllers\traits;
+namespace Hirtz\Location\modules\admin\controllers\traits;
 
-use davidhirtz\yii2\location\models\Tag;
+use Hirtz\Location\models\Tag;
 use Yii;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;

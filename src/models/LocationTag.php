@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\location\models;
+namespace Hirtz\Location\models;
 
 use davidhirtz\yii2\datetime\DateTime;
-use davidhirtz\yii2\location\modules\ModuleTrait;
-use davidhirtz\yii2\skeleton\behaviors\BlameableBehavior;
-use davidhirtz\yii2\skeleton\behaviors\TimestampBehavior;
-use davidhirtz\yii2\skeleton\behaviors\TrailBehavior;
-use davidhirtz\yii2\skeleton\db\ActiveQuery;
-use davidhirtz\yii2\skeleton\db\ActiveRecord;
-use davidhirtz\yii2\skeleton\models\traits\UpdatedByUserTrait;
-use davidhirtz\yii2\skeleton\validators\UniqueValidator;
+use Hirtz\Location\modules\ModuleTrait;
+use Hirtz\Skeleton\behaviors\BlameableBehavior;
+use Hirtz\Skeleton\behaviors\TimestampBehavior;
+use Hirtz\Skeleton\behaviors\TrailBehavior;
+use Hirtz\Skeleton\db\ActiveQuery;
+use Hirtz\Skeleton\db\ActiveRecord;
+use Hirtz\Skeleton\models\traits\UpdatedByUserTrait;
+use Hirtz\Skeleton\validators\UniqueValidator;
 use Yii;
 
 /**

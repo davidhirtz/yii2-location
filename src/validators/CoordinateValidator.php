@@ -1,6 +1,6 @@
 <?php
 
-namespace davidhirtz\yii2\location\validators;
+namespace Hirtz\Location\validators;
 
 use yii\validators\FilterValidator;
 

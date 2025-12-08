@@ -1,22 +1,22 @@
 <?php
 
-namespace davidhirtz\yii2\location\modules\admin;
+namespace Hirtz\Location\modules\admin;
 
-use davidhirtz\yii2\location\models\Location;
-use davidhirtz\yii2\location\modules\admin\controllers\LocationController;
-use davidhirtz\yii2\location\modules\admin\controllers\LocationTagController;
-use davidhirtz\yii2\location\modules\admin\controllers\TagController;
-use davidhirtz\yii2\location\modules\admin\interfaces\AutocompleteInterface;
-use davidhirtz\yii2\skeleton\helpers\ArrayHelper;
-use davidhirtz\yii2\skeleton\modules\admin\config\MainMenuItemConfig;
-use davidhirtz\yii2\skeleton\modules\admin\ModuleInterface;
+use Hirtz\Location\models\Location;
+use Hirtz\Location\modules\admin\controllers\LocationController;
+use Hirtz\Location\modules\admin\controllers\LocationTagController;
+use Hirtz\Location\modules\admin\controllers\TagController;
+use Hirtz\Location\modules\admin\interfaces\AutocompleteInterface;
+use Hirtz\Skeleton\helpers\ArrayHelper;
+use Hirtz\Skeleton\modules\admin\config\MainMenuItemConfig;
+use Hirtz\Skeleton\modules\admin\ModuleInterface;
 use Yii;
 
 /**
  * @property AutocompleteInterface|null $autocomplete
- * @property \davidhirtz\yii2\skeleton\modules\admin\Module $module
+ * @property \Hirtz\Skeleton\modules\admin\Module $module
  */
-class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInterface
+class Module extends \Hirtz\Skeleton\base\Module implements ModuleInterface
 {
     public $layout = '@skeleton/modules/admin/views/layouts/main';
     public array|string $url = ['/admin/location/index'];

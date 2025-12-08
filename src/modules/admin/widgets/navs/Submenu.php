@@ -1,15 +1,15 @@
 <?php
 
-namespace davidhirtz\yii2\location\modules\admin\widgets\navs;
+namespace Hirtz\Location\modules\admin\widgets\navs;
 
-use davidhirtz\yii2\location\models\Location;
-use davidhirtz\yii2\location\models\Tag;
-use davidhirtz\yii2\location\modules\admin\Module;
-use davidhirtz\yii2\location\modules\ModuleTrait;
+use Hirtz\Location\models\Location;
+use Hirtz\Location\models\Tag;
+use Hirtz\Location\modules\admin\Module;
+use Hirtz\Location\modules\ModuleTrait;
 use Yii;
 use yii\helpers\Html;
 
-class Submenu extends \davidhirtz\yii2\skeleton\widgets\fontawesome\Submenu
+class Submenu extends \Hirtz\Skeleton\widgets\fontawesome\Submenu
 {
     use ModuleTrait;
 

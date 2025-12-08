@@ -1,9 +1,9 @@
 <?php
 
-namespace davidhirtz\yii2\location;
+namespace Hirtz\Location;
 
-use davidhirtz\yii2\location\controllers\ApiController;
-use davidhirtz\yii2\skeleton\web\Application;
+use Hirtz\Location\controllers\ApiController;
+use Hirtz\Skeleton\web\Application;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\i18n\PhpMessageSource;
@@ -43,6 +43,6 @@ class Bootstrap implements BootstrapInterface
             $app->addUrlManagerRules(['api/location/<action>.<format>' => 'location/api/<action>']);
         }
 
-        $app->setMigrationNamespace('davidhirtz\yii2\location\migrations');
+        $app->setMigrationNamespace('Hirtz\Location\migrations');
     }
 }

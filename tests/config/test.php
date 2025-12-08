@@ -1,6 +1,6 @@
 <?php
 
-use davidhirtz\yii2\location\Bootstrap;
+use Hirtz\Location\Bootstrap;
 
 return [
     'bootstrap' => [

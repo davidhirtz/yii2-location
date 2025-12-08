@@ -1,11 +1,11 @@
 <?php
 
-namespace davidhirtz\yii2\location\modules\admin\widgets\grids;
+namespace Hirtz\Location\modules\admin\widgets\grids;
 
-use davidhirtz\yii2\location\models\Tag;
-use davidhirtz\yii2\skeleton\helpers\Html;
-use davidhirtz\yii2\skeleton\widgets\fontawesome\Icon;
-use davidhirtz\yii2\timeago\TimeagoColumn;
+use Hirtz\Location\models\Tag;
+use Hirtz\Skeleton\helpers\Html;
+use Hirtz\Skeleton\widgets\fontawesome\Icon;
+use Hirtz\Timeago\TimeagoColumn;
 use Yii;
 
 class LocationTagGridView extends TagGridView

@@ -1,17 +1,17 @@
 <?php
 
-namespace davidhirtz\yii2\location\modules\admin\widgets\grids;
+namespace Hirtz\Location\modules\admin\widgets\grids;
 
-use davidhirtz\yii2\location\models\Tag;
-use davidhirtz\yii2\location\modules\admin\data\TagActiveDataProvider;
-use davidhirtz\yii2\location\modules\ModuleTrait;
-use davidhirtz\yii2\skeleton\helpers\Html;
-use davidhirtz\yii2\skeleton\html\Icon;
-use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\columns\CounterColumn;
-use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\GridView;
-use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\traits\StatusGridViewTrait;
-use davidhirtz\yii2\skeleton\modules\admin\widgets\grids\traits\TypeGridViewTrait;
-use davidhirtz\yii2\timeago\TimeagoColumn;
+use Hirtz\Location\models\Tag;
+use Hirtz\Location\modules\admin\data\TagActiveDataProvider;
+use Hirtz\Location\modules\ModuleTrait;
+use Hirtz\Skeleton\helpers\Html;
+use Hirtz\Skeleton\html\Icon;
+use Hirtz\Skeleton\modules\admin\widgets\grids\columns\CounterColumn;
+use Hirtz\Skeleton\modules\admin\widgets\grids\GridView;
+use Hirtz\Skeleton\modules\admin\widgets\grids\traits\StatusGridViewTrait;
+use Hirtz\Skeleton\modules\admin\widgets\grids\traits\TypeGridViewTrait;
+use Hirtz\Timeago\TimeagoColumn;
 use Yii;
 
 /**

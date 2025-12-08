@@ -1,12 +1,12 @@
 <?php
 
-namespace davidhirtz\yii2\location\modules\admin\widgets\forms;
+namespace Hirtz\Location\modules\admin\widgets\forms;
 
-use davidhirtz\yii2\location\models\Location;
-use davidhirtz\yii2\skeleton\modules\admin\widgets\forms\traits\ModelTimestampTrait;
-use davidhirtz\yii2\skeleton\modules\admin\widgets\forms\traits\StatusFieldTrait;
-use davidhirtz\yii2\skeleton\modules\admin\widgets\forms\traits\TypeFieldTrait;
-use davidhirtz\yii2\skeleton\widgets\bootstrap\ActiveForm;
+use Hirtz\Location\models\Location;
+use Hirtz\Skeleton\modules\admin\widgets\forms\traits\ModelTimestampTrait;
+use Hirtz\Skeleton\modules\admin\widgets\forms\traits\StatusFieldTrait;
+use Hirtz\Skeleton\modules\admin\widgets\forms\traits\TypeFieldTrait;
+use Hirtz\Skeleton\widgets\bootstrap\ActiveForm;
 use yii\widgets\ActiveField;
 
 /**

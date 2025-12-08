@@ -7,14 +7,14 @@
  * @var Tag $tag
  */
 
-use davidhirtz\yii2\location\models\Tag;
-use davidhirtz\yii2\location\modules\admin\controllers\TagController;
-use davidhirtz\yii2\location\modules\admin\widgets\forms\TagActiveForm;
-use davidhirtz\yii2\location\modules\admin\widgets\navs\Submenu;
-use davidhirtz\yii2\skeleton\helpers\Html;
-use davidhirtz\yii2\skeleton\web\View;
-use davidhirtz\yii2\skeleton\widgets\bootstrap\Panel;
-use davidhirtz\yii2\skeleton\widgets\forms\DeleteActiveForm;
+use Hirtz\Location\models\Tag;
+use Hirtz\Location\modules\admin\controllers\TagController;
+use Hirtz\Location\modules\admin\widgets\forms\TagActiveForm;
+use Hirtz\Location\modules\admin\widgets\navs\Submenu;
+use Hirtz\Skeleton\helpers\Html;
+use Hirtz\Skeleton\web\View;
+use Hirtz\Skeleton\widgets\bootstrap\Panel;
+use Hirtz\Skeleton\widgets\forms\DeleteActiveForm;
 
 $this->title(Yii::t('location', 'Edit Tag'));
 ?>

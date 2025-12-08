@@ -1,6 +1,6 @@
 <?php
 
-namespace davidhirtz\yii2\location\modules\admin\interfaces;
+namespace Hirtz\Location\modules\admin\interfaces;
 
 interface AutocompleteInterface
 {

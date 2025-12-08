@@ -7,14 +7,14 @@
  * @var Location $location
  */
 
-use davidhirtz\yii2\location\models\Location;
-use davidhirtz\yii2\location\modules\admin\controllers\LocationController;
-use davidhirtz\yii2\location\modules\admin\widgets\forms\LocationActiveForm;
-use davidhirtz\yii2\location\modules\admin\widgets\navs\Submenu;
-use davidhirtz\yii2\skeleton\helpers\Html;
-use davidhirtz\yii2\skeleton\web\View;
-use davidhirtz\yii2\skeleton\widgets\bootstrap\Panel;
-use davidhirtz\yii2\skeleton\widgets\forms\DeleteActiveForm;
+use Hirtz\Location\models\Location;
+use Hirtz\Location\modules\admin\controllers\LocationController;
+use Hirtz\Location\modules\admin\widgets\forms\LocationActiveForm;
+use Hirtz\Location\modules\admin\widgets\navs\Submenu;
+use Hirtz\Skeleton\helpers\Html;
+use Hirtz\Skeleton\web\View;
+use Hirtz\Skeleton\widgets\bootstrap\Panel;
+use Hirtz\Skeleton\widgets\forms\DeleteActiveForm;
 
 $this->title(Yii::t('location', 'Edit Location'));
 ?>

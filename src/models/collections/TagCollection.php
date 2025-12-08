@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\location\models\collections;
+namespace Hirtz\Location\models\collections;
 
-use davidhirtz\yii2\location\models\Location;
-use davidhirtz\yii2\location\models\Tag;
-use davidhirtz\yii2\location\modules\ModuleTrait;
+use Hirtz\Location\models\Location;
+use Hirtz\Location\models\Tag;
+use Hirtz\Location\modules\ModuleTrait;
 use Yii;
 use yii\caching\TagDependency;
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace davidhirtz\yii2\location\migrations;
+namespace Hirtz\Location\migrations;
 
-use davidhirtz\yii2\location\migrations\traits\I18nTablesTrait;
-use davidhirtz\yii2\location\models\Location;
-use davidhirtz\yii2\location\models\LocationTag;
-use davidhirtz\yii2\location\models\Tag;
-use davidhirtz\yii2\skeleton\db\traits\MigrationTrait;
-use davidhirtz\yii2\skeleton\models\User;
+use Hirtz\Location\migrations\traits\I18nTablesTrait;
+use Hirtz\Location\models\Location;
+use Hirtz\Location\models\LocationTag;
+use Hirtz\Location\models\Tag;
+use Hirtz\Skeleton\db\traits\MigrationTrait;
+use Hirtz\Skeleton\models\User;
 use Yii;
 use yii\db\Migration;
 

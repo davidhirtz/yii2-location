@@ -1,8 +1,8 @@
 <?php
 
-namespace davidhirtz\yii2\location\migrations\traits;
+namespace Hirtz\Location\migrations\traits;
 
-use davidhirtz\yii2\location\modules\ModuleTrait;
+use Hirtz\Location\modules\ModuleTrait;
 use Yii;
 
 trait I18nTablesTrait

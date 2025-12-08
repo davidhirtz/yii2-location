@@ -2,28 +2,28 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\location\models;
+namespace Hirtz\Location\models;
 
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
-use davidhirtz\yii2\location\models\collections\TagCollection;
-use davidhirtz\yii2\location\models\queries\LocationQuery;
-use davidhirtz\yii2\location\models\queries\TagQuery;
-use davidhirtz\yii2\location\modules\ModuleTrait;
-use davidhirtz\yii2\location\validators\CoordinateValidator;
-use davidhirtz\yii2\skeleton\behaviors\BlameableBehavior;
-use davidhirtz\yii2\skeleton\behaviors\TimestampBehavior;
-use davidhirtz\yii2\skeleton\behaviors\TrailBehavior;
-use davidhirtz\yii2\skeleton\db\ActiveQuery;
-use davidhirtz\yii2\skeleton\db\ActiveRecord;
-use davidhirtz\yii2\skeleton\helpers\ArrayHelper;
-use davidhirtz\yii2\skeleton\models\interfaces\DraftStatusAttributeInterface;
-use davidhirtz\yii2\skeleton\models\interfaces\TypeAttributeInterface;
-use davidhirtz\yii2\skeleton\models\traits\DraftStatusAttributeTrait;
-use davidhirtz\yii2\skeleton\models\traits\I18nAttributesTrait;
-use davidhirtz\yii2\skeleton\models\traits\TypeAttributeTrait;
-use davidhirtz\yii2\skeleton\models\traits\UpdatedByUserTrait;
-use davidhirtz\yii2\skeleton\validators\DynamicRangeValidator;
+use Hirtz\Location\models\collections\TagCollection;
+use Hirtz\Location\models\queries\LocationQuery;
+use Hirtz\Location\models\queries\TagQuery;
+use Hirtz\Location\modules\ModuleTrait;
+use Hirtz\Location\validators\CoordinateValidator;
+use Hirtz\Skeleton\behaviors\BlameableBehavior;
+use Hirtz\Skeleton\behaviors\TimestampBehavior;
+use Hirtz\Skeleton\behaviors\TrailBehavior;
+use Hirtz\Skeleton\db\ActiveQuery;
+use Hirtz\Skeleton\db\ActiveRecord;
+use Hirtz\Skeleton\helpers\ArrayHelper;
+use Hirtz\Skeleton\models\interfaces\DraftStatusAttributeInterface;
+use Hirtz\Skeleton\models\interfaces\TypeAttributeInterface;
+use Hirtz\Skeleton\models\traits\DraftStatusAttributeTrait;
+use Hirtz\Skeleton\models\traits\I18nAttributesTrait;
+use Hirtz\Skeleton\models\traits\TypeAttributeTrait;
+use Hirtz\Skeleton\models\traits\UpdatedByUserTrait;
+use Hirtz\Skeleton\validators\DynamicRangeValidator;
 use Yii;
 
 /**

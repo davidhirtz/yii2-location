@@ -1,8 +1,8 @@
 <?php
 
-namespace davidhirtz\yii2\location\modules\admin\assets;
+namespace Hirtz\Location\modules\admin\assets;
 
-use davidhirtz\yii2\location\modules\admin\controllers\LocationController;
+use Hirtz\Location\modules\admin\controllers\LocationController;
 use yii\web\AssetBundle;
 
 /**
