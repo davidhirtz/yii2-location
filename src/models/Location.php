@@ -17,7 +17,7 @@ use Hirtz\Skeleton\Behaviors\TrailBehavior;
 use Hirtz\Skeleton\Db\ActiveQuery;
 use Hirtz\Skeleton\Db\ActiveRecord;
 use Hirtz\Skeleton\Helpers\ArrayHelper;
-use Hirtz\Skeleton\Helpers\Country;
+use Hirtz\Skeleton\Helpers\CountryList;
 use Hirtz\Skeleton\Models\Interfaces\DraftStatusAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\TypeAttributeInterface;
 use Hirtz\Skeleton\Models\Traits\DraftStatusAttributeTrait;
@@ -256,7 +256,7 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
 
     public static function getCountryCodes(): array
     {
-        return self::$countryCodes ??= array_keys(Country::getAll());
+        return self::$countryCodes ??= array_keys(CountryList::getNames());
     }
 
     public function hasTagsEnabled(): bool
