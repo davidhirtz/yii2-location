@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hirtz\Location\Migrations\Traits;
 
 use Hirtz\Location\modules\ModuleTrait;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hirtz\Location\Modules\Admin\Controllers;
 
 use Hirtz\Location\models\Location;
@@ -21,6 +23,7 @@ class LocationTagController extends Controller
     use TagTrait;
     use ModuleTrait;
 
+    #[\Override]
     public function behaviors(): array
     {
         return [
@@ -44,6 +47,7 @@ class LocationTagController extends Controller
         ];
     }
 
+    #[\Override]
     public function beforeAction($action): bool
     {
         if (!self::getModule()->enableTags) {

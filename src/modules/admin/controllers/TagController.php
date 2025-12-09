@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hirtz\Location\Modules\Admin\Controllers;
 
 use Hirtz\Location\models\Tag;
@@ -19,6 +21,7 @@ class TagController extends Controller
     use TagTrait;
     use ModuleTrait;
 
+    #[\Override]
     public function behaviors(): array
     {
         return [

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hirtz\Location\modules\admin;
 
 use Hirtz\Location\models\Location;
@@ -21,6 +23,7 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
     public $layout = '@skeleton/modules/admin/views/layouts/main';
     public array|string $url = ['/admin/location/index'];
 
+    #[\Override]
     public function init(): void
     {
         $this->controllerMap = ArrayHelper::merge($this->getCoreControllerMap(), $this->controllerMap);

@@ -66,6 +66,7 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
 
     private static ?array $countryCodes;
 
+    #[\Override]
     public function behaviors(): array
     {
         return [
@@ -75,6 +76,7 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
         ];
     }
 
+    #[\Override]
     public function fields(): array
     {
         return [
@@ -88,6 +90,7 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
         ];
     }
 
+    #[\Override]
     public function rules(): array
     {
         return [
@@ -138,6 +141,7 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
         ];
     }
 
+    #[\Override]
     public function beforeSave($insert): bool
     {
         $this->attachBehaviors([
@@ -148,12 +152,14 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
         return parent::beforeSave($insert);
     }
 
+    #[\Override]
     public function afterSave($insert, $changedAttributes): void
     {
         static::getModule()->invalidatePageCache();
         parent::afterSave($insert, $changedAttributes);
     }
 
+    #[\Override]
     public function afterDelete(): void
     {
         static::getModule()->invalidatePageCache();
@@ -181,6 +187,7 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
             ->inverseOf('location');
     }
 
+    #[\Override]
     public static function find(): LocationQuery
     {
         return Yii::createObject(LocationQuery::class, [static::class]);
@@ -264,6 +271,7 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
         return static::getModule()->enableTags;
     }
 
+    #[\Override]
     public function attributeLabels(): array
     {
         return [
@@ -284,11 +292,13 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
         ];
     }
 
+    #[\Override]
     public function formName(): string
     {
         return 'Location';
     }
 
+    #[\Override]
     public static function tableName(): string
     {
         return static::getModule()->getTableName('location');

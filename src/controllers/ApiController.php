@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hirtz\Location\controllers;
 
 use Hirtz\Location\models\Location;
@@ -24,6 +26,7 @@ class ApiController extends Controller
     public bool $allowAllTypes = true;
     public bool $enablePageCache = true;
 
+    #[\Override]
     public function behaviors(): array
     {
         $behaviors = parent::behaviors();
@@ -45,6 +48,7 @@ class ApiController extends Controller
     }
 
 
+    #[\Override]
     public function init(): void
     {
         parent::init();
@@ -57,6 +61,7 @@ class ApiController extends Controller
      * Checks the `Location::getTypes()` array for a matching slug, sets the `type` parameter accordingly and calls the
      * default action. This allows for URLs like `/api/location/<type-slug>.json`.
      */
+    #[\Override]
     public function runAction($id, $params = [])
     {
         if ($type = $this->findTypeBySlug($id)) {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hirtz\Location\Modules\Admin\Controllers;
 
 use Hirtz\Location\models\Location;
@@ -21,6 +23,7 @@ class LocationController extends Controller
     use LocationTrait;
     use ModuleTrait;
 
+    #[\Override]
     public function behaviors(): array
     {
         return [

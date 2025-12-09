@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hirtz\Location\Modules\Admin\Widgets\Grids;
 
 use Hirtz\Location\models\Tag;
@@ -10,6 +12,7 @@ use Yii;
 
 class LocationTagGridView extends TagGridView
 {
+    #[\Override]
     public function init(): void
     {
         if (!$this->rowOptions) {
@@ -33,11 +36,13 @@ class LocationTagGridView extends TagGridView
     }
 
 
+    #[\Override]
     protected function initFooter(): void
     {
         $this->footer = [];
     }
 
+    #[\Override]
     public function updatedAtColumn(): array
     {
         return [
@@ -47,6 +52,7 @@ class LocationTagGridView extends TagGridView
         ];
     }
 
+    #[\Override]
     public function buttonsColumn(): array
     {
         return [

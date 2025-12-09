@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hirtz\Location\Modules\Admin\Widgets\Grids;
 
 use Hirtz\Location\models\Tag;

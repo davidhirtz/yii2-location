@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hirtz\Location\models\queries;
 
 use Hirtz\Location\models\LocationTag;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hirtz\Location\Migrations;
 
 use Hirtz\Location\Migrations\Traits\I18nTablesTrait;

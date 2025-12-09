@@ -31,6 +31,7 @@ class LocationTag extends ActiveRecord
     use ModuleTrait;
     use UpdatedByUserTrait;
 
+    #[\Override]
     public function behaviors(): array
     {
         return [
@@ -39,23 +40,20 @@ class LocationTag extends ActiveRecord
         ];
     }
 
+    #[\Override]
     public function rules(): array
     {
-        return array_merge(parent::rules(), [
-            [
-                ['location_id'],
-                $this->validateLocationId(...),
-            ],
-            [
-                ['tag_id'],
-                $this->validateTagId(...),
-            ],
-            [
-                ['location_id'],
-                UniqueValidator::class,
-                'targetAttribute' => ['location_id', 'tag_id'],
-            ],
-        ]);
+        return [...parent::rules(), [
+            ['location_id'],
+            $this->validateLocationId(...),
+        ], [
+            ['tag_id'],
+            $this->validateTagId(...),
+        ], [
+            ['location_id'],
+            UniqueValidator::class,
+            'targetAttribute' => ['location_id', 'tag_id'],
+        ]];
     }
 
     protected function validateLocationId(): void
@@ -72,6 +70,7 @@ class LocationTag extends ActiveRecord
         }
     }
 
+    #[\Override]
     public function beforeSave($insert): bool
     {
         $this->attachBehaviors([
@@ -85,6 +84,7 @@ class LocationTag extends ActiveRecord
         return parent::beforeSave($insert);
     }
 
+    #[\Override]
     public function afterSave($insert, $changedAttributes): void
     {
         if ($insert) {
@@ -100,6 +100,7 @@ class LocationTag extends ActiveRecord
         parent::afterSave($insert, $changedAttributes);
     }
 
+    #[\Override]
     public function afterDelete(): void
     {
         if (!$this->location->isDeleted() && !$this->getIsBatch()) {
@@ -171,20 +172,19 @@ class LocationTag extends ActiveRecord
         return Yii::t('skeleton', 'Relation');
     }
 
+    #[\Override]
     public function attributeLabels(): array
     {
-        return array_merge(parent::attributeLabels(), [
-            'location_id' => Yii::t('location', 'Location'),
-            'tag_id' => Yii::t('location', 'Tag'),
-            'updated_at' => Yii::t('location', 'Added'),
-        ]);
+        return [...parent::attributeLabels(), 'location_id' => Yii::t('location', 'Location'), 'tag_id' => Yii::t('location', 'Tag'), 'updated_at' => Yii::t('location', 'Added')];
     }
 
+    #[\Override]
     public function formName(): string
     {
         return 'LocationTag';
     }
 
+    #[\Override]
     public static function tableName(): string
     {
         return static::getModule()->getTableName('location_tag');

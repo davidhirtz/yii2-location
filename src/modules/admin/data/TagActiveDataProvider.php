@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hirtz\Location\Modules\Admin\Data;
 
 use Hirtz\Location\models\Location;
@@ -25,6 +27,7 @@ class TagActiveDataProvider extends ActiveDataProvider
         parent::__construct($config);
     }
 
+    #[\Override]
     public function init(): void
     {
         parent::init();

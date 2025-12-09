@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hirtz\Location\Modules\Admin\Controllers\Traits;
 
 use Hirtz\Location\models\Location;

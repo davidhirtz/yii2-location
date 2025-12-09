@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hirtz\Location\Modules\Admin\Widgets\Forms;
 
 use Hirtz\Location\Modules\Admin\Assets\AutocompleteAssetBundle;
@@ -14,6 +16,7 @@ class AutocompleteInputWidget extends InputWidget
      */
     public string|false|null $label = null;
 
+    #[\Override]
     public function init(): void
     {
         if ($this->label !== null) {

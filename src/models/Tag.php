@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hirtz\Location\models;
 
 use davidhirtz\yii2\datetime\DateTime;
@@ -46,6 +48,7 @@ class Tag extends ActiveRecord implements DraftStatusAttributeInterface, TypeAtt
     public const AUTH_TAG_DELETE = 'tagDelete';
     public const AUTH_TAG_UPDATE = 'tagUpdate';
 
+    #[\Override]
     public function behaviors(): array
     {
         return [
@@ -55,6 +58,7 @@ class Tag extends ActiveRecord implements DraftStatusAttributeInterface, TypeAtt
         ];
     }
 
+    #[\Override]
     public function fields(): array
     {
         return [
@@ -65,6 +69,7 @@ class Tag extends ActiveRecord implements DraftStatusAttributeInterface, TypeAtt
         ];
     }
 
+    #[\Override]
     public function rules(): array
     {
         return [
@@ -88,6 +93,7 @@ class Tag extends ActiveRecord implements DraftStatusAttributeInterface, TypeAtt
         ];
     }
 
+    #[\Override]
     public function beforeSave($insert): bool
     {
         $this->attachBehaviors([
@@ -98,12 +104,14 @@ class Tag extends ActiveRecord implements DraftStatusAttributeInterface, TypeAtt
         return parent::beforeSave($insert);
     }
 
+    #[\Override]
     public function afterSave($insert, $changedAttributes): void
     {
         $this->invalidateCache();
         parent::afterSave($insert, $changedAttributes);
     }
 
+    #[\Override]
     public function afterDelete(): void
     {
         $this->invalidateCache();
@@ -131,6 +139,7 @@ class Tag extends ActiveRecord implements DraftStatusAttributeInterface, TypeAtt
             ->inverseOf('tag');
     }
 
+    #[\Override]
     public static function find(): TagQuery
     {
         return Yii::createObject(TagQuery::class, [static::class]);
@@ -199,6 +208,7 @@ class Tag extends ActiveRecord implements DraftStatusAttributeInterface, TypeAtt
         return static::getModule()->enableTags;
     }
 
+    #[\Override]
     public function attributeLabels(): array
     {
         return [
@@ -208,11 +218,13 @@ class Tag extends ActiveRecord implements DraftStatusAttributeInterface, TypeAtt
         ];
     }
 
+    #[\Override]
     public function formName(): string
     {
         return 'Tag';
     }
 
+    #[\Override]
     public static function tableName(): string
     {
         return static::getModule()->getTableName('tag');

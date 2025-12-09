@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hirtz\Location\Modules\Admin\Widgets\Forms;
 
 use Hirtz\Location\models\Location;
