@@ -24,7 +24,7 @@ class M240731193312Tag extends Migration
 
     public function safeUp(): void
     {
-        $this->i18nTablesCallback(function () {
+        $this->i18nTablesCallback(function (): void {
             $this->createTable(Tag::tableName(), [
                 'id' => $this->primaryKey()->unsigned(),
                 'status' => $this->smallInteger()->notNull()->defaultValue(Tag::STATUS_DEFAULT),
@@ -95,7 +95,7 @@ class M240731193312Tag extends Migration
         $this->delete($auth->itemTable, ['name' => Tag::AUTH_TAG_CREATE]);
         $this->delete($auth->itemTable, ['name' => Tag::AUTH_TAG_UPDATE]);
 
-        $this->i18nTablesCallback(function () {
+        $this->i18nTablesCallback(function (): void {
             $this->dropColumn(Location::tableName(), 'tag_ids');
             $this->dropColumn(Location::tableName(), 'tag_count');
 

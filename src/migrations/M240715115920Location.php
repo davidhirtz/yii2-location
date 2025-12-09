@@ -22,7 +22,7 @@ class M240715115920Location extends Migration
 
     public function safeUp(): void
     {
-        $this->i18nTablesCallback(function () {
+        $this->i18nTablesCallback(function (): void {
             $this->createTable(Location::tableName(), [
                 'id' => $this->primaryKey()->unsigned(),
                 'status' => $this->smallInteger()->notNull()->defaultValue(Location::STATUS_DEFAULT),
@@ -83,7 +83,7 @@ class M240715115920Location extends Migration
         $this->delete($auth->itemTable, ['name' => Location::AUTH_LOCATION_CREATE]);
         $this->delete($auth->itemTable, ['name' => Location::AUTH_LOCATION_UPDATE]);
 
-        $this->i18nTablesCallback(function () {
+        $this->i18nTablesCallback(function (): void {
             $this->dropTable(Location::tableName());
         });
     }
