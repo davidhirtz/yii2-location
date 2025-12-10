@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Location\Models\collections;
+namespace Hirtz\Location\Models\Collections;
 
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Tag;

@@ -6,7 +6,7 @@ namespace Hirtz\Location\Models;
 
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
-use Hirtz\Location\Models\collections\TagCollection;
+use Hirtz\Location\Models\Collections\TagCollection;
 use Hirtz\Location\Models\Queries\LocationQuery;
 use Hirtz\Location\Models\Queries\TagQuery;
 use Hirtz\Location\modules\ModuleTrait;
