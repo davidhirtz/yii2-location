@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Hirtz\Location\Migrations;
 
 use Hirtz\Location\Migrations\Traits\I18nTablesTrait;
-use Hirtz\Location\models\Location;
+use Hirtz\Location\Models\Location;
 use Hirtz\Skeleton\Db\Traits\MigrationTrait;
 use Hirtz\Skeleton\Models\User;
 use Yii;

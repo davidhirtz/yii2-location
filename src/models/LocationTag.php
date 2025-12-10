@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Location\models;
+namespace Hirtz\Location\Models;
 
 use davidhirtz\yii2\datetime\DateTime;
 use Hirtz\Location\modules\ModuleTrait;

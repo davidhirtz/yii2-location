@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Widgets\Grids;
 
-use Hirtz\Location\models\collections\TagCollection;
-use Hirtz\Location\models\Location;
-use Hirtz\Location\models\Tag;
+use Hirtz\Location\Models\collections\TagCollection;
+use Hirtz\Location\Models\Location;
+use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Data\LocationActiveDataProvider;
 use Hirtz\Location\modules\ModuleTrait;
 use Hirtz\Skeleton\Helpers\Html;

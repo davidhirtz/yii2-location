@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\modules\admin;
 
-use Hirtz\Location\models\Location;
+use Hirtz\Location\Models\Location;
 use Hirtz\Location\Modules\Admin\Controllers\LocationController;
 use Hirtz\Location\Modules\Admin\Controllers\LocationTagController;
 use Hirtz\Location\Modules\Admin\Controllers\TagController;

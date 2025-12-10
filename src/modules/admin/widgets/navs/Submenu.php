@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Widgets\Navs;
 
-use Hirtz\Location\models\Location;
-use Hirtz\Location\models\Tag;
+use Hirtz\Location\Models\Location;
+use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Module;
 use Hirtz\Location\modules\ModuleTrait;
 use Yii;

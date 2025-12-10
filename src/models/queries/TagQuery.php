@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Location\models\queries;
+namespace Hirtz\Location\Models\Queries;
 
-use Hirtz\Location\models\LocationTag;
+use Hirtz\Location\Models\LocationTag;
 use Hirtz\Skeleton\Db\ActiveQuery;
 use Hirtz\Skeleton\Db\I18nActiveQuery;
 

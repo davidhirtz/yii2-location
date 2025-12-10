@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Controllers;
 
-use Hirtz\Location\models\Tag;
+use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Controllers\Traits\TagTrait;
 use Hirtz\Location\Modules\Admin\Data\TagActiveDataProvider;
 use Hirtz\Location\modules\ModuleTrait;

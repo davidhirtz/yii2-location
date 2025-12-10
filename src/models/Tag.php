@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Location\models;
+namespace Hirtz\Location\Models;
 
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
-use Hirtz\Location\models\collections\TagCollection;
-use Hirtz\Location\models\queries\LocationQuery;
-use Hirtz\Location\models\queries\TagQuery;
+use Hirtz\Location\Models\collections\TagCollection;
+use Hirtz\Location\Models\Queries\LocationQuery;
+use Hirtz\Location\Models\Queries\TagQuery;
 use Hirtz\Location\modules\ModuleTrait;
 use Hirtz\Skeleton\Behaviors\BlameableBehavior;
 use Hirtz\Skeleton\Behaviors\TimestampBehavior;

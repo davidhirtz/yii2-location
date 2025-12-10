@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Widgets\Grids;
 
-use Hirtz\Location\models\Tag;
+use Hirtz\Location\Models\Tag;
 use Hirtz\Skeleton\Helpers\Html;
 use Hirtz\Skeleton\Widgets\Fontawesome\Icon;
 use Hirtz\Timeago\TimeagoColumn;

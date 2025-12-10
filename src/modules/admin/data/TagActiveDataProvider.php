@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Data;
 
-use Hirtz\Location\models\Location;
-use Hirtz\Location\models\LocationTag;
-use Hirtz\Location\models\queries\TagQuery;
-use Hirtz\Location\models\Tag;
+use Hirtz\Location\Models\Location;
+use Hirtz\Location\Models\LocationTag;
+use Hirtz\Location\Models\Queries\TagQuery;
+use Hirtz\Location\Models\Tag;
 use Hirtz\Skeleton\Data\ActiveDataProvider;
 
 /**

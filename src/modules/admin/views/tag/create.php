@@ -6,7 +6,7 @@
  * @var Tag $tag
  */
 
-use Hirtz\Location\models\Tag;
+use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Controllers\TagController;
 use Hirtz\Location\Modules\Admin\Widgets\Forms\TagActiveForm;
 use Hirtz\Location\Modules\Admin\Widgets\Navs\Submenu;

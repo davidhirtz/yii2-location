@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Controllers;
 
-use Hirtz\Location\models\Location;
-use Hirtz\Location\models\Tag;
+use Hirtz\Location\Models\Location;
+use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Controllers\Traits\LocationTrait;
 use Hirtz\Location\Modules\Admin\Data\LocationActiveDataProvider;
 use Hirtz\Location\Modules\Admin\Module;

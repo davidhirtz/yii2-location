@@ -6,7 +6,7 @@
  * @var Location $location
  */
 
-use Hirtz\Location\models\Location;
+use Hirtz\Location\Models\Location;
 use Hirtz\Location\Modules\Admin\Controllers\LocationController;
 use Hirtz\Location\Modules\Admin\Widgets\Forms\LocationActiveForm;
 use Hirtz\Location\Modules\Admin\Widgets\Navs\Submenu;

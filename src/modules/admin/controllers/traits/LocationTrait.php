@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Controllers\Traits;
 
-use Hirtz\Location\models\Location;
+use Hirtz\Location\Models\Location;
 use Yii;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;

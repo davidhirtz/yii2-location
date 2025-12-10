@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\controllers;
 
-use Hirtz\Location\models\Location;
-use Hirtz\Location\models\queries\LocationQuery;
+use Hirtz\Location\Models\Location;
+use Hirtz\Location\Models\Queries\LocationQuery;
 use Hirtz\Location\modules\ModuleTrait;
 use Hirtz\Skeleton\Filters\PageCache;
 use Yii;

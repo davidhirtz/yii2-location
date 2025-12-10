@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Location\models\collections;
+namespace Hirtz\Location\Models\collections;
 
-use Hirtz\Location\models\Location;
-use Hirtz\Location\models\Tag;
+use Hirtz\Location\Models\Location;
+use Hirtz\Location\Models\Tag;
 use Hirtz\Location\modules\ModuleTrait;
 use Yii;
 use yii\caching\TagDependency;
