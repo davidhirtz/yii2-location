@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Location\modules\admin;
+namespace Hirtz\Location\Modules\Admin;
 
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Modules\Admin\Controllers\LocationController;
