@@ -1,0 +1,137 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Hirtz\Location\Modules\Admin\Widgets\Grids;
+
+use Hirtz\Location\Models\Tag;
+use Hirtz\Location\Modules\Admin\Data\TagActiveDataProvider;
+use Hirtz\Location\modules\ModuleTrait;
+use Hirtz\Skeleton\Helpers\Html;
+use Hirtz\Skeleton\Html\Icon;
+use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Columns\CounterColumn;
+use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\GridView;
+use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Traits\StatusGridViewTrait;
+use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Traits\TypeGridViewTrait;
+use Hirtz\Timeago\TimeagoColumn;
+use Yii;
+
+/**
+ * @extends GridView<Tag>
+ * @property TagActiveDataProvider $dataProvider
+ */
+class TagGridView extends GridView
+{
+    use ModuleTrait;
+    use StatusGridViewTrait;
+    use TypeGridViewTrait;
+
+    public function init(): void
+    {
+        if (!$this->columns) {
+            $this->columns = [
+                $this->statusColumn(),
+                $this->typeColumn(),
+                $this->nameColumn(),
+                $this->locationCountColumn(),
+                $this->updatedAtColumn(),
+                $this->buttonsColumn(),
+            ];
+        }
+
+        parent::init();
+    }
+
+    protected function initHeader(): void
+    {
+        $this->header ??= [
+            [
+                [
+                    'content' => $this->statusDropdown(),
+                    'options' => ['class' => 'col-12 col-md-3'],
+                ],
+                [
+                    'content' => $this->typeDropdown(),
+                    'visible' => count($this->getModel()::getTypes()) > 1,
+                    'options' => ['class' => 'col-12 col-md-3'],
+                ],
+                [
+                    'content' => $this->search->render(),
+                    'options' => ['class' => 'col-12 col-md-6'],
+                ],
+                'options' => [
+                    'class' => 'justify-content-between',
+                ],
+            ],
+        ];
+    }
+
+    protected function initFooter(): void
+    {
+        $this->footer ??= [
+            [
+                [
+                    'content' => $this->getCreateTagButton(),
+                    'visible' => Yii::$app->getUser()->can(Tag::AUTH_TAG_CREATE),
+                    'options' => ['class' => 'col'],
+                ],
+            ],
+        ];
+    }
+
+    protected function getCreateTagButton(): string
+    {
+        $route = ['/admin/tag/create'];
+
+        return Html::a(Html::iconText('plus', Yii::t('location', 'New Tag')), $route, [
+            'class' => 'btn btn-primary',
+        ]);
+    }
+
+    public function nameColumn(): array
+    {
+        return [
+            'attribute' => 'name',
+            'content' => function (Tag $tag) {
+                $name = Html::markKeywords($tag->getI18nAttribute('name'), $this->search->getKeywords());
+                return Html::a($name, $tag->getAdminRoute(), ['class' => 'strong']);
+            }
+        ];
+    }
+
+    public function locationCountColumn(): array
+    {
+        return [
+            'class' => CounterColumn::class,
+            'attribute' => 'location_count',
+            'route' => fn (Tag $tag) => ['/admin/location/index', 'tag' => $tag->id],
+        ];
+    }
+
+    public function updatedAtColumn(): array
+    {
+        return [
+            'attribute' => 'updated_at',
+            'class' => TimeagoColumn::class,
+        ];
+    }
+
+    public function buttonsColumn(): array
+    {
+        return [
+            'contentOptions' => ['class' => 'text-right text-nowrap'],
+            'content' => function (Tag $tag): string {
+                $button = Html::a((string)Icon::tag('wrench'), $tag->getAdminRoute(), [
+                    'class' => 'btn btn-primary d-none d-md-inline-block',
+                ]);
+
+                return Html::buttons($button);
+            }
+        ];
+    }
+
+    public function getModel(): ?Tag
+    {
+        return Tag::instance();
+    }
+}
