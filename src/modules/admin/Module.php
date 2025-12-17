@@ -20,7 +20,7 @@ use Yii;
  */
 class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
 {
-    public $layout = '@skeleton/modules/admin/views/layouts/main';
+    public $layout = '@skeleton/../resources/views/admin/layouts/main';
     public array|string $url = ['/admin/location/index'];
 
     #[\Override]
@@ -40,15 +40,15 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
         return [
             'location' => [
                 'class' => LocationController::class,
-                'viewPath' => '@location/modules/admin/views/location',
+                'viewPath' => '@location/../resources/views/admin/location',
             ],
             'location-tag' => [
                 'class' => LocationTagController::class,
-                'viewPath' => '@location/modules/admin/views/location-tag',
+                'viewPath' => '@location/../resources/views/admin/location-tag',
             ],
             'tag' => [
                 'class' => TagController::class,
-                'viewPath' => '@location/modules/admin/views/tag',
+                'viewPath' => '@location/../resources/views/admin/tag',
             ],
         ];
     }
