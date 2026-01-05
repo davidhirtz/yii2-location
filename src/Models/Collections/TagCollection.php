@@ -6,7 +6,7 @@ namespace Hirtz\Location\Models\Collections;
 
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Tag;
-use Hirtz\Location\modules\ModuleTrait;
+use Hirtz\Location\Modules\ModuleTrait;
 use Yii;
 use yii\caching\TagDependency;
 

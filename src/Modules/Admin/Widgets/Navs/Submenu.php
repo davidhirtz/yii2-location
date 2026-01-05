@@ -7,7 +7,7 @@ namespace Hirtz\Location\Modules\Admin\Widgets\Navs;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Module;
-use Hirtz\Location\modules\ModuleTrait;
+use Hirtz\Location\Modules\ModuleTrait;
 use Yii;
 use yii\helpers\Html;
 

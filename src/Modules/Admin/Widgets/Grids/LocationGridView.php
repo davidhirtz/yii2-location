@@ -8,7 +8,7 @@ use Hirtz\Location\Models\Collections\TagCollection;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Data\LocationActiveDataProvider;
-use Hirtz\Location\modules\ModuleTrait;
+use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Helpers\Html;
 use Hirtz\Skeleton\Helpers\Url;
 use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Columns\CounterColumn;

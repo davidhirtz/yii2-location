@@ -9,7 +9,7 @@ use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Controllers\Traits\LocationTrait;
 use Hirtz\Location\Modules\Admin\Data\LocationActiveDataProvider;
 use Hirtz\Location\Modules\Admin\Module;
-use Hirtz\Location\modules\ModuleTrait;
+use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
 use Yii;
 use yii\filters\AccessControl;

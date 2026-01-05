@@ -6,7 +6,7 @@ namespace Hirtz\Location\controllers;
 
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Queries\LocationQuery;
-use Hirtz\Location\modules\ModuleTrait;
+use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Filters\PageCache;
 use Yii;
 use yii\web\BadRequestHttpException;

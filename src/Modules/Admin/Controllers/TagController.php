@@ -7,7 +7,7 @@ namespace Hirtz\Location\Modules\Admin\Controllers;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Controllers\Traits\TagTrait;
 use Hirtz\Location\Modules\Admin\Data\TagActiveDataProvider;
-use Hirtz\Location\modules\ModuleTrait;
+use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
 use Yii;
 use yii\filters\AccessControl;

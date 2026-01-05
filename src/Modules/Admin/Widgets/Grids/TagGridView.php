@@ -6,7 +6,7 @@ namespace Hirtz\Location\Modules\Admin\Widgets\Grids;
 
 use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Data\TagActiveDataProvider;
-use Hirtz\Location\modules\ModuleTrait;
+use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Helpers\Html;
 use Hirtz\Skeleton\Html\Icon;
 use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Columns\CounterColumn;

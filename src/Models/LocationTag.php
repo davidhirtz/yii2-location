@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Hirtz\Location\Models;
 
 use davidhirtz\yii2\datetime\DateTime;
-use Hirtz\Location\modules\ModuleTrait;
+use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Behaviors\BlameableBehavior;
 use Hirtz\Skeleton\Behaviors\TimestampBehavior;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
