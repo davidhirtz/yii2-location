@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Hirtz\Location\Modules\Admin\Widgets\Forms;
 
 use Hirtz\Location\Models\Location;
-use Hirtz\Skeleton\Modules\Admin\Widgets\Forms\Traits\ModelTimestampTrait;
-use Hirtz\Skeleton\Modules\Admin\Widgets\Forms\Traits\StatusFieldTrait;
-use Hirtz\Skeleton\Modules\Admin\Widgets\Forms\Traits\TypeFieldTrait;
-use Hirtz\Skeleton\Widgets\Bootstrap\ActiveForm;
+use Hirtz\Skeleton\Widgets\Forms\ActiveForm;
+use Hirtz\Skeleton\Widgets\Forms\Fields\InputField;
+use Hirtz\Skeleton\Widgets\Forms\Fields\SelectField;
+use Stringable;
 use yii\widgets\ActiveField;
 
 /**
@@ -16,51 +16,94 @@ use yii\widgets\ActiveField;
  */
 class LocationActiveForm extends ActiveForm
 {
-    use ModelTimestampTrait;
-    use StatusFieldTrait;
-    use TypeFieldTrait;
-
-    public function init(): void
+    protected function configure(): void
     {
-        $this->fields ??= [
-            'provider_id',
-            '-',
-            'status',
-            'type',
-            'name',
-            'formatted_address',
-            '-',
-            'street',
-            'house_number',
-            'locality',
-            'postal_code',
-            'district',
-            'state',
-            'country_code',
-            '-',
-            'lat',
-            'lng',
+        $this->rows ??= [
+            [
+                $this->getProviderIdField()
+            ],
+            [
+                $this->getStatusField(),
+                $this->getTypeField(),
+                $this->getNameField(),
+                $this->getFormattedAddressField(),
+            ],
+            [
+                $this->getStreetField(),
+                $this->getHouseNumberField(),
+                $this->getLocalityField(),
+                $this->getPostalCodeField(),
+                $this->getDistrictField(),
+                $this->getCountryCodeField(),
+            ],
+            [
+                $this->getLatField(),
+                $this->getLngField(),
+            ]
         ];
 
-        parent::init();
+        parent::configure();
     }
 
-    /**
-     * @noinspection PhpUnused {@see self::renderFields()}
-     */
-    public function countryCodeField(array $options = []): ActiveField|string
+    protected function getStatusField(): ?Stringable
     {
-        $items = $this->getCountyCodeItems();
+        return SelectField::make()
+            ->property('status');
+    }
 
-        if (count($items) < 2) {
-            return '';
-        }
+    protected function getTypeField(): ?Stringable
+    {
+        return SelectField::make()
+            ->property('type');
+    }
 
-        if (!$this->model->isAttributeRequired('country_code')) {
-            $options['inputOptions']['prompt'] ??= '';
-        }
+    protected function getNameField(): ?Stringable
+    {
+        return InputField::make()
+            ->property('name');
+    }
 
-        return $this->field($this->model, 'country_code', $options)->dropDownList($items);
+    protected function getFormattedAddressField(): ?Stringable
+    {
+        return InputField::make()
+            ->property('formatted_address');
+    }
+
+    protected function getStreetField(): ?Stringable
+    {
+        return InputField::make()
+            ->property('street');
+    }
+
+    protected function getHouseNumberField(): ?Stringable
+    {
+        return InputField::make()
+            ->property('house_number');
+    }
+
+    protected function getLocalityField(): ?Stringable
+    {
+        return InputField::make()
+            ->property('locality');
+    }
+
+    protected function getPostalCodeField(): ?Stringable
+    {
+        return InputField::make()
+            ->property('postal_code');
+    }
+
+    protected function getDistrictField(): ?Stringable
+    {
+        return InputField::make()
+            ->property('district');
+    }
+
+    protected function getCountryCodeField(): ?Stringable
+    {
+        return SelectField::make()
+            ->property('country_code')
+            ->items($this->getCountyCodeItems());
     }
 
     protected function getCountyCodeItems(): array
@@ -68,12 +111,20 @@ class LocationActiveForm extends ActiveForm
         return $this->model::getCountryCodes();
     }
 
-    /**
-     * @noinspection PhpUnused {@see self::renderFields()}
-     */
-    public function providerIdField(array $options = []): ActiveField|string
+    protected function getProviderIdField(): ?Stringable
     {
-        return $this->field($this->model, 'provider_id')
-            ->widget(AutocompleteInputWidget::class, $options);
+        return LocationProviderIdField::make();
+    }
+
+    protected function getLatField(): ?Stringable
+    {
+        return InputField::make()
+            ->property('lat');
+    }
+
+    protected function getLngField(): ?Stringable
+    {
+        return InputField::make()
+            ->property('lng');
     }
 }

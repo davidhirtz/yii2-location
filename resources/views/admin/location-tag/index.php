@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * @see \Hirtz\Location\Modules\Admin\Controllers\LocationTagController::actionIndex()
  *
@@ -8,19 +10,15 @@
 
 use Hirtz\Location\Modules\Admin\Data\TagActiveDataProvider;
 use Hirtz\Location\Modules\Admin\Widgets\Grids\LocationTagGridView;
-use Hirtz\Location\Modules\Admin\Widgets\Navs\Submenu;
+use Hirtz\Location\Modules\Admin\Widgets\Navs\LocationSubmenu;
 use Hirtz\Skeleton\Web\View;
-use Hirtz\Skeleton\Widgets\Bootstrap\Panel;
+use Hirtz\Skeleton\Widgets\Grids\GridContainer;
 
 $this->title(Yii::t('location', 'Tags'));
-?>
 
-<?= Submenu::widget([
-    'location' => $provider->location,
-]); ?>
+echo LocationSubmenu::make()
+    ->location($provider->location);
 
-<?= Panel::widget([
-    'content' => LocationTagGridView::widget([
-        'dataProvider' => $provider,
-    ]),
-]); ?>
+echo GridContainer::make()
+    ->grid(LocationTagGridView::make()
+        ->provider($provider));

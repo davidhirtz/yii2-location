@@ -10,7 +10,7 @@
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Modules\Admin\Controllers\LocationController;
 use Hirtz\Location\Modules\Admin\Widgets\Forms\LocationActiveForm;
-use Hirtz\Location\Modules\Admin\Widgets\Navs\Submenu;
+use Hirtz\Location\Modules\Admin\Widgets\Navs\LocationSubmenu;
 use Hirtz\Skeleton\Helpers\Html;
 use Hirtz\Skeleton\Web\View;
 use Hirtz\Skeleton\Widgets\Bootstrap\Panel;
@@ -19,7 +19,7 @@ use Hirtz\Skeleton\Widgets\Forms\DeleteActiveForm;
 $this->title(Yii::t('location', 'Edit Location'));
 ?>
 
-<?= Submenu::widget([
+<?= LocationSubmenu::widget([
     'location' => $location,
 ]); ?>
 

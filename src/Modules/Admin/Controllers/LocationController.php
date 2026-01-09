@@ -11,6 +11,7 @@ use Hirtz\Location\Modules\Admin\Data\LocationActiveDataProvider;
 use Hirtz\Location\Modules\Admin\Module;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
+use Override;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -23,7 +24,7 @@ class LocationController extends Controller
     use LocationTrait;
     use ModuleTrait;
 
-    #[\Override]
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -119,12 +120,12 @@ class LocationController extends Controller
         throw new ServerErrorHttpException(reset($errors));
     }
 
-    public function actionAutocomplete(string $term): Response
+    public function actionAutocomplete(string $q): Response
     {
         /** @var Module $module */
         $module = Yii::$app->getModule('admin')->getModule('location');
         $autocomplete = $module->getAutocomplete();
 
-        return $this->asJson($autocomplete?->getResults($term) ?? []);
+        return $this->asJson($autocomplete?->getResults($q) ?? []);
     }
 }

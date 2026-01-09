@@ -23,6 +23,7 @@ use Hirtz\Skeleton\Models\Traits\TypeAttributeTrait;
 use Hirtz\Skeleton\Models\Traits\UpdatedByUserTrait;
 use Hirtz\Skeleton\Validators\DynamicRangeValidator;
 use Hirtz\Skeleton\Validators\UniqueValidator;
+use Override;
 use Yii;
 
 /**
@@ -44,11 +45,11 @@ class Tag extends ActiveRecord implements DraftStatusAttributeInterface, TypeAtt
     use TypeAttributeTrait;
     use UpdatedByUserTrait;
 
-    public const AUTH_TAG_CREATE = 'tagCreate';
-    public const AUTH_TAG_DELETE = 'tagDelete';
-    public const AUTH_TAG_UPDATE = 'tagUpdate';
+    public const string AUTH_TAG_CREATE = 'tagCreate';
+    public const string AUTH_TAG_DELETE = 'tagDelete';
+    public const string AUTH_TAG_UPDATE = 'tagUpdate';
 
-    #[\Override]
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -58,7 +59,7 @@ class Tag extends ActiveRecord implements DraftStatusAttributeInterface, TypeAtt
         ];
     }
 
-    #[\Override]
+    #[Override]
     public function fields(): array
     {
         return [
@@ -69,7 +70,7 @@ class Tag extends ActiveRecord implements DraftStatusAttributeInterface, TypeAtt
         ];
     }
 
-    #[\Override]
+    #[Override]
     public function rules(): array
     {
         return [
@@ -93,7 +94,7 @@ class Tag extends ActiveRecord implements DraftStatusAttributeInterface, TypeAtt
         ];
     }
 
-    #[\Override]
+    #[Override]
     public function beforeSave($insert): bool
     {
         $this->attachBehaviors([
@@ -104,14 +105,14 @@ class Tag extends ActiveRecord implements DraftStatusAttributeInterface, TypeAtt
         return parent::beforeSave($insert);
     }
 
-    #[\Override]
+    #[Override]
     public function afterSave($insert, $changedAttributes): void
     {
         $this->invalidateCache();
         parent::afterSave($insert, $changedAttributes);
     }
 
-    #[\Override]
+    #[Override]
     public function afterDelete(): void
     {
         $this->invalidateCache();
@@ -139,7 +140,7 @@ class Tag extends ActiveRecord implements DraftStatusAttributeInterface, TypeAtt
             ->inverseOf('tag');
     }
 
-    #[\Override]
+    #[Override]
     public static function find(): TagQuery
     {
         return Yii::createObject(TagQuery::class, [static::class]);
@@ -208,7 +209,7 @@ class Tag extends ActiveRecord implements DraftStatusAttributeInterface, TypeAtt
         return static::getModule()->enableTags;
     }
 
-    #[\Override]
+    #[Override]
     public function attributeLabels(): array
     {
         return [
@@ -218,13 +219,13 @@ class Tag extends ActiveRecord implements DraftStatusAttributeInterface, TypeAtt
         ];
     }
 
-    #[\Override]
+    #[Override]
     public function formName(): string
     {
         return 'Tag';
     }
 
-    #[\Override]
+    #[Override]
     public static function tableName(): string
     {
         return static::getModule()->getTableName('tag');

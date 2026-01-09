@@ -1,0 +1,46 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Hirtz\Location\Modules\Admin\Widgets\Forms;
+
+use Hirtz\Location\Modules\Admin\Assets\AutocompleteAssetBundle;
+use Hirtz\Location\Modules\Admin\Module;
+use Hirtz\Location\Modules\ModuleTrait;
+use Hirtz\Skeleton\Widgets\Forms\Fields\InputField;
+use Override;
+use Yii;
+
+class LocationProviderIdField extends InputField
+{
+    use ModuleTrait;
+
+    #[Override]
+    protected function configure(): void
+    {
+        $this->property ??= 'provider_id';
+
+        $this->attributes['autocomplete'] ??= 'off';
+        $this->attributes['placeholder'] ??= Yii::t('location', 'Search for a location ...');
+        $this->attributes['type'] ??= $this->model?->{$this->property} ? 'text' : 'search';
+
+        /** @var Module $module */
+        $module = Yii::$app->getModule('admin')->getModule('location');
+
+        if ($module->getAutocomplete()) {
+            $this->registerAutocompleteClientScript();
+        }
+
+        parent::configure();
+    }
+
+    protected function registerAutocompleteClientScript(): void
+    {
+        $module = AutocompleteAssetBundle::register($this->view);
+
+        $this->view->registerJsModule("$module->baseUrl/$module->filename", [
+            '#' . $this->getId(),
+            Yii::$app->getUrlManager()->createUrl(['/admin/location/autocomplete']),
+        ]);
+    }
+}

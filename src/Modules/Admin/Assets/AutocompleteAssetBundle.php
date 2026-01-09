@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Hirtz\Location\Modules\Admin\Assets;
 
 use Hirtz\Location\Modules\Admin\Controllers\LocationController;
-use yii\web\AssetBundle;
+use Hirtz\Skeleton\Assets\AbstractAssetBundle;
 
 /**
- * @todo
  * @see LocationController::actionAutocomplete()
  */
-class AutocompleteAssetBundle extends AssetBundle
+class AutocompleteAssetBundle extends AbstractAssetBundle
 {
-    public $js = ['autocomplete.min.js'];
-    public $sourcePath = '@location/modules/admin/assets/autocomplete/dist';
+    public $css = ['css/autocomplete.css'];
+    public string $filename = 'js/autocomplete.js';
+    public $sourcePath = '@location/../resources/assets/dist';
 }

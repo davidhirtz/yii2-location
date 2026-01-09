@@ -5,71 +5,56 @@ declare(strict_types=1);
 namespace Hirtz\Location\Modules\Admin\Widgets\Grids;
 
 use Hirtz\Location\Models\Tag;
-use Hirtz\Skeleton\Helpers\Html;
-use Hirtz\Skeleton\Widgets\Fontawesome\Icon;
-use Hirtz\Timeago\TimeagoColumn;
+use Hirtz\Skeleton\Html\Button;
+use Hirtz\Skeleton\Widgets\Grids\Columns\Column;
+use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
+use Override;
 use Yii;
 
 class LocationTagGridView extends TagGridView
 {
-    #[\Override]
-    public function init(): void
+    #[Override]
+    protected function configure(): void
     {
-        if (!$this->rowOptions) {
-            $this->rowOptions = fn (Tag $tag) => [
-                'class' => $tag->locationTag ? 'is-selected' : null,
-            ];
-        }
-
-        if (!$this->columns) {
-            $this->columns = [
-                $this->statusColumn(),
-                $this->typeColumn(),
-                $this->nameColumn(),
-                $this->locationCountColumn(),
-                $this->updatedAtColumn(),
-                $this->buttonsColumn(),
-            ];
-        }
-
-        parent::init();
-    }
-
-
-    #[\Override]
-    protected function initFooter(): void
-    {
-        $this->footer = [];
-    }
-
-    #[\Override]
-    public function updatedAtColumn(): array
-    {
-        return [
-            'class' => TimeagoColumn::class,
-            'attribute' => 'locationTag.updated_at',
-            'displayAtBreakpoint' => 'lg',
+        $this->rowAttributes ??= fn (Tag $tag) => [
+            'class' => $tag->locationTag ? 'is-selected' : null,
         ];
+
+        $this->columns ??= [
+            $this->getStatusColumn(),
+            $this->getTypeColumn(),
+            $this->getNameColumn(),
+            $this->getLocationCountColumn(),
+            $this->getUpdatedAtColumn(),
+            $this->getButtonColumn(),
+        ];
+
+        $this->footer = [];
+
+        parent::configure();
     }
 
-    #[\Override]
-    public function buttonsColumn(): array
+    #[Override]
+    protected function getUpdatedAtColumn(): ?Column
+    {
+        return RelativeTimeColumn::make()
+            ->value(fn (Tag $tag) => $tag->locationTag->updated_at)
+            ->hiddenForMediumDevices();
+    }
+
+    #[Override]
+    protected function getButtonColumnContent(Tag $tag): array
     {
         return [
-            'contentOptions' => ['class' => 'text-right text-nowrap'],
-            'content' => function (Tag $tag): string {
-                $route = [
+            Button::make()
+                ->primary()
+                ->icon($tag->locationTag ? 'ban' : 'star')
+                ->post([
                     ...Yii::$app->getRequest()->getQueryParams(),
                     $tag->locationTag ? 'delete' : 'create',
                     'location' => $this->dataProvider->location->id,
                     'tag' => $tag->id,
-                ];
-
-                return Html::buttons(Html::a(Icon::tag($tag->locationTag ? 'ban' : 'star'), $route, [
-                    'class' => 'btn btn-primary',
-                    'data-method' => 'post',
-                ]));
-            }
+                ]),
         ];
     }
 }

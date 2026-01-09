@@ -8,12 +8,18 @@ use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Data\TagActiveDataProvider;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Helpers\Html;
-use Hirtz\Skeleton\Html\Icon;
-use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Columns\CounterColumn;
-use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\GridView;
-use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Traits\StatusGridViewTrait;
-use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Traits\TypeGridViewTrait;
-use Hirtz\Timeago\TimeagoColumn;
+use Hirtz\Skeleton\Html\A;
+use Hirtz\Skeleton\Widgets\Grids\Columns\BadgeColumn;
+use Hirtz\Skeleton\Widgets\Grids\Columns\ButtonColumn;
+use Hirtz\Skeleton\Widgets\Grids\Columns\Buttons\ViewGridButton;
+use Hirtz\Skeleton\Widgets\Grids\Columns\Column;
+use Hirtz\Skeleton\Widgets\Grids\Columns\DataColumn;
+use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
+use Hirtz\Skeleton\Widgets\Grids\GridView;
+use Hirtz\Skeleton\Widgets\Grids\Toolbars\CreateButton;
+use Hirtz\Skeleton\Widgets\Grids\Traits\StatusGridViewTrait;
+use Hirtz\Skeleton\Widgets\Grids\Traits\TypeGridViewTrait;
+use Stringable;
 use Yii;
 
 /**
@@ -26,112 +32,80 @@ class TagGridView extends GridView
     use StatusGridViewTrait;
     use TypeGridViewTrait;
 
-    public function init(): void
+    protected function configure(): void
     {
-        if (!$this->columns) {
-            $this->columns = [
-                $this->statusColumn(),
-                $this->typeColumn(),
-                $this->nameColumn(),
-                $this->locationCountColumn(),
-                $this->updatedAtColumn(),
-                $this->buttonsColumn(),
-            ];
-        }
+        $this->model ??= Tag::instance();
 
-        parent::init();
-    }
-
-    protected function initHeader(): void
-    {
         $this->header ??= [
-            [
-                [
-                    'content' => $this->statusDropdown(),
-                    'options' => ['class' => 'col-12 col-md-3'],
-                ],
-                [
-                    'content' => $this->typeDropdown(),
-                    'visible' => count($this->getModel()::getTypes()) > 1,
-                    'options' => ['class' => 'col-12 col-md-3'],
-                ],
-                [
-                    'content' => $this->search->render(),
-                    'options' => ['class' => 'col-12 col-md-6'],
-                ],
-                'options' => [
-                    'class' => 'justify-content-between',
-                ],
-            ],
+            $this->getStatusDropdown(),
+            $this->getTypeDropdown(),
+            $this->search->getToolbarItem(),
         ];
-    }
 
-    protected function initFooter(): void
-    {
+        $this->columns ??= [
+            $this->getStatusColumn(),
+            $this->getTypeColumn(),
+            $this->getNameColumn(),
+            $this->getLocationCountColumn(),
+            $this->getUpdatedAtColumn(),
+            $this->getButtonColumn(),
+        ];
+
         $this->footer ??= [
-            [
-                [
-                    'content' => $this->getCreateTagButton(),
-                    'visible' => Yii::$app->getUser()->can(Tag::AUTH_TAG_CREATE),
-                    'options' => ['class' => 'col'],
-                ],
-            ],
+            $this->getCreateTagButton(),
         ];
+
+        parent::configure();
     }
 
-    protected function getCreateTagButton(): string
+    protected function getCreateTagButton(): ?Stringable
     {
-        $route = ['/admin/tag/create'];
-
-        return Html::a(Html::iconText('plus', Yii::t('location', 'New Tag')), $route, [
-            'class' => 'btn btn-primary',
-        ]);
+        return $this->webuser->can(Tag::AUTH_TAG_CREATE)
+            ? CreateButton::make()->text(Yii::t('location', 'New Tag'))
+            : null;
     }
 
-    public function nameColumn(): array
+    protected function getNameColumn(): ?Column
+    {
+        return DataColumn::make()
+            ->property('name')
+            ->content($this->getNameColumnContent(...));
+    }
+
+    protected function getNameColumnContent(Tag $tag): ?Stringable
+    {
+        $content = Html::markKeywords(Html::encode($tag->getI18nAttribute('name')), $this->search->getKeywords());
+
+        return A::make()
+            ->content($content)
+            ->href($tag->getAdminRoute())
+            ->class('strong');
+    }
+
+    protected function getLocationCountColumn(): ?Column
+    {
+        return BadgeColumn::make()
+            ->property('location_count')
+            ->url(fn (Tag $tag) => $tag->getAdminRoute());
+    }
+
+    protected function getUpdatedAtColumn(): ?Column
+    {
+        return RelativeTimeColumn::make()
+            ->property('updated_at');
+    }
+
+    protected function getButtonColumn(): ?Column
+    {
+        return ButtonColumn::make()
+            ->content($this->getButtonColumnContent(...));
+    }
+
+    protected function getButtonColumnContent(Tag $tag): array
     {
         return [
-            'attribute' => 'name',
-            'content' => function (Tag $tag) {
-                $name = Html::markKeywords($tag->getI18nAttribute('name'), $this->search->getKeywords());
-                return Html::a($name, $tag->getAdminRoute(), ['class' => 'strong']);
-            }
+            ViewGridButton::make()
+                ->model($tag),
         ];
-    }
-
-    public function locationCountColumn(): array
-    {
-        return [
-            'class' => CounterColumn::class,
-            'attribute' => 'location_count',
-            'route' => fn (Tag $tag) => ['/admin/location/index', 'tag' => $tag->id],
-        ];
-    }
-
-    public function updatedAtColumn(): array
-    {
-        return [
-            'attribute' => 'updated_at',
-            'class' => TimeagoColumn::class,
-        ];
-    }
-
-    public function buttonsColumn(): array
-    {
-        return [
-            'contentOptions' => ['class' => 'text-right text-nowrap'],
-            'content' => function (Tag $tag): string {
-                $button = Html::a((string)Icon::tag('wrench'), $tag->getAdminRoute(), [
-                    'class' => 'btn btn-primary d-none d-md-inline-block',
-                ]);
-
-                return Html::buttons($button);
-            }
-        ];
-    }
-
-    public function getModel(): ?Tag
-    {
-        return Tag::instance();
     }
 }

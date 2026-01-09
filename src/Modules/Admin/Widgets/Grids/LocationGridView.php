@@ -10,14 +10,21 @@ use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Data\LocationActiveDataProvider;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Helpers\Html;
-use Hirtz\Skeleton\Helpers\Url;
-use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Columns\CounterColumn;
-use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\GridView;
-use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Traits\StatusGridViewTrait;
-use Hirtz\Skeleton\Modules\Admin\Widgets\Grids\Traits\TypeGridViewTrait;
-use Hirtz\Skeleton\Widgets\Bootstrap\ButtonDropdown;
-use Hirtz\Skeleton\Widgets\Fontawesome\Icon;
-use Hirtz\Timeago\TimeagoColumn;
+use Hirtz\Skeleton\Html\A;
+use Hirtz\Skeleton\Html\Button;
+use Hirtz\Skeleton\Html\Div;
+use Hirtz\Skeleton\Widgets\Grids\Columns\BadgeColumn;
+use Hirtz\Skeleton\Widgets\Grids\Columns\ButtonColumn;
+use Hirtz\Skeleton\Widgets\Grids\Columns\Buttons\ViewGridButton;
+use Hirtz\Skeleton\Widgets\Grids\Columns\Column;
+use Hirtz\Skeleton\Widgets\Grids\Columns\DataColumn;
+use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
+use Hirtz\Skeleton\Widgets\Grids\GridView;
+use Hirtz\Skeleton\Widgets\Grids\Toolbars\CreateButton;
+use Hirtz\Skeleton\Widgets\Grids\Toolbars\FilterDropdown;
+use Hirtz\Skeleton\Widgets\Grids\Traits\StatusGridViewTrait;
+use Hirtz\Skeleton\Widgets\Grids\Traits\TypeGridViewTrait;
+use Stringable;
 use Yii;
 
 /**
@@ -30,203 +37,150 @@ class LocationGridView extends GridView
     use StatusGridViewTrait;
     use TypeGridViewTrait;
 
-    /**
-     * @var bool whether tags be selectable via dropdown
-     */
-    public bool $showTagDropdown = true;
+    protected bool $showTagDropdown = true;
+    protected bool $showTags = true;
+    protected bool $showTypeDropdown = true;
 
-    /**
-     * @var bool whether tags should be displayed in the grid
-     */
-    public bool $showTags = true;
-
-    /**
-     * @var bool whether location types should be selectable via dropdown
-     */
-    public bool $showTypeDropdown = true;
-
-    public function init(): void
+    protected function configure(): void
     {
-        if (!$this->columns) {
-            $this->columns = [
-                $this->statusColumn(),
-                $this->typeColumn(),
-                $this->nameColumn(),
-                $this->tagCountColumn(),
-                $this->updatedAtColumn(),
-                $this->buttonsColumn(),
-            ];
+        $this->model ??= Location::instance();
+        $this->showTags = $this->showTags && static::getModule()->enableTags;
+
+        $this->showTagDropdown = $this->showTagDropdown
+            && static::getModule()->enableTags && count(TagCollection::getAll()) > 1;
+
+        $this->showTypeDropdown = $this->showTypeDropdown && count(Location::instance()::getTypes()) > 1;
+
+        $this->header ??= [
+            $this->getTypeDropdown(),
+            $this->showTagDropdown ? $this->getTagDropdown() : null,
+            $this->search->getToolbarItem(),
+        ];
+
+        $this->columns ??= [
+            $this->getStatusColumn(),
+            $this->getTypeColumn(),
+            $this->getNameColumn(),
+            $this->getTagCountColumn(),
+            $this->getUpdatedAtColumn(),
+            $this->getButtonColumn(),
+        ];
+
+        $this->footer ??= [
+            $this->getCreateLocationButton(),
+        ];
+
+        parent::configure();
+    }
+
+    protected function getTagDropdown(): ?FilterDropdown
+    {
+        return FilterDropdown::make()
+            ->label(Yii::t('skeleton', 'Tags'))
+            ->items($this->getTagDropdownItems())
+            ->param('tag');
+    }
+
+    protected function getTagDropdownItems(): array
+    {
+        return array_map(fn (Tag $tag) => $tag->getI18nAttribute('name'), TagCollection::getAll());
+    }
+
+    protected function getCreateLocationButton(): ?Stringable
+    {
+        return $this->webuser->can(Location::AUTH_LOCATION_CREATE)
+            ? CreateButton::make()
+                ->text(Yii::t('location', 'New Location'))
+                ->href(['/admin/location/create'])
+            : null;
+    }
+
+    protected function getNameColumn(): ?Column
+    {
+        return DataColumn::make()
+            ->property('name')
+            ->content($this->getNameColumnContent(...));
+    }
+
+    protected function getNameColumnContent(Location $location): string
+    {
+        if ($address = $location->formatted_address) {
+            $address = Html::markKeywords(Html::encode($address), $this->search->getKeywords());
+        }
+
+        if ($name = $location->getI18nAttribute('name')) {
+            $name = Html::markKeywords(Html::encode($name), $this->search->getKeywords());
+
+            $content = A::make()
+                ->content($name)
+                ->href($location->getAdminRoute())
+                ->addClass('strong');
+
+            if ($address) {
+                $content .= Div::make()
+                    ->content($address)
+                    ->addClass('small');
+            }
+        } else {
+            $name = $address ?: Yii::t('location', 'Unnamed');
+
+            $content = A::make()
+                ->content($name)
+                ->href($location->getAdminRoute())
+                ->addClass('strong');
         }
 
         if ($this->showTags) {
-            $this->showTags = static::getModule()->enableTags;
+            $content .= $this->getTagButtons($location);
         }
 
-        if ($this->showTagDropdown) {
-            $this->showTagDropdown = static::getModule()->enableTags && count(TagCollection::getAll()) > 1;
-        }
-
-        if ($this->showTypeDropdown) {
-            $this->showTypeDropdown = count($this->getModel()::getTypes()) > 1;
-        }
-
-        parent::init();
+        return $content;
     }
 
-    protected function initHeader(): void
+    protected function getTagCountColumn(): ?Column
     {
-        $this->header ??= [
-            [
-                [
-                    'content' => $this->typeDropdown(),
-                    'visible' => $this->showTypeDropdown,
-                    'options' => ['class' => 'col-12 col-md-3'],
-                ],
-                [
-                    'content' => $this->tagDropdown(),
-                    'options' => ['class' => 'col-12 col-md-3'],
-                    'visible' => $this->showTagDropdown,
-                ],
-                [
-                    'content' => $this->getSearchInput(),
-                    'options' => ['class' => 'col-12 col-md-6'],
-                ],
-                'options' => [
-                    'class' => $this->showTypeDropdown || $this->showTagDropdown ? 'justify-content-between' : 'justify-content-end',
-                ],
-            ],
-        ];
+        return BadgeColumn::make()
+            ->property('tag_count')
+            ->visible(static::getModule()->enableTags)
+            ->url(fn (Location $location) => ['/admin/location-tag/index', 'location' => $location->id]);
     }
 
-    protected function tagDropdown(): string
+    protected function getUpdatedAtColumn(): ?Column
     {
-        $items = [];
-
-        foreach (TagCollection::getAll() as $tag) {
-            $items[] = [
-                'label' => $tag->getI18nAttribute('name'),
-                'url' => $this->getTagUrl($tag),
-            ];
-        }
-
-        return ButtonDropdown::widget([
-            'label' => $this->dataProvider->tag?->getI18nAttribute('name') ?? Yii::t('skeleton', 'Tags'),
-            'items' => $items,
-            'paramName' => 'tag',
-        ]);
+        return RelativeTimeColumn::make()
+            ->property('updated_at');
     }
 
-    protected function initFooter(): void
+    protected function getButtonColumn(): ?Column
     {
-        $this->footer ??= [
-            [
-                [
-                    'content' => $this->getCreateLocationButton(),
-                    'visible' => Yii::$app->getUser()->can(Location::AUTH_LOCATION_CREATE),
-                    'options' => ['class' => 'col'],
-                ],
-            ],
-        ];
+        return ButtonColumn::make()
+            ->content($this->getButtonColumnContent(...));
     }
 
-    protected function getCreateLocationButton(): string
-    {
-        $route = ['/admin/location/create'];
-
-        return Html::a(Html::iconText('plus', Yii::t('location', 'New Location')), $route, [
-            'class' => 'btn btn-primary',
-        ]);
-    }
-
-    public function nameColumn(): array
+    protected function getButtonColumnContent(Location $location): array
     {
         return [
-            'attribute' => 'name',
-            'content' => function (Location $location) {
-                if ($address = $location->formatted_address) {
-                    $address = Html::markKeywords(Html::encode($address), $this->getSearchKeywords());
-                }
-
-                if ($name = $location->getI18nAttribute('name')) {
-                    $name = Html::markKeywords(Html::encode($name), $this->getSearchKeywords());
-                    $content = Html::a($name, $location->getAdminRoute(), ['class' => 'strong']);
-
-                    if ($address) {
-                        $content .= Html::tag('div', $address, [
-                            'class' => 'small',
-                        ]);
-                    }
-                } else {
-                    $content = $address ?: Yii::t('location', 'Unnamed');
-                    $content = Html::a($content, $location->getAdminRoute(), ['class' => 'strong']);
-                }
-
-                if ($this->showTags) {
-                    $content .= $this->renderTagButtons($location);
-                }
-
-                return $content;
-            }
+            ViewGridButton::make()
+                ->model($location),
         ];
     }
 
-    public function tagCountColumn(): array
-    {
-        return [
-            'class' => CounterColumn::class,
-            'attribute' => 'tag_count',
-            'visible' => static::getModule()->enableTags,
-            'route' => fn (Location $location) => ['/admin/location-tag/index', 'location' => $location->id],
-        ];
-    }
-
-    public function updatedAtColumn(): array
-    {
-        return [
-            'attribute' => 'updated_at',
-            'class' => TimeagoColumn::class,
-        ];
-    }
-
-    public function buttonsColumn(): array
-    {
-        return [
-            'contentOptions' => ['class' => 'text-right text-nowrap'],
-            'content' => function (Location $location): string {
-                $button = Html::a(Icon::tag('wrench'), $location->getAdminRoute(), [
-                    'class' => 'btn btn-primary d-none d-md-inline-block',
-                ]);
-
-                return Html::buttons($button);
-            }
-        ];
-    }
-
-    public function renderTagButtons(Location $location, array $options = []): string
+    protected function getTagButtons(Location $location): ?Stringable
     {
         $tags = [];
 
         foreach (TagCollection::getByLocation($location) as $tag) {
-            $tags[] = Html::a(Html::encode($tag->getI18nAttribute('name')), $this->getTagUrl($tag), [
-                'class' => 'btn btn-secondary btn-sm',
-            ]);
+            $tags[] = Button::make()
+                ->secondary()
+                ->text($tag->getI18nAttribute('name'))
+                ->current(['tag' => $tag->id, 'page' => null])
+                ->addClass('btn-sm');
         }
 
         return $tags
-            ? Html::tag('div', implode('', $tags), $options ?: ['class' => 'btn-list'])
-            : '';
-    }
-
-    protected function getTagUrl(Tag $tag): string
-    {
-        return Url::current([
-            'tag' => $tag->id,
-            'page' => null,
-        ]);
-    }
-
-    public function getModel(): ?Location
-    {
-        return Location::instance();
+            ? Div::make()
+                ->class('btn-group')
+                ->content(...$tags)
+            : null;
     }
 }

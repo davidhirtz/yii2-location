@@ -12,6 +12,7 @@ use Hirtz\Location\Modules\Admin\Interfaces\AutocompleteInterface;
 use Hirtz\Skeleton\Helpers\ArrayHelper;
 use Hirtz\Skeleton\Modules\Admin\Config\MainMenuItemConfig;
 use Hirtz\Skeleton\Modules\Admin\ModuleInterface;
+use Override;
 use Yii;
 
 /**
@@ -23,7 +24,7 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
     public $layout = '@skeleton/../resources/views/admin/layouts/main';
     public array|string $url = ['/admin/location/index'];
 
-    #[\Override]
+    #[Override]
     public function init(): void
     {
         $this->controllerMap = ArrayHelper::merge($this->getCoreControllerMap(), $this->controllerMap);

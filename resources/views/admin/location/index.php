@@ -8,17 +8,14 @@
 
 use Hirtz\Location\Modules\Admin\Data\LocationActiveDataProvider;
 use Hirtz\Location\Modules\Admin\Widgets\Grids\LocationGridView;
-use Hirtz\Location\Modules\Admin\Widgets\Navs\Submenu;
+use Hirtz\Location\Modules\Admin\Widgets\Navs\LocationSubmenu;
 use Hirtz\Skeleton\Web\View;
-use Hirtz\Skeleton\Widgets\Bootstrap\Panel;
+use Hirtz\Skeleton\Widgets\Grids\GridContainer;
 
 $this->title(Yii::t('location', 'Locations'));
-?>
 
-<?= Submenu::widget(); ?>
+echo LocationSubmenu::make();
 
-<?= Panel::widget([
-    'content' => LocationGridView::widget([
-        'dataProvider' => $provider,
-    ]),
-]); ?>
+echo GridContainer::make()
+    ->grid(LocationGridView::make()
+    ->provider($provider));
