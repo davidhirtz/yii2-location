@@ -98,7 +98,6 @@ class LocationTag extends ActiveRecord implements TrailModelInterface
         if ($insert) {
             if (!$this->getIsBatch()) {
                 $this->updateLocationTagIds();
-
             }
             $this->updateTagLocationCount();
         }

@@ -1,3 +1,12 @@
+## 1.3.1 (Jan 11, 2025)
+
+- Enhanced `Location` and `Tag` deletion to recalculate related counters and delete `LocationTag` records accordingly.
+
+## 1.3.0 (Dec 1, 2025)
+
+- Requires PHP 8.3 or higher
+- Added Russian language support
+
 ## 1.2.6 (Mar 7, 2025)
 
 - Added validation for `Location::$lat` and `Location::$lng`

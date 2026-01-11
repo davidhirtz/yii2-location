@@ -165,6 +165,12 @@ class Location extends ActiveRecord implements
     #[Override]
     public function afterDelete(): void
     {
+        if ($this->tag_count) {
+            foreach ($this->locationTags as $locationTag) {
+                $locationTag->delete();
+            }
+        }
+
         static::getModule()->invalidatePageCache();
         parent::afterDelete();
     }
