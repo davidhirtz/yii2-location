@@ -5,12 +5,16 @@ declare(strict_types=1);
 namespace Hirtz\Location\Modules\Admin\Widgets\Grids;
 
 use Hirtz\Location\Models\Tag;
+use Hirtz\Location\Modules\Admin\Data\LocationActiveDataProvider;
 use Hirtz\Skeleton\Html\Button;
 use Hirtz\Skeleton\Widgets\Grids\Columns\Column;
 use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
 use Override;
 use Yii;
 
+/**
+ * @property LocationActiveDataProvider $provider
+ */
 class LocationTagGridView extends TagGridView
 {
     #[Override]
@@ -38,7 +42,13 @@ class LocationTagGridView extends TagGridView
     protected function getUpdatedAtColumn(): ?Column
     {
         return RelativeTimeColumn::make()
-            ->value(fn (Tag $tag) => $tag->locationTag->updated_at)
+            ->label(Yii::t('location', 'Added'))
+            ->visible(array_reduce(
+                $this->provider->getModels(),
+                fn (bool $carry, Tag $tag) => $carry || $tag->locationTag !== null,
+                false
+            ))
+            ->value(fn (Tag $tag) => $tag->locationTag?->updated_at)
             ->hiddenForMediumDevices();
     }
 
@@ -52,7 +62,7 @@ class LocationTagGridView extends TagGridView
                 ->post([
                     ...Yii::$app->getRequest()->getQueryParams(),
                     $tag->locationTag ? 'delete' : 'create',
-                    'location' => $this->dataProvider->location->id,
+                    'location' => $this->provider->location->id,
                     'tag' => $tag->id,
                 ]),
         ];

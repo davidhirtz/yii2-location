@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @see TagController::actionCreate()
  *
@@ -10,20 +13,14 @@ use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Controllers\TagController;
 use Hirtz\Location\Modules\Admin\Widgets\Forms\TagActiveForm;
 use Hirtz\Location\Modules\Admin\Widgets\Navs\LocationSubmenu;
-use Hirtz\Skeleton\Helpers\Html;
 use Hirtz\Skeleton\Web\View;
-use Hirtz\Skeleton\Widgets\Bootstrap\Panel;
+use Hirtz\Skeleton\Widgets\Forms\FormContainer;
 
 $this->title(Yii::t('location', 'Create New Tag'));
-?>
 
-<?= LocationSubmenu::widget(); ?>
+echo LocationSubmenu::make();
 
-<?= Html::errorSummary($tag); ?>
-
-<?= Panel::widget([
-    'title' => $this->title,
-    'content' => TagActiveForm::widget([
-        'model' => $tag,
-    ]),
-]); ?>
+echo FormContainer::make()
+    ->title($this->title)
+    ->form(TagActiveForm::make()
+        ->model($tag));

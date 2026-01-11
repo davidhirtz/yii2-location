@@ -16,9 +16,12 @@ use Hirtz\Skeleton\Behaviors\TrailBehavior;
 use Hirtz\Skeleton\Db\ActiveQuery;
 use Hirtz\Skeleton\Db\ActiveRecord;
 use Hirtz\Skeleton\Models\Interfaces\DraftStatusAttributeInterface;
+use Hirtz\Skeleton\Models\Interfaces\I18nAttributeInterface;
+use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
 use Hirtz\Skeleton\Models\Interfaces\TypeAttributeInterface;
 use Hirtz\Skeleton\Models\Traits\DraftStatusAttributeTrait;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
+use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
 use Hirtz\Skeleton\Models\Traits\TypeAttributeTrait;
 use Hirtz\Skeleton\Models\Traits\UpdatedByUserTrait;
 use Hirtz\Skeleton\Validators\DynamicRangeValidator;
@@ -37,12 +40,17 @@ use Yii;
  * @property-read LocationTag|null $locationTag {@see static::getLocationTag()}
  * @property-read Location[] $locations {@see static::getLocations()}
  */
-class Tag extends ActiveRecord implements DraftStatusAttributeInterface, TypeAttributeInterface
+class Tag extends ActiveRecord implements
+    DraftStatusAttributeInterface,
+    I18nAttributeInterface,
+    TrailModelInterface,
+    TypeAttributeInterface
 {
     use DraftStatusAttributeTrait;
     use I18nAttributesTrait;
     use ModuleTrait;
     use TypeAttributeTrait;
+    use TrailModelTrait;
     use UpdatedByUserTrait;
 
     public const string AUTH_TAG_CREATE = 'tagCreate';

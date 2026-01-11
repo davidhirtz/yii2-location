@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Hirtz\Location\Modules\Admin\Widgets\Forms;
 
 use Hirtz\Location\Models\Location;
+use Hirtz\Skeleton\Helpers\CountryList;
 use Hirtz\Skeleton\Widgets\Forms\ActiveForm;
 use Hirtz\Skeleton\Widgets\Forms\Fields\InputField;
 use Hirtz\Skeleton\Widgets\Forms\Fields\SelectField;
@@ -108,7 +109,7 @@ class LocationActiveForm extends ActiveForm
 
     protected function getCountyCodeItems(): array
     {
-        return $this->model::getCountryCodes();
+        return CountryList::getNames();
     }
 
     protected function getProviderIdField(): ?Stringable

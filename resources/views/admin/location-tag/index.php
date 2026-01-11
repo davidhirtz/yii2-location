@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /**
  * @see \Hirtz\Location\Modules\Admin\Controllers\LocationTagController::actionIndex()
  *

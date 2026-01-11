@@ -1,30 +1,33 @@
 import TomSelect from "tom-select";
 
 type Option = {
-    label: string;
+    text: string;
     value: string | number;
 };
 
 export default (selector: string, url: string) => {
     new TomSelect(selector, {
-        labelField: "label",
-        searchField: ["label"],
+        maxItems: 1,
+        dropdownClass: 'dropdown-menu',
+        optionClass: 'dropdown-option',
         load: (value: string, callback: Function) => {
             const input = new URL(url, window.location.origin);
             input.searchParams.set("q", value);
-            console.log(input.toString());
 
             fetch(input.toString())
                 .then(response => response.json())
-                .then(json => callback(json))
+                .then(json => callback(json as Option[]))
                 .catch(() => callback());
 
         },
         shouldLoad: (query: string) => query.length > 4,
-        // render: {
-        //     option: function (item, escape) {
-        //         return `<div class="dropdown-item"><div class="dropdown-link">${escape(item.label)}</div></div>`;
-        //     },
-        // },
+        onChange: function (value: string) {
+            this.input.value = value;
+            console.log("Selected value:", this.input.value);
+            // this.control_input.value = value;
+        },
+        onItemAdd: function (value: string, $item: HTMLElement) {
+            $item.innerText = value;
+        }
     });
 };

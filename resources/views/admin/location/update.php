@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @see LocationController::actionUpdate()
  * @see LocationController::actionDelete()
@@ -11,33 +14,24 @@ use Hirtz\Location\Models\Location;
 use Hirtz\Location\Modules\Admin\Controllers\LocationController;
 use Hirtz\Location\Modules\Admin\Widgets\Forms\LocationActiveForm;
 use Hirtz\Location\Modules\Admin\Widgets\Navs\LocationSubmenu;
-use Hirtz\Skeleton\Helpers\Html;
 use Hirtz\Skeleton\Web\View;
-use Hirtz\Skeleton\Widgets\Bootstrap\Panel;
 use Hirtz\Skeleton\Widgets\Forms\DeleteActiveForm;
+use Hirtz\Skeleton\Widgets\Forms\FormContainer;
 
 $this->title(Yii::t('location', 'Edit Location'));
-?>
 
-<?= LocationSubmenu::widget([
-    'location' => $location,
-]); ?>
+echo LocationSubmenu::make()
+    ->location($location);
 
-<?= Html::errorSummary($location); ?>
+echo FormContainer::make()
+    ->title($this->title)
+    ->form(LocationActiveForm::make()
+        ->model($location));
 
-<?= Panel::widget([
-    'title' => $this->title,
-    'content' => LocationActiveForm::widget([
-        'model' => $location,
-    ]),
-]); ?>
-
-<?php if (Yii::$app->getUser()->can(Location::AUTH_LOCATION_DELETE, ['location' => $location])) {
-    echo Panel::widget([
-        'type' => 'danger',
-        'title' => Yii::t('location', 'Delete Location'),
-        'content' => DeleteActiveForm::widget([
-            'model' => $location,
-        ]),
-    ]);
-} ?>
+if (Yii::$app->getUser()->can(Location::AUTH_LOCATION_DELETE, ['location' => $location])) {
+    echo FormContainer::make()
+        ->danger()
+        ->title(Yii::t('location', 'Delete Location'))
+        ->form(DeleteActiveForm::make()
+            ->model($location));
+}

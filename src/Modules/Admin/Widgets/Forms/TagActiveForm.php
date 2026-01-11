@@ -5,28 +5,42 @@ declare(strict_types=1);
 namespace Hirtz\Location\Modules\Admin\Widgets\Forms;
 
 use Hirtz\Location\Models\Tag;
-use Hirtz\Skeleton\Modules\Admin\Widgets\Forms\Traits\ModelTimestampTrait;
-use Hirtz\Skeleton\Modules\Admin\Widgets\Forms\Traits\StatusFieldTrait;
-use Hirtz\Skeleton\Modules\Admin\Widgets\Forms\Traits\TypeFieldTrait;
-use Hirtz\Skeleton\Widgets\Bootstrap\ActiveForm;
+use Hirtz\Skeleton\Widgets\Forms\ActiveForm;
+use Hirtz\Skeleton\Widgets\Forms\Fields\InputField;
+use Hirtz\Skeleton\Widgets\Forms\Fields\SelectField;
+use Stringable;
 
 /**
  * @property Tag $model
  */
 class TagActiveForm extends ActiveForm
 {
-    use ModelTimestampTrait;
-    use StatusFieldTrait;
-    use TypeFieldTrait;
-
-    public function init(): void
+    protected function configure(): void
     {
-        $this->fields ??= [
-            'status',
-            'type',
-            'name',
+        $this->rows ??= [
+            $this->getStatusField(),
+            $this->getTypeField(),
+            $this->getNameField(),
         ];
 
-        parent::init();
+        parent::configure();
+    }
+
+    protected function getStatusField(): ?Stringable
+    {
+        return SelectField::make()
+            ->property('status');
+    }
+
+    protected function getTypeField(): ?Stringable
+    {
+        return SelectField::make()
+            ->property('type');
+    }
+
+    protected function getNameField(): ?Stringable
+    {
+        return InputField::make()
+            ->property('name');
     }
 }

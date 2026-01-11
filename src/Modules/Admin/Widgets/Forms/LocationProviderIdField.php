@@ -21,8 +21,12 @@ class LocationProviderIdField extends InputField
         $this->property ??= 'provider_id';
 
         $this->attributes['autocomplete'] ??= 'off';
-        $this->attributes['placeholder'] ??= Yii::t('location', 'Search for a location ...');
-        $this->attributes['type'] ??= $this->model?->{$this->property} ? 'text' : 'search';
+
+        if (!$this->model->{$this->property}) {
+            $this->attributes['placeholder'] ??= Yii::t('location', 'Search for a location ...');
+            $this->attributes['type'] ??= 'search';
+        }
+
 
         /** @var Module $module */
         $module = Yii::$app->getModule('admin')->getModule('location');

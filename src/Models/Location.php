@@ -19,12 +19,16 @@ use Hirtz\Skeleton\Db\ActiveRecord;
 use Hirtz\Skeleton\Helpers\ArrayHelper;
 use Hirtz\Skeleton\Helpers\CountryList;
 use Hirtz\Skeleton\Models\Interfaces\DraftStatusAttributeInterface;
+use Hirtz\Skeleton\Models\Interfaces\I18nAttributeInterface;
+use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
 use Hirtz\Skeleton\Models\Interfaces\TypeAttributeInterface;
 use Hirtz\Skeleton\Models\Traits\DraftStatusAttributeTrait;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
+use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
 use Hirtz\Skeleton\Models\Traits\TypeAttributeTrait;
 use Hirtz\Skeleton\Models\Traits\UpdatedByUserTrait;
 use Hirtz\Skeleton\Validators\DynamicRangeValidator;
+use Override;
 use Yii;
 
 /**
@@ -52,21 +56,26 @@ use Yii;
  * @property-read LocationTag|null $locationTag {@see static::getLocationTag()}
  * @property-read Tag[] $tags {@see static::getTags()}
  */
-class Location extends ActiveRecord implements DraftStatusAttributeInterface, TypeAttributeInterface
+class Location extends ActiveRecord implements
+    DraftStatusAttributeInterface,
+    I18nAttributeInterface,
+    TrailModelInterface,
+    TypeAttributeInterface
 {
     use DraftStatusAttributeTrait;
     use I18nAttributesTrait;
     use ModuleTrait;
+    use TrailModelTrait;
     use TypeAttributeTrait;
     use UpdatedByUserTrait;
 
-    public const AUTH_LOCATION_CREATE = 'locationCreate';
-    public const AUTH_LOCATION_DELETE = 'locationDelete';
-    public const AUTH_LOCATION_UPDATE = 'locationUpdate';
+    public const string AUTH_LOCATION_CREATE = 'locationCreate';
+    public const string AUTH_LOCATION_DELETE = 'locationDelete';
+    public const string AUTH_LOCATION_UPDATE = 'locationUpdate';
 
     private static ?array $countryCodes;
 
-    #[\Override]
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -76,7 +85,7 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
         ];
     }
 
-    #[\Override]
+    #[Override]
     public function fields(): array
     {
         return [
@@ -90,7 +99,7 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
         ];
     }
 
-    #[\Override]
+    #[Override]
     public function rules(): array
     {
         return [
@@ -126,22 +135,17 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
             [
                 ['country_code'],
                 'in',
-                'range' => array_keys(static::getCountryCodes()),
+                'range' => $this->getCountryCodes(),
             ],
             [
                 ['tag_ids'],
                 'each',
                 'rule' => ['integer'],
             ],
-            [
-                ['country_code'],
-                DynamicRangeValidator::class,
-                'integerOnly' => false,
-            ],
         ];
     }
 
-    #[\Override]
+    #[Override]
     public function beforeSave($insert): bool
     {
         $this->attachBehaviors([
@@ -152,14 +156,14 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
         return parent::beforeSave($insert);
     }
 
-    #[\Override]
+    #[Override]
     public function afterSave($insert, $changedAttributes): void
     {
         static::getModule()->invalidatePageCache();
         parent::afterSave($insert, $changedAttributes);
     }
 
-    #[\Override]
+    #[Override]
     public function afterDelete(): void
     {
         static::getModule()->invalidatePageCache();
@@ -187,7 +191,7 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
             ->inverseOf('location');
     }
 
-    #[\Override]
+    #[Override]
     public static function find(): LocationQuery
     {
         return Yii::createObject(LocationQuery::class, [static::class]);
@@ -204,7 +208,7 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
 
     public function getCountryName(): ?string
     {
-        return static::getCountryCodes()[$this->country_code] ?? null;
+        return $this->country_code ? CountryList::getName($this->country_code) : null;
     }
 
     public function getTagNames(): array
@@ -261,7 +265,7 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
         return $this->id ? $this->getAdminRoute() : false;
     }
 
-    public static function getCountryCodes(): array
+    protected function getCountryCodes(): array
     {
         return self::$countryCodes ??= array_keys(CountryList::getNames());
     }
@@ -271,7 +275,7 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
         return static::getModule()->enableTags;
     }
 
-    #[\Override]
+    #[Override]
     public function attributeLabels(): array
     {
         return [
@@ -292,13 +296,13 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
         ];
     }
 
-    #[\Override]
+    #[Override]
     public function formName(): string
     {
         return 'Location';
     }
 
-    #[\Override]
+    #[Override]
     public static function tableName(): string
     {
         return static::getModule()->getTableName('location');

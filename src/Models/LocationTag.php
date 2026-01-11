@@ -11,8 +11,11 @@ use Hirtz\Skeleton\Behaviors\TimestampBehavior;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
 use Hirtz\Skeleton\Db\ActiveQuery;
 use Hirtz\Skeleton\Db\ActiveRecord;
+use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
+use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
 use Hirtz\Skeleton\Models\Traits\UpdatedByUserTrait;
 use Hirtz\Skeleton\Validators\UniqueValidator;
+use Override;
 use Yii;
 
 /**
@@ -26,12 +29,13 @@ use Yii;
  *
  * @mixin TrailBehavior
  */
-class LocationTag extends ActiveRecord
+class LocationTag extends ActiveRecord implements TrailModelInterface
 {
     use ModuleTrait;
+    use TrailModelTrait;
     use UpdatedByUserTrait;
 
-    #[\Override]
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -40,7 +44,7 @@ class LocationTag extends ActiveRecord
         ];
     }
 
-    #[\Override]
+    #[Override]
     public function rules(): array
     {
         return [...parent::rules(), [
@@ -70,7 +74,7 @@ class LocationTag extends ActiveRecord
         }
     }
 
-    #[\Override]
+    #[Override]
     public function beforeSave($insert): bool
     {
         $this->attachBehaviors([
@@ -84,7 +88,7 @@ class LocationTag extends ActiveRecord
         return parent::beforeSave($insert);
     }
 
-    #[\Override]
+    #[Override]
     public function afterSave($insert, $changedAttributes): void
     {
         if ($insert) {
@@ -100,7 +104,7 @@ class LocationTag extends ActiveRecord
         parent::afterSave($insert, $changedAttributes);
     }
 
-    #[\Override]
+    #[Override]
     public function afterDelete(): void
     {
         if (!$this->location->isDeleted() && !$this->getIsBatch()) {
@@ -172,19 +176,19 @@ class LocationTag extends ActiveRecord
         return Yii::t('skeleton', 'Relation');
     }
 
-    #[\Override]
+    #[Override]
     public function attributeLabels(): array
     {
         return [...parent::attributeLabels(), 'location_id' => Yii::t('location', 'Location'), 'tag_id' => Yii::t('location', 'Tag'), 'updated_at' => Yii::t('location', 'Added')];
     }
 
-    #[\Override]
+    #[Override]
     public function formName(): string
     {
         return 'LocationTag';
     }
 
-    #[\Override]
+    #[Override]
     public static function tableName(): string
     {
         return static::getModule()->getTableName('location_tag');
