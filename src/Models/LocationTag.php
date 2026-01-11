@@ -47,17 +47,21 @@ class LocationTag extends ActiveRecord implements TrailModelInterface
     #[Override]
     public function rules(): array
     {
-        return [...parent::rules(), [
-            ['location_id'],
-            $this->validateLocationId(...),
-        ], [
-            ['tag_id'],
-            $this->validateTagId(...),
-        ], [
-            ['location_id'],
-            UniqueValidator::class,
-            'targetAttribute' => ['location_id', 'tag_id'],
-        ]];
+        return [
+            ...parent::rules(), [
+                ['location_id'],
+                $this->validateLocationId(...),
+            ],
+            [
+                ['tag_id'],
+                $this->validateTagId(...),
+            ],
+            [
+                ['location_id'],
+                UniqueValidator::class,
+                'targetAttribute' => ['location_id', 'tag_id'],
+            ],
+        ];
     }
 
     protected function validateLocationId(): void

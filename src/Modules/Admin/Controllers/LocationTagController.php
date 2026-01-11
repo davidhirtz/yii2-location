@@ -11,6 +11,7 @@ use Hirtz\Location\Modules\Admin\Controllers\Traits\TagTrait;
 use Hirtz\Location\Modules\Admin\Data\TagActiveDataProvider;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
+use Override;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -23,7 +24,7 @@ class LocationTagController extends Controller
     use TagTrait;
     use ModuleTrait;
 
-    #[\Override]
+    #[Override]
     public function behaviors(): array
     {
         return [
@@ -47,7 +48,7 @@ class LocationTagController extends Controller
         ];
     }
 
-    #[\Override]
+    #[Override]
     public function beforeAction($action): bool
     {
         if (!self::getModule()->enableTags) {

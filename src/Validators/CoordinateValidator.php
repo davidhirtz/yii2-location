@@ -2,16 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Location\validators;
+namespace Hirtz\Location\Validators;
 
+use Override;
 use yii\validators\FilterValidator;
 
 class CoordinateValidator extends FilterValidator
 {
-    /**
-     * Applies MySQL decimal format.
-     */
-    #[\Override]
+    #[Override]
     public function init(): void
     {
         $this->filter = fn ($attribute): ?string => $attribute

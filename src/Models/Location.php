@@ -10,7 +10,7 @@ use Hirtz\Location\Models\Collections\TagCollection;
 use Hirtz\Location\Models\Queries\LocationQuery;
 use Hirtz\Location\Models\Queries\TagQuery;
 use Hirtz\Location\Modules\ModuleTrait;
-use Hirtz\Location\validators\CoordinateValidator;
+use Hirtz\Location\Validators\CoordinateValidator;
 use Hirtz\Skeleton\Behaviors\BlameableBehavior;
 use Hirtz\Skeleton\Behaviors\TimestampBehavior;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
@@ -88,15 +88,14 @@ class Location extends ActiveRecord implements
     #[Override]
     public function fields(): array
     {
-        return [
+        return array_filter([
             'name',
+            count(static::getTypes()) > 1 ? 'type' : null,
             'formatted_address',
-            'tags' => static::getModule()->enableTags
-                ? fn (self $location) => $location->getTagNames()
-                : null,
+            'tags' => static::getModule()->enableTags ? fn (self $location) => $location->getTagNames() : null,
             'lat',
             'lng',
-        ];
+        ]);
     }
 
     #[Override]

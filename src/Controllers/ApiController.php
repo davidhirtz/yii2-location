@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Location\controllers;
+namespace Hirtz\Location\Controllers;
 
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Queries\LocationQuery;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Filters\PageCache;
+use Override;
 use Yii;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -26,7 +27,7 @@ class ApiController extends Controller
     public bool $allowAllTypes = true;
     public bool $enablePageCache = true;
 
-    #[\Override]
+    #[Override]
     public function behaviors(): array
     {
         $behaviors = parent::behaviors();
@@ -48,7 +49,7 @@ class ApiController extends Controller
     }
 
 
-    #[\Override]
+    #[Override]
     public function init(): void
     {
         parent::init();
@@ -61,7 +62,7 @@ class ApiController extends Controller
      * Checks the `Location::getTypes()` array for a matching slug, sets the `type` parameter accordingly and calls the
      * default action. This allows for URLs like `/api/location/<type-slug>.json`.
      */
-    #[\Override]
+    #[Override]
     public function runAction($id, $params = [])
     {
         if ($type = $this->findTypeBySlug($id)) {

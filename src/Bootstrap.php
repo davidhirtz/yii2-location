@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location;
 
-use Hirtz\Location\controllers\ApiController;
+use Hirtz\Location\Controllers\ApiController;
 use Hirtz\Skeleton\Web\Application;
 use Yii;
 use yii\base\BootstrapInterface;

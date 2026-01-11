@@ -123,6 +123,10 @@ class Tag extends ActiveRecord implements
     #[Override]
     public function afterDelete(): void
     {
+        foreach ($this->locationTags as $locationTag) {
+            $locationTag->delete();
+        }
+
         $this->invalidateCache();
         parent::afterDelete();
     }
