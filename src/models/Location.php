@@ -59,9 +59,9 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
     use TypeAttributeTrait;
     use UpdatedByUserTrait;
 
-    public const AUTH_LOCATION_CREATE = 'locationCreate';
-    public const AUTH_LOCATION_DELETE = 'locationDelete';
-    public const AUTH_LOCATION_UPDATE = 'locationUpdate';
+    public const string AUTH_LOCATION_CREATE = 'locationCreate';
+    public const string AUTH_LOCATION_DELETE = 'locationDelete';
+    public const string AUTH_LOCATION_UPDATE = 'locationUpdate';
 
     private static ?array $countryCodes;
 
@@ -155,6 +155,12 @@ class Location extends ActiveRecord implements DraftStatusAttributeInterface, Ty
 
     public function afterDelete(): void
     {
+        if ($this->tag_count) {
+            foreach ($this->locationTags as $locationTag) {
+                $locationTag->delete();
+            }
+        }
+
         static::getModule()->invalidatePageCache();
         parent::afterDelete();
     }

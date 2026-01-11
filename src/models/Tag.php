@@ -42,9 +42,9 @@ class Tag extends ActiveRecord implements DraftStatusAttributeInterface, TypeAtt
     use TypeAttributeTrait;
     use UpdatedByUserTrait;
 
-    public const AUTH_TAG_CREATE = 'tagCreate';
-    public const AUTH_TAG_DELETE = 'tagDelete';
-    public const AUTH_TAG_UPDATE = 'tagUpdate';
+    public const string AUTH_TAG_CREATE = 'tagCreate';
+    public const string AUTH_TAG_DELETE = 'tagDelete';
+    public const string AUTH_TAG_UPDATE = 'tagUpdate';
 
     public function behaviors(): array
     {
@@ -106,6 +106,12 @@ class Tag extends ActiveRecord implements DraftStatusAttributeInterface, TypeAtt
 
     public function afterDelete(): void
     {
+        if ($this->location_count) {
+            foreach ($this->locationTags as $locationTag) {
+                $locationTag->delete();
+            }
+        }
+
         $this->invalidateCache();
         parent::afterDelete();
     }
