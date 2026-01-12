@@ -73,8 +73,6 @@ class Location extends ActiveRecord implements
     public const string AUTH_LOCATION_DELETE = 'locationDelete';
     public const string AUTH_LOCATION_UPDATE = 'locationUpdate';
 
-    private static ?array $countryCodes;
-
     #[Override]
     public function behaviors(): array
     {
@@ -272,7 +270,7 @@ class Location extends ActiveRecord implements
 
     protected function getCountryCodes(): array
     {
-        return self::$countryCodes ??= array_keys(CountryList::getNames());
+        return array_keys(CountryList::getNames());
     }
 
     public function hasTagsEnabled(): bool

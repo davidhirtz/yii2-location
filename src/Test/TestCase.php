@@ -11,7 +11,7 @@ class TestCase extends \Hirtz\Skeleton\Test\TestCase
     #[Override]
     protected function setUp(): void
     {
-        $this->config ??= require(__DIR__ . '/../../tests/config.php');
+        $this->config ??= require(__DIR__ . '/../../config/test.php');
         parent::setUp();
     }
 }

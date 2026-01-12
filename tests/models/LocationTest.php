@@ -20,7 +20,7 @@ class LocationTest extends TestCase
         $location->type = TestLocation::TYPE_TEST;
 
         self::assertTrue($location->save());
-        self::assertNotNull($location->id);
+        self::assertSame(6, $location->id);
 
         $location->name = 'Test Location';
         $location->formatted_address = '123 Main St, New York, NY 10001, US';

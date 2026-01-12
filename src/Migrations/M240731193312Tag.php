@@ -52,11 +52,11 @@ class M240731193312Tag extends Migration
 
             $this->addPrimaryKey('entry_id', LocationTag::tableName(), ['location_id', 'tag_id']);
 
-            $this->addColumn(Location::tableName(), 'tag_ids', $this->json()
+            $this->addColumn(Location::tableName(), 'tag_ids', (string)$this->json()
                 ->null()
                 ->after('provider_id'));
 
-            $this->addColumn(Location::tableName(), 'tag_count', $this->integer()
+            $this->addColumn(Location::tableName(), 'tag_count', (string)$this->integer()
                 ->unsigned()
                 ->notNull()
                 ->defaultValue(0)

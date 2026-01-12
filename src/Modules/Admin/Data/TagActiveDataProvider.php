@@ -12,6 +12,7 @@ use Hirtz\Skeleton\Data\ActiveDataProvider;
 
 /**
  * @property TagQuery $query
+ * @extends ActiveDataProvider<Tag>
  */
 class TagActiveDataProvider extends ActiveDataProvider
 {
