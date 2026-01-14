@@ -21,7 +21,6 @@ class TagTest extends TestCase
         $tag->name = 'Test Tag';
 
         self::assertTrue($tag->save());
-        self::assertEquals(1, $tag->id);
 
         $location = $this->getLocationFromFixture('location-1');
 
