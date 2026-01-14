@@ -25,6 +25,7 @@ class LocationSubmenu extends Submenu
         return $this;
     }
 
+    #[\Override]
     protected function configure(): void
     {
         /** @var Module $module */

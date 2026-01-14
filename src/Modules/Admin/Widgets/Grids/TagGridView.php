@@ -32,6 +32,7 @@ class TagGridView extends GridView
     use StatusGridViewTrait;
     use TypeGridViewTrait;
 
+    #[\Override]
     protected function configure(): void
     {
         $this->model ??= Tag::instance();

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Location\tests\Controllers;
+namespace Hirtz\Location\Tests\Controllers;
 
 use Hirtz\Location\Test\Fixtures\Traits\LocationFixtureTrait;
 use Hirtz\Location\Test\TestCase;
@@ -13,6 +13,7 @@ class ApiControllerFunctionalTest extends TestCase
     use FunctionalTestTrait;
     use LocationFixtureTrait;
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

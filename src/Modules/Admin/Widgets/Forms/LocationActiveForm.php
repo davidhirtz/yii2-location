@@ -17,6 +17,7 @@ use yii\widgets\ActiveField;
  */
 class LocationActiveForm extends ActiveForm
 {
+    #[\Override]
     protected function configure(): void
     {
         $this->rows ??= [

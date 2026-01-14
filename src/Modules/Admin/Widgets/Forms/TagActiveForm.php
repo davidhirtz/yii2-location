@@ -15,6 +15,7 @@ use Stringable;
  */
 class TagActiveForm extends ActiveForm
 {
+    #[\Override]
     protected function configure(): void
     {
         $this->rows ??= [

@@ -41,6 +41,7 @@ class LocationGridView extends GridView
     protected bool $showTags = true;
     protected bool $showTypeDropdown = true;
 
+    #[\Override]
     protected function configure(): void
     {
         $this->model ??= Location::instance();

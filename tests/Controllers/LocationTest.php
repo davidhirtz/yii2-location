@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Location\tests\models;
+namespace Hirtz\Location\Tests\Controllers;
 
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Test\Models\TestLocation;
