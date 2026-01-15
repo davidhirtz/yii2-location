@@ -268,7 +268,7 @@ class Location extends ActiveRecord implements
         return $this->id ? $this->getAdminRoute() : false;
     }
 
-    protected function getCountryCodes(): array
+    public function getCountryCodes(): array
     {
         return array_keys(CountryList::getNames());
     }
