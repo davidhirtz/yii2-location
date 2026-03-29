@@ -113,9 +113,9 @@ class LocationGridView extends GridView
             $name = Html::markKeywords(Html::encode($name), $this->search->getKeywords());
 
             $content = A::make()
+                ->class('strong')
                 ->content($name)
-                ->href($location->getAdminRoute())
-                ->addClass('strong');
+                ->href($location->getAdminRoute());
 
             if ($address) {
                 $content .= Div::make()
@@ -126,9 +126,9 @@ class LocationGridView extends GridView
             $name = $address ?: Yii::t('location', 'Unnamed');
 
             $content = A::make()
+                ->class('strong')
                 ->content($name)
-                ->href($location->getAdminRoute())
-                ->addClass('strong');
+                ->href($location->getAdminRoute());
         }
 
         if ($this->showTags) {
