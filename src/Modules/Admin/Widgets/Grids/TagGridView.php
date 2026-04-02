@@ -9,6 +9,7 @@ use Hirtz\Location\Modules\Admin\Data\TagActiveDataProvider;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Helpers\Html;
 use Hirtz\Skeleton\Html\A;
+use Hirtz\Skeleton\Widgets\Buttons\CreateButton;
 use Hirtz\Skeleton\Widgets\Grids\Columns\BadgeColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\ButtonColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\Buttons\ViewGridButton;
@@ -16,9 +17,9 @@ use Hirtz\Skeleton\Widgets\Grids\Columns\Column;
 use Hirtz\Skeleton\Widgets\Grids\Columns\DataColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
 use Hirtz\Skeleton\Widgets\Grids\GridView;
-use Hirtz\Skeleton\Widgets\Grids\Toolbars\CreateButton;
 use Hirtz\Skeleton\Widgets\Grids\Traits\StatusGridViewTrait;
 use Hirtz\Skeleton\Widgets\Grids\Traits\TypeGridViewTrait;
+use Override;
 use Stringable;
 use Yii;
 
@@ -32,7 +33,7 @@ class TagGridView extends GridView
     use StatusGridViewTrait;
     use TypeGridViewTrait;
 
-    #[\Override]
+    #[Override]
     protected function configure(): void
     {
         $this->model ??= Tag::instance();
@@ -59,11 +60,11 @@ class TagGridView extends GridView
         parent::configure();
     }
 
-    protected function getCreateTagButton(): ?Stringable
+    protected function getCreateTagButton(): string|Stringable
     {
-        return $this->webuser->can(Tag::AUTH_TAG_CREATE)
-            ? CreateButton::make()->text(Yii::t('location', 'New Tag'))
-            : null;
+        return CreateButton::make()
+            ->text(Yii::t('location', 'New Tag'))
+            ->roles([Tag::AUTH_TAG_CREATE]);
     }
 
     protected function getNameColumn(): ?Column

@@ -13,6 +13,7 @@ use Hirtz\Skeleton\Helpers\Html;
 use Hirtz\Skeleton\Html\A;
 use Hirtz\Skeleton\Html\Div;
 use Hirtz\Skeleton\Widgets\Buttons\Button;
+use Hirtz\Skeleton\Widgets\Buttons\CreateButton;
 use Hirtz\Skeleton\Widgets\Grids\Columns\BadgeColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\ButtonColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\Buttons\ViewGridButton;
@@ -20,7 +21,6 @@ use Hirtz\Skeleton\Widgets\Grids\Columns\Column;
 use Hirtz\Skeleton\Widgets\Grids\Columns\DataColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
 use Hirtz\Skeleton\Widgets\Grids\GridView;
-use Hirtz\Skeleton\Widgets\Grids\Toolbars\CreateButton;
 use Hirtz\Skeleton\Widgets\Grids\Toolbars\FilterDropdown;
 use Hirtz\Skeleton\Widgets\Grids\Traits\StatusGridViewTrait;
 use Hirtz\Skeleton\Widgets\Grids\Traits\TypeGridViewTrait;
@@ -87,13 +87,12 @@ class LocationGridView extends GridView
         return array_map(fn (Tag $tag) => $tag->getI18nAttribute('name'), TagCollection::getAll());
     }
 
-    protected function getCreateLocationButton(): ?Stringable
+    protected function getCreateLocationButton(): string|Stringable
     {
-        return $this->webuser->can(Location::AUTH_LOCATION_CREATE)
-            ? CreateButton::make()
-                ->text(Yii::t('location', 'New Location'))
-                ->href(['/admin/location/create'])
-            : null;
+        return CreateButton::make()
+            ->href(['/admin/location/create'])
+            ->roles([Location::AUTH_LOCATION_CREATE])
+            ->text(Yii::t('location', 'New Location'));
     }
 
     protected function getNameColumn(): ?Column
