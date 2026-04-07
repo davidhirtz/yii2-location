@@ -10,8 +10,9 @@ use Hirtz\Location\Modules\Admin\Controllers\LocationTagController;
 use Hirtz\Location\Modules\Admin\Controllers\TagController;
 use Hirtz\Location\Modules\Admin\Interfaces\AutocompleteInterface;
 use Hirtz\Skeleton\Helpers\ArrayHelper;
-use Hirtz\Skeleton\Modules\Admin\Config\MainMenuItemConfig;
 use Hirtz\Skeleton\Modules\Admin\ModuleInterface;
+use Hirtz\Skeleton\Widgets\Navs\Nav;
+use Hirtz\Skeleton\Widgets\Navs\NavItem;
 use Override;
 use Yii;
 
@@ -59,27 +60,19 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
         return [];
     }
 
+    public function aside(Nav $nav): Nav
+    {
+        return $nav->addItem(NavItem::make()
+            ->label($this->getName())
+            ->url($this->url)
+            ->icon('map-marker-alt')
+            ->order(50)
+            ->roles([Location::AUTH_LOCATION_UPDATE])
+            ->routes(['admin/location/', 'admin/location-tag/', 'admin/tag/']));
+    }
+
     public function getName(): string
     {
         return Yii::t('location', 'Locations');
-    }
-
-    public function getMainMenuItems(): array
-    {
-        return [
-            'location' => new MainMenuItemConfig(
-                label: $this->getName(),
-                url: $this->url,
-                icon: 'map-marker-alt',
-                roles: [
-                    Location::AUTH_LOCATION_UPDATE,
-                ],
-                routes: [
-                    'admin/location/',
-                    'admin/location-tag/',
-                    'admin/tag/'
-                ],
-            ),
-        ];
     }
 }
