@@ -90,9 +90,9 @@ class LocationGridView extends GridView
     protected function getCreateLocationButton(): string|Stringable
     {
         return CreateButton::make()
-            ->href(['/admin/location/create'])
+            ->label(Yii::t('location', 'New Location'))
             ->roles([Location::AUTH_LOCATION_CREATE])
-            ->text(Yii::t('location', 'New Location'));
+            ->url(['/admin/location/create']);
     }
 
     protected function getNameColumn(): ?Column

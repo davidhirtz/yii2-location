@@ -63,7 +63,7 @@ class TagGridView extends GridView
     protected function getCreateTagButton(): string|Stringable
     {
         return CreateButton::make()
-            ->text(Yii::t('location', 'New Tag'))
+            ->label(Yii::t('location', 'New Tag'))
             ->roles([Tag::AUTH_TAG_CREATE]);
     }
 
