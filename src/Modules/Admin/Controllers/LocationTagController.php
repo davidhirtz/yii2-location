@@ -9,6 +9,7 @@ use Hirtz\Location\Models\LocationTag;
 use Hirtz\Location\Modules\Admin\Controllers\Traits\LocationTrait;
 use Hirtz\Location\Modules\Admin\Controllers\Traits\TagTrait;
 use Hirtz\Location\Modules\Admin\Data\TagActiveDataProvider;
+use Hirtz\Location\Modules\Admin\Module;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
 use Override;
@@ -18,6 +19,9 @@ use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
+/**
+ * @extends Controller<Module>
+ */
 class LocationTagController extends Controller
 {
     use LocationTrait;

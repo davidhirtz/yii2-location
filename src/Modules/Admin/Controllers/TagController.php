@@ -7,6 +7,7 @@ namespace Hirtz\Location\Modules\Admin\Controllers;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Controllers\Traits\TagTrait;
 use Hirtz\Location\Modules\Admin\Data\TagActiveDataProvider;
+use Hirtz\Location\Modules\Admin\Module;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
 use Yii;
@@ -16,6 +17,9 @@ use yii\web\ForbiddenHttpException;
 use yii\web\Response;
 use yii\web\ServerErrorHttpException;
 
+/**
+ * @extends Controller<Module>
+ */
 class TagController extends Controller
 {
     use TagTrait;

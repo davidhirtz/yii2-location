@@ -19,6 +19,9 @@ use yii\web\ForbiddenHttpException;
 use yii\web\Response;
 use yii\web\ServerErrorHttpException;
 
+/**
+ * @extends Controller<Module>
+ */
 class LocationController extends Controller
 {
     use LocationTrait;

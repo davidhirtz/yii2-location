@@ -1,0 +1,67 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Hirtz\Location\Modules\Admin\Widgets\Navs;
+
+use Hirtz\Location\Models\Location;
+use Hirtz\Location\Models\Tag;
+use Hirtz\Location\Modules\ModuleTrait;
+use Hirtz\Skeleton\Widgets\Navs\NavItem;
+use Override;
+use Yii;
+
+class LocationNavItem extends NavItem
+{
+    use ModuleTrait;
+
+    protected bool $showTags = true;
+
+    public function __construct(array $config = [])
+    {
+        $this->label ??= Yii::t('location', 'Places');
+        $this->icon ??= 'map-marker-alt';
+        $this->order ??= 50;
+        $this->url ??= ['/admin/location/index'];
+
+        parent::__construct($config);
+    }
+
+    #[Override]
+    protected function configure(): void
+    {
+        if ($this->showTags) {
+            $this->showTags = static::getModule()->enableTags;
+        }
+
+        $this->addSubnavItems();
+        parent::configure();
+    }
+
+    protected function addSubnavItems(): void
+    {
+        $this->addItems($this->getLocationIndexItem(), $this->getTagIndexItem());
+    }
+
+    protected function getLocationIndexItem(): ?NavItem
+    {
+        return NavItem::make()
+            ->label(Yii::t('location', 'Locations'))
+            ->order(10)
+            ->url(['/admin/location/index'])
+            ->roles([Location::AUTH_LOCATION_CREATE])
+            ->routes(['admin/location/', 'admin/location-tag/']);
+    }
+
+    protected function getTagIndexItem(): ?NavItem
+    {
+        return $this->showTags
+            ? NavItem::make()
+                ->label(Yii::t('location', 'Tags'))
+                ->order(20)
+                ->url(['/admin/tag/index'])
+                ->roles([Tag::AUTH_TAG_CREATE])
+                ->routes(['admin/tag/'])
+            : null;
+    }
+}
