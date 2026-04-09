@@ -205,7 +205,7 @@ class Tag extends ActiveRecord implements
 
     public function getAdminRoute(): array
     {
-        return ['/admin/tag/update', 'id' => $this->id];
+        return ['/admin/location/tag/update', 'id' => $this->id];
     }
 
     /**

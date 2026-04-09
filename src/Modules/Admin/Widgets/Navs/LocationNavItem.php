@@ -22,7 +22,7 @@ class LocationNavItem extends NavItem
         $this->label ??= Yii::t('location', 'Places');
         $this->icon ??= 'map-marker-alt';
         $this->order ??= 50;
-        $this->url ??= ['/admin/location/index'];
+        $this->url ??= ['/admin/location/location/index'];
 
         parent::__construct($config);
     }
@@ -48,9 +48,9 @@ class LocationNavItem extends NavItem
         return NavItem::make()
             ->label(Yii::t('location', 'Locations'))
             ->order(10)
-            ->url(['/admin/location/index'])
+            ->url(['/admin/location/location/index'])
             ->roles([Location::AUTH_LOCATION_CREATE])
-            ->routes(['admin/location/', 'admin/location-tag/']);
+            ->routes(['admin/location/location/', 'admin/location/location-tag/']);
     }
 
     protected function getTagIndexItem(): ?NavItem
@@ -59,9 +59,9 @@ class LocationNavItem extends NavItem
             ? NavItem::make()
                 ->label(Yii::t('location', 'Tags'))
                 ->order(20)
-                ->url(['/admin/tag/index'])
+                ->url(['/admin/location/tag/index'])
                 ->roles([Tag::AUTH_TAG_CREATE])
-                ->routes(['admin/tag/'])
+                ->routes(['admin/location/tag'])
             : null;
     }
 }

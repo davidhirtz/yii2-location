@@ -44,7 +44,7 @@ class LocationProviderIdField extends InputField
 
         $this->view->registerJsModule("$module->baseUrl/$module->filename", [
             '#' . $this->getId(),
-            Yii::$app->getUrlManager()->createUrl(['/admin/location/autocomplete']),
+            Yii::$app->getUrlManager()->createUrl(['/admin/location/location/autocomplete']),
         ]);
     }
 }

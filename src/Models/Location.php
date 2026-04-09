@@ -257,7 +257,7 @@ class Location extends ActiveRecord implements
 
     public function getAdminRoute(): array
     {
-        return ['/admin/location/update', 'id' => $this->id];
+        return ['/admin/location/location/update', 'id' => $this->id];
     }
 
     /**

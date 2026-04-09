@@ -23,7 +23,7 @@ class LocationSubmenu extends Submenu
     protected function configure(): void
     {
         $this->title ??= Yii::t('location', 'Locations');
-        $this->url ??= ['/admin/location/index'];
+        $this->url ??= ['/admin/location/location/index'];
 
         parent::configure();
     }

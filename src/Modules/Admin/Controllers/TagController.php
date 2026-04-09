@@ -10,6 +10,7 @@ use Hirtz\Location\Modules\Admin\Data\TagActiveDataProvider;
 use Hirtz\Location\Modules\Admin\Module;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
+use Override;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -25,7 +26,7 @@ class TagController extends Controller
     use TagTrait;
     use ModuleTrait;
 
-    #[\Override]
+    #[Override]
     public function behaviors(): array
     {
         return [

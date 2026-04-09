@@ -92,7 +92,7 @@ class LocationGridView extends GridView
         return CreateButton::make()
             ->label(Yii::t('location', 'New Location'))
             ->roles([Location::AUTH_LOCATION_CREATE])
-            ->url(['/admin/location/create']);
+            ->url(['/admin/location/location/create']);
     }
 
     protected function getNameColumn(): ?Column
@@ -142,7 +142,7 @@ class LocationGridView extends GridView
         return BadgeColumn::make()
             ->property('tag_count')
             ->visible(static::getModule()->enableTags)
-            ->url(fn (Location $location) => ['/admin/location-tag/index', 'location' => $location->id]);
+            ->url(fn (Location $location) => ['/admin/location/location-tag/index', 'location' => $location->id]);
     }
 
     protected function getUpdatedAtColumn(): ?Column
