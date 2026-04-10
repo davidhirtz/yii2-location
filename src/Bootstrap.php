@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Hirtz\Location;
 
 use Hirtz\Location\Controllers\ApiController;
+use Hirtz\Location\Models\Location;
+use Hirtz\Location\Models\Tag;
+use Hirtz\Skeleton\Modules\Admin\Controllers\DashboardController;
 use Hirtz\Skeleton\Web\Application;
 use Yii;
 use yii\base\BootstrapInterface;
@@ -44,6 +47,11 @@ class Bootstrap implements BootstrapInterface
         if (Yii::$app->getModules()['location']['enableApiRoutes'] ?? true) {
             $app->addUrlManagerRules(['api/location/<action>.<format>' => 'location/api/<action>']);
         }
+
+        DashboardController::addRoles([
+            Location::AUTH_LOCATION_UPDATE,
+            Tag::AUTH_TAG_UPDATE,
+        ]);
 
         $app->setMigrationNamespace('Hirtz\Location\Migrations');
     }
