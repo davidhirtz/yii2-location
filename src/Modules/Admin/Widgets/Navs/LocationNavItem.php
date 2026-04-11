@@ -40,7 +40,7 @@ class LocationNavItem extends NavItem
 
     protected function addSubnavItems(): void
     {
-        $this->addItems($this->getLocationIndexItem(), $this->getTagIndexItem());
+        $this->addItem($this->getLocationIndexItem(), $this->getTagIndexItem());
     }
 
     protected function getLocationIndexItem(): ?NavItem
