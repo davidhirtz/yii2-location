@@ -9,7 +9,6 @@ use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Data\LocationActiveDataProvider;
 use Hirtz\Location\Modules\ModuleTrait;
-use Hirtz\Skeleton\Helpers\Html;
 use Hirtz\Skeleton\Html\A;
 use Hirtz\Skeleton\Html\Div;
 use Hirtz\Skeleton\Widgets\Buttons\Button;
@@ -22,8 +21,10 @@ use Hirtz\Skeleton\Widgets\Grids\Columns\DataColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
 use Hirtz\Skeleton\Widgets\Grids\GridView;
 use Hirtz\Skeleton\Widgets\Grids\Toolbars\FilterDropdown;
+use Hirtz\Skeleton\Widgets\Grids\Toolbars\GridSearchForm;
 use Hirtz\Skeleton\Widgets\Grids\Traits\StatusGridViewTrait;
 use Hirtz\Skeleton\Widgets\Grids\Traits\TypeGridViewTrait;
+use Override;
 use Stringable;
 use Yii;
 
@@ -41,7 +42,7 @@ class LocationGridView extends GridView
     protected bool $showTags = true;
     protected bool $showTypeDropdown = true;
 
-    #[\Override]
+    #[Override]
     protected function configure(): void
     {
         $this->model ??= Location::instance();
@@ -55,7 +56,7 @@ class LocationGridView extends GridView
         $this->header ??= [
             $this->getTypeDropdown(),
             $this->showTagDropdown ? $this->getTagDropdown() : null,
-            $this->search->getToolbarItem(),
+            GridSearchForm::make()->grid($this),
         ];
 
         $this->columns ??= [
@@ -105,11 +106,11 @@ class LocationGridView extends GridView
     protected function getNameColumnContent(Location $location): string
     {
         if ($address = $location->formatted_address) {
-            $address = Html::markKeywords(Html::encode($address), $this->search->getKeywords());
+            $address = $this->search->markKeywords($address);
         }
 
         if ($name = $location->getI18nAttribute('name')) {
-            $name = Html::markKeywords(Html::encode($name), $this->search->getKeywords());
+            $name = $this->search->markKeywords($name);
 
             $content = A::make()
                 ->class('strong')

@@ -7,7 +7,6 @@ namespace Hirtz\Location\Modules\Admin\Widgets\Grids;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Data\TagActiveDataProvider;
 use Hirtz\Location\Modules\ModuleTrait;
-use Hirtz\Skeleton\Helpers\Html;
 use Hirtz\Skeleton\Html\A;
 use Hirtz\Skeleton\Widgets\Buttons\CreateButton;
 use Hirtz\Skeleton\Widgets\Grids\Columns\BadgeColumn;
@@ -17,6 +16,7 @@ use Hirtz\Skeleton\Widgets\Grids\Columns\Column;
 use Hirtz\Skeleton\Widgets\Grids\Columns\DataColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
 use Hirtz\Skeleton\Widgets\Grids\GridView;
+use Hirtz\Skeleton\Widgets\Grids\Toolbars\GridSearchForm;
 use Hirtz\Skeleton\Widgets\Grids\Traits\StatusGridViewTrait;
 use Hirtz\Skeleton\Widgets\Grids\Traits\TypeGridViewTrait;
 use Override;
@@ -41,7 +41,7 @@ class TagGridView extends GridView
         $this->header ??= [
             $this->getStatusDropdown(),
             $this->getTypeDropdown(),
-            $this->search->getToolbarItem(),
+            GridSearchForm::make()->grid($this),
         ];
 
         $this->columns ??= [
@@ -76,7 +76,7 @@ class TagGridView extends GridView
 
     protected function getNameColumnContent(Tag $tag): ?Stringable
     {
-        $content = Html::markKeywords(Html::encode($tag->getI18nAttribute('name')), $this->search->getKeywords());
+        $content = $this->search->markKeywords($tag->getI18nAttribute('name'));
 
         return A::make()
             ->content($content)
