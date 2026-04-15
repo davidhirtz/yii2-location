@@ -36,8 +36,6 @@ class TagGridView extends GridView
     #[Override]
     protected function configure(): void
     {
-        $this->model ??= Tag::instance();
-
         $this->header ??= [
             $this->getStatusDropdown(),
             $this->getTypeDropdown(),
