@@ -48,7 +48,7 @@ class LocationTagGridView extends TagGridView
         );
 
         return RelativeTimeColumn::make()
-            ->label(Yii::t('location', 'Added'))
+            ->title(Yii::t('location', 'Added'))
             ->visible($visible)
             ->value(fn (Tag $tag) => $tag->locationTag?->updated_at)
             ->hiddenForMediumDevices();
