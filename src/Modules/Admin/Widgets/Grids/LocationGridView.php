@@ -17,7 +17,7 @@ use Hirtz\Skeleton\Widgets\Grids\Columns\BadgeColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\ButtonColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\Buttons\ViewGridButton;
 use Hirtz\Skeleton\Widgets\Grids\Columns\Column;
-use Hirtz\Skeleton\Widgets\Grids\Columns\PropertyColumn;
+use Hirtz\Skeleton\Widgets\Grids\Columns\DataColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
 use Hirtz\Skeleton\Widgets\Grids\GridView;
 use Hirtz\Skeleton\Widgets\Grids\Toolbars\FilterDropdown;
@@ -74,12 +74,17 @@ class LocationGridView extends GridView
         parent::configure();
     }
 
+    protected function getStatusDropdownItems(): array
+    {
+        return Location::instance()::getStatuses();
+    }
+
     protected function getTagDropdown(): ?FilterDropdown
     {
         return FilterDropdown::make()
             ->label(Yii::t('skeleton', 'Tags'))
             ->items($this->getTagDropdownItems())
-            ->param('tag');
+            ->paramName('tag');
     }
 
     protected function getTagDropdownItems(): array
@@ -97,7 +102,7 @@ class LocationGridView extends GridView
 
     protected function getNameColumn(): ?Column
     {
-        return PropertyColumn::make()
+        return DataColumn::make()
             ->property('name')
             ->content($this->getNameColumnContent(...));
     }
