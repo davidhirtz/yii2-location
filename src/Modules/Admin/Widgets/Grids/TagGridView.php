@@ -39,7 +39,7 @@ class TagGridView extends GridView
         $this->header ??= [
             $this->getStatusDropdown(),
             $this->getTypeDropdown(),
-            GridSearchForm::make()->grid($this),
+            $this->getSearchInput(),
         ];
 
         $this->columns ??= [

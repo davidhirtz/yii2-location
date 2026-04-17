@@ -55,7 +55,7 @@ class LocationGridView extends GridView
         $this->header ??= [
             $this->getTypeDropdown(),
             $this->showTagDropdown ? $this->getTagDropdown() : null,
-            GridSearchForm::make()->grid($this),
+            $this->getSearchInput(),
         ];
 
         $this->columns ??= [
