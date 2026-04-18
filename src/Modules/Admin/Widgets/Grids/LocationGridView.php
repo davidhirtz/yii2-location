@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Widgets\Grids;
 
+use Hirtz\Cms\Hotspot\Models\HotspotAsset;
 use Hirtz\Location\Models\Collections\TagCollection;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Tag;
@@ -20,10 +21,11 @@ use Hirtz\Skeleton\Widgets\Grids\Columns\Column;
 use Hirtz\Skeleton\Widgets\Grids\Columns\DataColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\StatusIconColumn;
+use Hirtz\Skeleton\Widgets\Grids\Columns\TypeColumn;
 use Hirtz\Skeleton\Widgets\Grids\GridView;
 use Hirtz\Skeleton\Widgets\Grids\Toolbars\FilterDropdown;
 use Hirtz\Skeleton\Widgets\Grids\Toolbars\StatusFilterDropdown;
-use Hirtz\Skeleton\Widgets\Grids\Traits\TypeGridViewTrait;
+use Hirtz\Skeleton\Widgets\Grids\Toolbars\TypeFilterDropdown;
 use Override;
 use Stringable;
 use Yii;
@@ -35,7 +37,6 @@ use Yii;
 class LocationGridView extends GridView
 {
     use ModuleTrait;
-    use TypeGridViewTrait;
 
     protected bool $showTagDropdown = true;
     protected bool $showTags = true;
@@ -80,6 +81,12 @@ class LocationGridView extends GridView
             ->model(Location::instance());
     }
 
+    protected function getTypeDropdown(): ?Stringable
+    {
+        return TypeFilterDropdown::make()
+            ->model(Location::instance());
+    }
+
     protected function getTagDropdown(): ?FilterDropdown
     {
         return FilterDropdown::make()
@@ -104,6 +111,18 @@ class LocationGridView extends GridView
     protected function getStatusColumn(): ?Column
     {
         return StatusIconColumn::make();
+    }
+
+    protected function getTypeColumn(): ?Column
+    {
+        return TypeColumn::make()
+            ->url(fn (Location $location) => $location->getAdminRoute())
+            ->visible($this->hasVisibleTypes());
+    }
+
+    protected function hasVisibleTypes(): bool
+    {
+        return count(Location::instance()::getTypes()) > 1;
     }
 
     protected function getNameColumn(): ?Column

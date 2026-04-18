@@ -16,10 +16,9 @@ use Hirtz\Skeleton\Widgets\Grids\Columns\Column;
 use Hirtz\Skeleton\Widgets\Grids\Columns\DataColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\StatusIconColumn;
+use Hirtz\Skeleton\Widgets\Grids\Columns\TypeColumn;
 use Hirtz\Skeleton\Widgets\Grids\GridView;
 use Hirtz\Skeleton\Widgets\Grids\Toolbars\StatusFilterDropdown;
-
-use Hirtz\Skeleton\Widgets\Grids\Traits\TypeGridViewTrait;
 use Override;
 use Stringable;
 use Yii;
@@ -31,14 +30,12 @@ use Yii;
 class TagGridView extends GridView
 {
     use ModuleTrait;
-    use TypeGridViewTrait;
 
     #[Override]
     protected function configure(): void
     {
         $this->header ??= [
             $this->getStatusDropdown(),
-            $this->getTypeDropdown(),
             $this->getSearchInput(),
         ];
 
@@ -74,6 +71,18 @@ class TagGridView extends GridView
     protected function getStatusColumn(): ?Column
     {
         return StatusIconColumn::make();
+    }
+
+    protected function getTypeColumn(): ?Column
+    {
+        return TypeColumn::make()
+                ->url(fn (Tag $model) => $model->getAdminRoute())
+                ->visible($this->hasVisibleTypes());
+    }
+
+    protected function hasVisibleTypes(): bool
+    {
+        return count(Tag::instance()::getTypes()) > 1;
     }
 
     protected function getNameColumn(): ?Column
