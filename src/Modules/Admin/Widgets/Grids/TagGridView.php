@@ -15,9 +15,10 @@ use Hirtz\Skeleton\Widgets\Grids\Columns\Buttons\ViewGridButton;
 use Hirtz\Skeleton\Widgets\Grids\Columns\Column;
 use Hirtz\Skeleton\Widgets\Grids\Columns\DataColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
+use Hirtz\Skeleton\Widgets\Grids\Columns\StatusIconColumn;
 use Hirtz\Skeleton\Widgets\Grids\GridView;
-use Hirtz\Skeleton\Widgets\Grids\Toolbars\GridSearchForm;
-use Hirtz\Skeleton\Widgets\Grids\Traits\StatusGridViewTrait;
+use Hirtz\Skeleton\Widgets\Grids\Toolbars\StatusFilterDropdown;
+
 use Hirtz\Skeleton\Widgets\Grids\Traits\TypeGridViewTrait;
 use Override;
 use Stringable;
@@ -30,7 +31,6 @@ use Yii;
 class TagGridView extends GridView
 {
     use ModuleTrait;
-    use StatusGridViewTrait;
     use TypeGridViewTrait;
 
     #[Override]
@@ -58,9 +58,10 @@ class TagGridView extends GridView
         parent::configure();
     }
 
-    protected function getStatusDropdownItems(): array
+    protected function getStatusDropdown(): ?Stringable
     {
-        return Tag::instance()::getStatuses();
+        return StatusFilterDropdown::make()
+            ->model(Tag::instance());
     }
 
     protected function getCreateTagButton(): string|Stringable
@@ -68,6 +69,11 @@ class TagGridView extends GridView
         return CreateButton::make()
             ->label(Yii::t('location', 'New Tag'))
             ->roles([Tag::AUTH_TAG_CREATE]);
+    }
+
+    protected function getStatusColumn(): ?Column
+    {
+        return StatusIconColumn::make();
     }
 
     protected function getNameColumn(): ?Column

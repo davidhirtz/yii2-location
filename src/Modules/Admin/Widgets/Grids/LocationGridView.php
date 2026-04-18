@@ -19,10 +19,10 @@ use Hirtz\Skeleton\Widgets\Grids\Columns\Buttons\ViewGridButton;
 use Hirtz\Skeleton\Widgets\Grids\Columns\Column;
 use Hirtz\Skeleton\Widgets\Grids\Columns\DataColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
+use Hirtz\Skeleton\Widgets\Grids\Columns\StatusIconColumn;
 use Hirtz\Skeleton\Widgets\Grids\GridView;
 use Hirtz\Skeleton\Widgets\Grids\Toolbars\FilterDropdown;
-use Hirtz\Skeleton\Widgets\Grids\Toolbars\GridSearchForm;
-use Hirtz\Skeleton\Widgets\Grids\Traits\StatusGridViewTrait;
+use Hirtz\Skeleton\Widgets\Grids\Toolbars\StatusFilterDropdown;
 use Hirtz\Skeleton\Widgets\Grids\Traits\TypeGridViewTrait;
 use Override;
 use Stringable;
@@ -35,7 +35,6 @@ use Yii;
 class LocationGridView extends GridView
 {
     use ModuleTrait;
-    use StatusGridViewTrait;
     use TypeGridViewTrait;
 
     protected bool $showTagDropdown = true;
@@ -53,6 +52,7 @@ class LocationGridView extends GridView
         $this->showTypeDropdown = $this->showTypeDropdown && count(Location::instance()::getTypes()) > 1;
 
         $this->header ??= [
+            $this->getStatusDropdown(),
             $this->getTypeDropdown(),
             $this->showTagDropdown ? $this->getTagDropdown() : null,
             $this->getSearchInput(),
@@ -74,9 +74,10 @@ class LocationGridView extends GridView
         parent::configure();
     }
 
-    protected function getStatusDropdownItems(): array
+    protected function getStatusDropdown(): ?Stringable
     {
-        return Location::instance()::getStatuses();
+        return StatusFilterDropdown::make()
+            ->model(Location::instance());
     }
 
     protected function getTagDropdown(): ?FilterDropdown
@@ -98,6 +99,11 @@ class LocationGridView extends GridView
             ->label(Yii::t('location', 'New Location'))
             ->roles([Location::AUTH_LOCATION_CREATE])
             ->url(['/admin/location/location/create']);
+    }
+
+    protected function getStatusColumn(): ?Column
+    {
+        return StatusIconColumn::make();
     }
 
     protected function getNameColumn(): ?Column
