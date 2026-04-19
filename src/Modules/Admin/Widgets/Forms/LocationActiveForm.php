@@ -9,15 +9,15 @@ use Hirtz\Skeleton\Helpers\CountryList;
 use Hirtz\Skeleton\Widgets\Forms\ActiveForm;
 use Hirtz\Skeleton\Widgets\Forms\Fields\InputField;
 use Hirtz\Skeleton\Widgets\Forms\Fields\SelectField;
+use Override;
 use Stringable;
-use yii\widgets\ActiveField;
 
 /**
  * @property Location $model
  */
 class LocationActiveForm extends ActiveForm
 {
-    #[\Override]
+    #[Override]
     protected function configure(): void
     {
         $this->rows ??= [

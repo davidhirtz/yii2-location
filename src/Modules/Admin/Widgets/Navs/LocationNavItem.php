@@ -20,7 +20,7 @@ class LocationNavItem extends NavItem
     public function __construct(array $config = [])
     {
         $this->label ??= Yii::t('location', 'Places');
-        $this->icon ??= 'map-marker-alt';
+        $this->icon ??= 'map-marked-alt';
         $this->order ??= 50;
         $this->url ??= ['/admin/location/location/index'];
 
@@ -46,6 +46,7 @@ class LocationNavItem extends NavItem
     protected function getLocationIndexItem(): ?NavItem
     {
         return NavItem::make()
+            ->icon('map-marker-alt')
             ->label(Yii::t('location', 'Locations'))
             ->order(10)
             ->url(['/admin/location/location/index'])
@@ -57,6 +58,7 @@ class LocationNavItem extends NavItem
     {
         return $this->showTags
             ? NavItem::make()
+                ->icon('tags')
                 ->label(Yii::t('location', 'Tags'))
                 ->order(20)
                 ->url(['/admin/location/tag/index'])

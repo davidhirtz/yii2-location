@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Widgets\Grids;
 
-use Hirtz\Cms\Hotspot\Models\HotspotAsset;
 use Hirtz\Location\Models\Collections\TagCollection;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Tag;
@@ -13,7 +12,7 @@ use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Html\A;
 use Hirtz\Skeleton\Html\Div;
 use Hirtz\Skeleton\Widgets\Buttons\Button;
-use Hirtz\Skeleton\Widgets\Buttons\CreateButton;
+use Hirtz\Skeleton\Widgets\Buttons\ButtonGroup;
 use Hirtz\Skeleton\Widgets\Grids\Columns\BadgeColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\ButtonColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\Buttons\ViewGridButton;
@@ -47,15 +46,18 @@ class LocationGridView extends GridView
     {
         $this->showTags = $this->showTags && static::getModule()->enableTags;
 
-        $this->showTagDropdown = $this->showTagDropdown
-            && static::getModule()->enableTags && count(TagCollection::getAll()) > 1;
+        if ($this->showTagDropdown) {
+            $this->showTagDropdown = static::getModule()->enableTags && count(TagCollection::getAll()) !== 0;
+        }
 
-        $this->showTypeDropdown = $this->showTypeDropdown && count(Location::instance()::getTypes()) > 1;
+        if ($this->showTypeDropdown) {
+            $this->showTypeDropdown = count(Location::getTypes()) > 1;
+        }
 
         $this->header ??= [
             $this->getStatusDropdown(),
             $this->getTypeDropdown(),
-            $this->showTagDropdown ? $this->getTagDropdown() : null,
+            $this->getTagDropdown(),
             $this->getSearchInput(),
         ];
 
@@ -66,10 +68,6 @@ class LocationGridView extends GridView
             $this->getTagCountColumn(),
             $this->getUpdatedAtColumn(),
             $this->getButtonColumn(),
-        ];
-
-        $this->footer ??= [
-            $this->getCreateLocationButton(),
         ];
 
         parent::configure();
@@ -92,20 +90,13 @@ class LocationGridView extends GridView
         return FilterDropdown::make()
             ->label(Yii::t('skeleton', 'Tags'))
             ->items($this->getTagDropdownItems())
+            ->visible($this->showTagDropdown)
             ->paramName('tag');
     }
 
     protected function getTagDropdownItems(): array
     {
         return array_map(fn (Tag $tag) => $tag->getI18nAttribute('name'), TagCollection::getAll());
-    }
-
-    protected function getCreateLocationButton(): string|Stringable
-    {
-        return CreateButton::make()
-            ->label(Yii::t('location', 'New Location'))
-            ->roles([Location::AUTH_LOCATION_CREATE])
-            ->url(['/admin/location/location/create']);
     }
 
     protected function getStatusColumn(): ?Column
@@ -117,12 +108,7 @@ class LocationGridView extends GridView
     {
         return TypeColumn::make()
             ->url(fn (Location $location) => $location->getAdminRoute())
-            ->visible($this->hasVisibleTypes());
-    }
-
-    protected function hasVisibleTypes(): bool
-    {
-        return count(Location::instance()::getTypes()) > 1;
+            ->visible($this->showTypeDropdown);
     }
 
     protected function getNameColumn(): ?Column
@@ -207,10 +193,6 @@ class LocationGridView extends GridView
                 ->addClass('btn-sm');
         }
 
-        return $tags
-            ? Div::make()
-                ->class('btn-group')
-                ->content(...$tags)
-            : null;
+        return $tags ? ButtonGroup::make()->content(...$tags) : null;
     }
 }

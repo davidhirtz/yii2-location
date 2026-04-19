@@ -12,13 +12,12 @@ declare(strict_types=1);
 use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Controllers\TagController;
 use Hirtz\Location\Modules\Admin\Widgets\Forms\TagActiveForm;
-use Hirtz\Location\Modules\Admin\Widgets\Navs\LocationSubmenu;
+use Hirtz\Location\Modules\Admin\Widgets\Navs\TagHeader;
 use Hirtz\Skeleton\Web\View;
 use Hirtz\Skeleton\Widgets\Forms\FormContainer;
 
-$this->title(Yii::t('location', 'Create New Tag'));
-
-echo LocationSubmenu::make();
+echo TagHeader::make()
+    ->title(Yii::t('location', 'Create New Tag'));
 
 echo FormContainer::make()
     ->title($this->title)

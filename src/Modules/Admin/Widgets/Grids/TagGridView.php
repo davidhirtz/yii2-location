@@ -48,10 +48,6 @@ class TagGridView extends GridView
             $this->getButtonColumn(),
         ];
 
-        $this->footer ??= [
-            $this->getCreateTagButton(),
-        ];
-
         parent::configure();
     }
 
@@ -59,13 +55,6 @@ class TagGridView extends GridView
     {
         return StatusFilterDropdown::make()
             ->model(Tag::instance());
-    }
-
-    protected function getCreateTagButton(): string|Stringable
-    {
-        return CreateButton::make()
-            ->label(Yii::t('location', 'New Tag'))
-            ->roles([Tag::AUTH_TAG_CREATE]);
     }
 
     protected function getStatusColumn(): ?Column
@@ -76,8 +65,8 @@ class TagGridView extends GridView
     protected function getTypeColumn(): ?Column
     {
         return TypeColumn::make()
-                ->url(fn (Tag $model) => $model->getAdminRoute())
-                ->visible($this->hasVisibleTypes());
+            ->url(fn (Tag $model) => $model->getAdminRoute())
+            ->visible($this->hasVisibleTypes());
     }
 
     protected function hasVisibleTypes(): bool
@@ -106,7 +95,7 @@ class TagGridView extends GridView
     {
         return BadgeColumn::make()
             ->property('location_count')
-            ->url(fn (Tag $tag) => $tag->getAdminRoute());
+            ->url(fn (Tag $tag): array => ['/admin/location/location/index', 'tag' => $tag->id]);
     }
 
     protected function getUpdatedAtColumn(): ?Column

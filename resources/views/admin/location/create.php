@@ -12,13 +12,12 @@ declare(strict_types=1);
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Modules\Admin\Controllers\LocationController;
 use Hirtz\Location\Modules\Admin\Widgets\Forms\LocationActiveForm;
-use Hirtz\Location\Modules\Admin\Widgets\Navs\LocationSubmenu;
+use Hirtz\Location\Modules\Admin\Widgets\Navs\LocationHeader;
 use Hirtz\Skeleton\Web\View;
 use Hirtz\Skeleton\Widgets\Forms\FormContainer;
 
-$this->title(Yii::t('location', 'Create New Location'));
-
-echo LocationSubmenu::make();
+echo LocationHeader::make()
+    ->title(Yii::t('location', 'Create New Location'));
 
 echo FormContainer::make()
     ->title($this->title)
