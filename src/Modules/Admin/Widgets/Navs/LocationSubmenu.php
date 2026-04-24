@@ -25,20 +25,17 @@ class LocationSubmenu extends Submenu
     #[Override]
     protected function configure(): void
     {
-        $this->title ??= Yii::t('location', 'Locations');
-        $this->url ??= ['/admin/location/location/index'];
-
         $this->addItem($this->getLocationItem(), $this->getLocationTagsItem());
-
         parent::configure();
     }
 
     protected function getLocationItem(): ?Stringable
     {
         return NavItem::make()
-            ->label(Yii::t('location', 'Location'))
+            ->label(Yii::t('skeleton', 'General'))
             ->url($this->model->getAdminRoute())
-            ->icon('map-marker-alt');
+            ->routes(['admin/location/'])
+            ->icon('cog');
     }
 
     protected function getLocationTagsItem(): ?Stringable
