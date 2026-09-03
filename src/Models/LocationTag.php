@@ -183,7 +183,7 @@ class LocationTag extends ActiveRecord implements TrailModelInterface
     #[Override]
     public function attributeLabels(): array
     {
-        return [...parent::attributeLabels(), 'location_id' => Lang::t('location', 'LOCATION_TAG_LOCATION_ID_LABEL_ALT_2'), 'tag_id' => Lang::t('location', 'LOCATION_TAG_LOCATION_ID_LABEL'), 'updated_at' => Lang::t('location', 'LOCATION_TAG_UPDATED_AT_LABEL')];
+        return [...parent::attributeLabels(), 'location_id' => Lang::t('location', 'LOCATION_TAG_LOCATION_ID_LABEL'), 'tag_id' => Lang::t('location', 'LOCATION_TAG_TAG_ID_LABEL'), 'updated_at' => Lang::t('location', 'LOCATION_TAG_UPDATED_AT_LABEL')];
     }
 
     #[Override]
