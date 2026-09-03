@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Controllers;
 
+use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Controllers\Traits\LocationTrait;
@@ -87,7 +88,7 @@ class LocationController extends Controller
         }
 
         if ($location->load(Yii::$app->getRequest()->post()) && $location->insert()) {
-            $this->success(Yii::t('location', 'The location was created.'));
+            $this->success(Lang::t('location', 'LOCATION_FLASH_THE_LOCATION_WAS_CREATED'));
             return $this->redirect(['index']);
         }
 
@@ -101,7 +102,7 @@ class LocationController extends Controller
         $location = $this->findLocation($id, Location::AUTH_LOCATION_UPDATE);
 
         if ($location->load(Yii::$app->getRequest()->post()) && $location->update()) {
-            $this->success(Yii::t('location', 'The location was updated.'));
+            $this->success(Lang::t('location', 'LOCATION_FLASH_THE_LOCATION_WAS_UPDATED'));
             return $this->refresh();
         }
 
@@ -115,7 +116,7 @@ class LocationController extends Controller
         $location = $this->findLocation($id, Location::AUTH_LOCATION_DELETE);
 
         if ($location->delete()) {
-            $this->success(Yii::t('location', 'The location was deleted.'));
+            $this->success(Lang::t('location', 'LOCATION_FLASH_THE_LOCATION_WAS_DELETED'));
             return $this->redirect(['index']);
         }
 

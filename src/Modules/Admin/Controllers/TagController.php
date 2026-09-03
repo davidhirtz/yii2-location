@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Controllers;
 
+use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Controllers\Traits\TagTrait;
 use Hirtz\Location\Modules\Admin\Data\TagActiveDataProvider;
@@ -88,7 +89,7 @@ class TagController extends Controller
         }
 
         if ($tag->load(Yii::$app->getRequest()->post()) && $tag->insert()) {
-            $this->success(Yii::t('location', 'The tag was created.'));
+            $this->success(Lang::t('location', 'TAG_FLASH_THE_TAG_WAS_CREATED'));
             return $this->redirect(['index']);
         }
 
@@ -102,7 +103,7 @@ class TagController extends Controller
         $tag = $this->findTag($id, Tag::AUTH_TAG_UPDATE);
 
         if ($tag->load(Yii::$app->getRequest()->post()) && $tag->update()) {
-            $this->success(Yii::t('location', 'The tag was updated.'));
+            $this->success(Lang::t('location', 'TAG_FLASH_THE_TAG_WAS_UPDATED'));
             return $this->refresh();
         }
 
@@ -116,7 +117,7 @@ class TagController extends Controller
         $tag = $this->findTag($id, Tag::AUTH_TAG_DELETE);
 
         if ($tag->delete()) {
-            $this->success(Yii::t('location', 'The tag was deleted.'));
+            $this->success(Lang::t('location', 'TAG_FLASH_THE_TAG_WAS_DELETED'));
             return $this->redirect(['index']);
         }
 

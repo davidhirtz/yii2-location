@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Controllers;
 
+use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\LocationTag;
 use Hirtz\Location\Modules\Admin\Controllers\Traits\LocationTrait;
@@ -96,7 +97,7 @@ class LocationTagController extends Controller
 
         $locationTag->insert();
 
-        $this->errorOrSuccess($locationTag, Yii::t('location', 'The tag was added to the location.'));
+        $this->errorOrSuccess($locationTag, Lang::t('location', 'LOCATION_TAG_FLASH_THE_TAG_WAS_ADDED_TO_THE'));
 
         return $this->redirect(['index'] + Yii::$app->getRequest()->getQueryParams());
     }
@@ -115,7 +116,7 @@ class LocationTagController extends Controller
         $this->checkLocationPermission($locationTag->location, Location::AUTH_LOCATION_UPDATE);
         $locationTag->delete();
 
-        $this->errorOrSuccess($locationTag, Yii::t('location', 'The tag was removed to the location.'));
+        $this->errorOrSuccess($locationTag, Lang::t('location', 'LOCATION_TAG_FLASH_THE_TAG_WAS_REMOVED_TO_THE'));
 
         return $this->redirect(['index'] + Yii::$app->getRequest()->getQueryParams());
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Widgets\Grids;
 
+use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Data\TagActiveDataProvider;
 use Hirtz\Skeleton\Widgets\Buttons\Button;
@@ -48,7 +49,7 @@ class LocationTagGridView extends TagGridView
         );
 
         return RelativeTimeColumn::make()
-            ->title(Yii::t('location', 'Added'))
+            ->title(Lang::t('location', 'LOCATION_TAG_ADDED'))
             ->visible($visible)
             ->value(fn (Tag $tag) => $tag->locationTag?->updated_at)
             ->hiddenForMediumDevices();

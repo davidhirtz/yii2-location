@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin;
 
+use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Cms\Models\Entry;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Modules\Admin\Interfaces\AutocompleteInterface;
@@ -34,7 +35,7 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
     {
         return $dashboard->addItem(DashboardItem::make()
             ->icon('map-marker-alt')
-            ->label(Yii::t('location', 'Create New Location'))
+            ->label(Lang::t('location', 'MODULE_CREATE_NEW_LOCATION'))
             ->roles([Location::AUTH_LOCATION_CREATE])
             ->url(['/admin/location/location/create']));
     }

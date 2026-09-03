@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Widgets\Navs;
 
+use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Widgets\Navs\NavItem;
@@ -32,7 +33,7 @@ class LocationSubmenu extends Submenu
     protected function getLocationItem(): ?Stringable
     {
         return NavItem::make()
-            ->label(Yii::t('skeleton', 'General'))
+            ->label(Lang::t('skeleton', 'COMMON_GENERAL'))
             ->url($this->model->getAdminRoute())
             ->routes(['admin/location/'])
             ->icon('cog');
@@ -41,7 +42,7 @@ class LocationSubmenu extends Submenu
     protected function getLocationTagsItem(): ?Stringable
     {
         return NavItem::make()
-            ->label(Yii::t('location', 'Tags'))
+            ->label(Lang::t('location', 'COMMON_TAGS'))
             ->url(['location-tag/index', 'location' => $this->model->id])
             ->visible(static::getModule()->enableTags)
             ->badge($this->model->tag_count ?: null)

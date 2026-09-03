@@ -9,6 +9,7 @@ use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Skeleton\Modules\Admin\Controllers\DashboardController;
 use Hirtz\Skeleton\Web\Application;
+use Hirtz\Skeleton\Routing\Route;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\i18n\PhpMessageSource;
@@ -25,7 +26,8 @@ class Bootstrap implements BootstrapInterface
         $app->getI18n()->translations['location'] ??= [
             'class' => PhpMessageSource::class,
             'basePath' => '@location/../messages',
-        ];
+                    'forceTranslation' => true,
+];
 
         $app->extendModules([
             'admin' => [
@@ -45,7 +47,7 @@ class Bootstrap implements BootstrapInterface
          * @see ApiController::actionIndex()
          */
         if (Yii::$app->getModules()['location']['enableApiRoutes'] ?? true) {
-            $app->addUrlManagerRules(['api/location/<action>.<format>' => 'location/api/<action>']);
+            $app->addRoutes(Route::to('api/location/{action}.{format}', 'location/api/{action}'));
         }
 
         DashboardController::addRoles([

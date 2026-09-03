@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Widgets\Navs;
 
+use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Skeleton\Widgets\Buttons\CreateButton;
 use Hirtz\Skeleton\Widgets\Navs\Header;
 use Hirtz\Skeleton\Widgets\Traits\ModelTrait;
@@ -29,7 +30,7 @@ class TagHeader extends Header
     #[Override]
     protected function configure(): void
     {
-        $this->title ??= $this->model?->getOldAttribute('name') ?? Yii::t('location', 'Tags');
+        $this->title ??= $this->model?->getOldAttribute('name') ?? Lang::t('location', 'COMMON_TAGS');
 
         if ($this->model) {
             $this->addContent($this->getTagActionDropdown());
@@ -41,8 +42,8 @@ class TagHeader extends Header
         }
 
         if (!$this->provider) {
-            $this->view->addBreadcrumb(Yii::t('location', 'Locations'), ['/admin/location/']);
-            $this->view->addBreadcrumb(Yii::t('location', 'Tags'), ['/admin/location/tag/']);
+            $this->view->addBreadcrumb(Lang::t('location', 'COMMON_LOCATIONS'), ['/admin/location/']);
+            $this->view->addBreadcrumb(Lang::t('location', 'COMMON_TAGS'), ['/admin/location/tag/']);
         }
 
         parent::configure();
@@ -60,7 +61,7 @@ class TagHeader extends Header
     protected function getCreateTagButton(): string|Stringable
     {
         return CreateButton::make()
-            ->label(Yii::t('location', 'New Tag'))
+            ->label(Lang::t('location', 'TAG_HEADER_NEW_TAG'))
             ->roles([Tag::AUTH_TAG_CREATE]);
     }
 }

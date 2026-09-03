@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Widgets\Navs;
 
+use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\ModuleTrait;
@@ -19,7 +20,7 @@ class LocationNavItem extends NavItem
 
     public function __construct(array $config = [])
     {
-        $this->label ??= Yii::t('location', 'Places');
+        $this->label ??= Lang::t('location', 'LOCATION_NAV_ITEM_PLACES');
         $this->icon ??= 'map-marked-alt';
         $this->order ??= 50;
         $this->url ??= ['/admin/location/location/index'];
@@ -47,7 +48,7 @@ class LocationNavItem extends NavItem
     {
         return NavItem::make()
             ->icon('map-marker-alt')
-            ->label(Yii::t('location', 'Locations'))
+            ->label(Lang::t('location', 'COMMON_LOCATIONS'))
             ->order(10)
             ->url(['/admin/location/location/index'])
             ->roles([Location::AUTH_LOCATION_CREATE])
@@ -59,7 +60,7 @@ class LocationNavItem extends NavItem
         return $this->showTags
             ? NavItem::make()
                 ->icon('tags')
-                ->label(Yii::t('location', 'Tags'))
+                ->label(Lang::t('location', 'COMMON_TAGS'))
                 ->order(20)
                 ->url(['/admin/location/tag/index'])
                 ->roles([Tag::AUTH_TAG_CREATE])

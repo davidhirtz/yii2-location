@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Widgets\Forms;
 
+use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Location\Modules\Admin\Assets\AutocompleteAssetBundle;
 use Hirtz\Location\Modules\Admin\Module;
 use Hirtz\Location\Modules\ModuleTrait;
@@ -23,7 +24,7 @@ class LocationProviderIdField extends InputField
         $this->attributes['autocomplete'] ??= 'off';
 
         if (!$this->model->{$this->property}) {
-            $this->attributes['placeholder'] ??= Yii::t('location', 'Search for a location ...');
+            $this->attributes['placeholder'] ??= Lang::t('location', 'LOCATION_PROVIDER_ID_SEARCH_FOR_A_LOCATION');
             $this->attributes['type'] ??= 'search';
         }
 

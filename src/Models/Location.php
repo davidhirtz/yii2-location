@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Models;
 
+use Hirtz\Skeleton\I18n\Lang;
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
 use Hirtz\Location\Models\Collections\TagCollection;
@@ -241,7 +242,7 @@ class Location extends ActiveRecord implements
     public function getTrailModelName(): string
     {
         if ($this->id) {
-            return $this->getI18nAttribute('name') ?: Yii::t('skeleton', '{model} #{id}', [
+            return $this->getI18nAttribute('name') ?: Lang::t('skeleton', 'COMMON_MODEL_ID', [
                 'model' => $this->getTrailModelType(),
                 'id' => $this->id,
             ]);
@@ -252,7 +253,7 @@ class Location extends ActiveRecord implements
 
     public function getTrailModelType(): string
     {
-        return Yii::t('location', 'Location');
+        return Lang::t('location', 'COMMON_LOCATION');
     }
 
     public function getAdminRoute(): array
@@ -283,19 +284,19 @@ class Location extends ActiveRecord implements
     {
         return [
             ...parent::attributeLabels(),
-            'name' => Yii::t('location', 'Name'),
-            'formatted_address' => Yii::t('location', 'Formatted address'),
-            'street' => Yii::t('location', 'Street'),
-            'house_number' => Yii::t('location', 'House number'),
-            'locality' => Yii::t('location', 'City'),
-            'postal_code' => Yii::t('location', 'Postal code'),
-            'district' => Yii::t('location', 'District'),
-            'state' => Yii::t('location', 'State'),
-            'country_code' => Yii::t('location', 'Country'),
-            'lat' => Yii::t('location', 'Latitude'),
-            'lng' => Yii::t('location', 'Longitude'),
-            'provider_id' => Yii::t('location', 'Provider ID'),
-            'tag_count' => Yii::t('location', 'Tags'),
+            'name' => Lang::t('location', 'LOCATION_NAME_LABEL'),
+            'formatted_address' => Lang::t('location', 'LOCATION_FORMATTED_ADDRESS_LABEL'),
+            'street' => Lang::t('location', 'LOCATION_STREET_LABEL'),
+            'house_number' => Lang::t('location', 'LOCATION_HOUSE_NUMBER_LABEL'),
+            'locality' => Lang::t('location', 'LOCATION_LOCALITY_LABEL'),
+            'postal_code' => Lang::t('location', 'LOCATION_POSTAL_CODE_LABEL'),
+            'district' => Lang::t('location', 'LOCATION_DISTRICT_LABEL'),
+            'state' => Lang::t('location', 'LOCATION_STATE_LABEL'),
+            'country_code' => Lang::t('location', 'LOCATION_COUNTRY_CODE_LABEL'),
+            'lat' => Lang::t('location', 'LOCATION_LAT_LABEL'),
+            'lng' => Lang::t('location', 'LOCATION_LNG_LABEL'),
+            'provider_id' => Lang::t('location', 'LOCATION_PROVIDER_ID_LABEL'),
+            'tag_count' => Lang::t('location', 'LOCATION_TAG_COUNT_LABEL'),
         ];
     }
 
