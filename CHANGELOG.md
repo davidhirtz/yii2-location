@@ -1,3 +1,7 @@
+## 3.0.0 (in development)
+
+- Changed the API URL rule to a `Route` registered via `Application::addRoutes()`
+
 ## 1.3.1 (Jan 11, 2025)
 
 - Enhanced `Location` and `Tag` deletion to recalculate related counters and delete `LocationTag` records accordingly.
