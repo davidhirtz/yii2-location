@@ -89,7 +89,7 @@ class TagController extends Controller
         }
 
         if ($tag->load(Yii::$app->getRequest()->post()) && $tag->insert()) {
-            $this->success(Lang::t('location', 'TAG_FLASH_THE_TAG_WAS_CREATED'));
+            $this->success(Lang::t('location', 'TAG_SUCCESS_CREATED'));
             return $this->redirect(['index']);
         }
 
@@ -103,7 +103,7 @@ class TagController extends Controller
         $tag = $this->findTag($id, Tag::AUTH_TAG_UPDATE);
 
         if ($tag->load(Yii::$app->getRequest()->post()) && $tag->update()) {
-            $this->success(Lang::t('location', 'TAG_FLASH_THE_TAG_WAS_UPDATED'));
+            $this->success(Lang::t('location', 'TAG_SUCCESS_UPDATED'));
             return $this->refresh();
         }
 
@@ -117,7 +117,7 @@ class TagController extends Controller
         $tag = $this->findTag($id, Tag::AUTH_TAG_DELETE);
 
         if ($tag->delete()) {
-            $this->success(Lang::t('location', 'TAG_FLASH_THE_TAG_WAS_DELETED'));
+            $this->success(Lang::t('location', 'TAG_SUCCESS_DELETED'));
             return $this->redirect(['index']);
         }
 

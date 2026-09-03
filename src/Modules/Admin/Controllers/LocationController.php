@@ -88,7 +88,7 @@ class LocationController extends Controller
         }
 
         if ($location->load(Yii::$app->getRequest()->post()) && $location->insert()) {
-            $this->success(Lang::t('location', 'LOCATION_FLASH_THE_LOCATION_WAS_CREATED'));
+            $this->success(Lang::t('location', 'LOCATION_SUCCESS_CREATED'));
             return $this->redirect(['index']);
         }
 
@@ -102,7 +102,7 @@ class LocationController extends Controller
         $location = $this->findLocation($id, Location::AUTH_LOCATION_UPDATE);
 
         if ($location->load(Yii::$app->getRequest()->post()) && $location->update()) {
-            $this->success(Lang::t('location', 'LOCATION_FLASH_THE_LOCATION_WAS_UPDATED'));
+            $this->success(Lang::t('location', 'LOCATION_SUCCESS_UPDATED'));
             return $this->refresh();
         }
 
@@ -116,7 +116,7 @@ class LocationController extends Controller
         $location = $this->findLocation($id, Location::AUTH_LOCATION_DELETE);
 
         if ($location->delete()) {
-            $this->success(Lang::t('location', 'LOCATION_FLASH_THE_LOCATION_WAS_DELETED'));
+            $this->success(Lang::t('location', 'LOCATION_SUCCESS_DELETED'));
             return $this->redirect(['index']);
         }
 

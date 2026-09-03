@@ -97,7 +97,7 @@ class LocationTagController extends Controller
 
         $locationTag->insert();
 
-        $this->errorOrSuccess($locationTag, Lang::t('location', 'LOCATION_TAG_FLASH_THE_TAG_WAS_ADDED_TO_THE'));
+        $this->errorOrSuccess($locationTag, Lang::t('location', 'LOCATION_TAG_SUCCESS_ADDED'));
 
         return $this->redirect(['index'] + Yii::$app->getRequest()->getQueryParams());
     }
@@ -116,7 +116,7 @@ class LocationTagController extends Controller
         $this->checkLocationPermission($locationTag->location, Location::AUTH_LOCATION_UPDATE);
         $locationTag->delete();
 
-        $this->errorOrSuccess($locationTag, Lang::t('location', 'LOCATION_TAG_FLASH_THE_TAG_WAS_REMOVED_TO_THE'));
+        $this->errorOrSuccess($locationTag, Lang::t('location', 'LOCATION_TAG_SUCCESS_REMOVED'));
 
         return $this->redirect(['index'] + Yii::$app->getRequest()->getQueryParams());
     }

@@ -24,7 +24,7 @@ class LocationProviderIdField extends InputField
         $this->attributes['autocomplete'] ??= 'off';
 
         if (!$this->model->{$this->property}) {
-            $this->attributes['placeholder'] ??= Lang::t('location', 'LOCATION_PROVIDER_ID_SEARCH_FOR_A_LOCATION');
+            $this->attributes['placeholder'] ??= Lang::t('location', 'LOCATION_PROVIDER_ID_SEARCH');
             $this->attributes['type'] ??= 'search';
         }
 
