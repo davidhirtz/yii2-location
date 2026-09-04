@@ -11,7 +11,6 @@ use Hirtz\Skeleton\Widgets\Navs\NavItem;
 use Hirtz\Skeleton\Widgets\Navs\Submenu;
 use Hirtz\Skeleton\Widgets\Traits\ModelTrait;
 use Override;
-use Stringable;
 use Yii;
 
 class LocationSubmenu extends Submenu
@@ -30,7 +29,7 @@ class LocationSubmenu extends Submenu
         parent::configure();
     }
 
-    protected function getLocationItem(): ?Stringable
+    protected function getLocationItem(): ?NavItem
     {
         return NavItem::make()
             ->label(Lang::t('skeleton', 'COMMON_GENERAL'))
@@ -39,7 +38,7 @@ class LocationSubmenu extends Submenu
             ->icon('cog');
     }
 
-    protected function getLocationTagsItem(): ?Stringable
+    protected function getLocationTagsItem(): ?NavItem
     {
         return NavItem::make()
             ->label(Lang::t('location', 'COMMON_TAGS'))
