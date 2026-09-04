@@ -124,11 +124,17 @@ class LocationTag extends ActiveRecord implements TrailModelInterface
         parent::afterDelete();
     }
 
+    /**
+     * @return ActiveQuery<Location>
+     */
     public function getLocation(): ActiveQuery
     {
         return $this->hasOne(Location::class, ['id' => 'location_id']);
     }
 
+    /**
+     * @return ActiveQuery<Tag>
+     */
     public function getTag(): ActiveQuery
     {
         return $this->hasOne(Tag::class, ['id' => 'tag_id']);

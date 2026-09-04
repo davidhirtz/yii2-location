@@ -141,12 +141,18 @@ class Tag extends ActiveRecord implements
         return $query;
     }
 
+    /**
+     * @return ActiveQuery<LocationTag>
+     */
     public function getLocationTag(): ActiveQuery
     {
         return $this->hasOne(LocationTag::class, ['tag_id' => 'id'])
             ->inverseOf('tag');
     }
 
+    /**
+     * @return ActiveQuery<LocationTag>
+     */
     public function getLocationTags(): ActiveQuery
     {
         return $this->hasMany(LocationTag::class, ['tag_id' => 'id'])
