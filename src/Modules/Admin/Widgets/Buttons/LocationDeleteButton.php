@@ -6,7 +6,6 @@ namespace Hirtz\Location\Modules\Admin\Widgets\Buttons;
 
 use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Skeleton\Widgets\Buttons\DeleteButton;
-use Hirtz\Skeleton\Widgets\Traits\ModelTrait;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Modules\Admin\Controllers\LocationController;
 use Override;
@@ -14,14 +13,11 @@ use Yii;
 
 /**
  * @see LocationController::actionDelete()
+ *
+ * @extends DeleteButton<Location>
  */
 class LocationDeleteButton extends DeleteButton
 {
-    /**
-     * @use ModelTrait<Location>
-     */
-    use ModelTrait;
-
     public function isVisible(): bool
     {
         return parent::isVisible()
