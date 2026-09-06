@@ -10,7 +10,7 @@ use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Behaviors\BlameableBehavior;
 use Hirtz\Skeleton\Behaviors\TimestampBehavior;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
-use Hirtz\Skeleton\Db\ActiveQuery;
+use yii\db\ActiveQuery;
 use Hirtz\Skeleton\Db\ActiveRecord;
 use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
 use Hirtz\Skeleton\Models\Traits\TrailModelTrait;

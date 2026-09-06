@@ -15,7 +15,7 @@ use Hirtz\Location\Validators\CoordinateValidator;
 use Hirtz\Skeleton\Behaviors\BlameableBehavior;
 use Hirtz\Skeleton\Behaviors\TimestampBehavior;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
-use Hirtz\Skeleton\Db\ActiveQuery;
+use yii\db\ActiveQuery;
 use Hirtz\Skeleton\Db\ActiveRecord;
 use Hirtz\Skeleton\Helpers\ArrayHelper;
 use Hirtz\Skeleton\Helpers\CountryList;
