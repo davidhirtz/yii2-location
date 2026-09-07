@@ -34,7 +34,7 @@ class LocationSubmenu extends Submenu
         return NavItem::make()
             ->label(Lang::t('skeleton', 'COMMON_GENERAL'))
             ->url($this->model->getAdminRoute())
-            ->routes(['admin/location/'])
+            ->routes(['admin/location/location/'])
             ->icon('cog');
     }
 
@@ -45,7 +45,7 @@ class LocationSubmenu extends Submenu
             ->url(['location-tag/index', 'location' => $this->model->id])
             ->visible(static::getModule()->enableTags)
             ->badge($this->model->tag_count ?: null)
-            ->routes(['location-tag/'])
+            ->routes(['admin/location/location-tag/'])
             ->icon('tags');
     }
 }
