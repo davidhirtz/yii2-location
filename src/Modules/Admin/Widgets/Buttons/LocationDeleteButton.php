@@ -18,6 +18,7 @@ use Yii;
  */
 class LocationDeleteButton extends DeleteButton
 {
+    #[\Override]
     public function isVisible(): bool
     {
         return parent::isVisible()

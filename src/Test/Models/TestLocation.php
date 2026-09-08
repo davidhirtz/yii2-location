@@ -10,6 +10,7 @@ final class TestLocation extends Location
 {
     public const int TYPE_TEST = 2;
 
+    #[\Override]
     public static function getTypes(): array
     {
         return [

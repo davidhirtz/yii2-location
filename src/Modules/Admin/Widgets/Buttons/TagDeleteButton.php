@@ -15,6 +15,7 @@ use Hirtz\Skeleton\Widgets\Buttons\DeleteButton;
  */
 class TagDeleteButton extends DeleteButton
 {
+    #[\Override]
     public function isVisible(): bool
     {
         return parent::isVisible()
