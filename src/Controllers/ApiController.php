@@ -98,7 +98,7 @@ class ApiController extends Controller
         $status = Yii::$app->getRequest()->getIsDraft() ? Location::STATUS_DRAFT : Location::STATUS_ENABLED;
 
         return Location::find()
-            ->replaceI18nAttributes()
+            ->withTranslations()
             ->whereStatus($status);
     }
 

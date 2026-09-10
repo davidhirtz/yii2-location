@@ -55,7 +55,7 @@ class TagCollection
     public static function findAll(): array
     {
         return Tag::find()
-            ->replaceI18nAttributes()
+            ->withTranslations()
             ->whereStatus()
             ->indexBy('id')
             ->all();

@@ -1,5 +1,7 @@
 ## 3.0.0 (in development)
 
+- Translated attributes of `Location` and `Tag` moved from their `_xx` columns into the skeleton's
+  `translation` table (`M260910140000Translations`)
 - Changed the API URL rule to a `Route` registered via `Application::addRoutes()`
 
 ## 1.3.1 (Jan 11, 2025)

@@ -56,7 +56,7 @@ class TagActiveDataProvider extends ActiveDataProvider
 
         if ($this->search) {
             $search = $this->query->sanitizeSearchString($this->search);
-            $this->query->andWhere(['like', $this->query->getI18nAttributeName('name'), $search]);
+            $this->query->andWhere(['like', $this->query->getI18nAttributeName('name', fallback: true), $search]);
         }
 
         $this->setPagination(['defaultPageSize' => $this->defaultPageSize]);

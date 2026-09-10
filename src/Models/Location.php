@@ -15,6 +15,7 @@ use Hirtz\Location\Validators\CoordinateValidator;
 use Hirtz\Skeleton\Behaviors\BlameableBehavior;
 use Hirtz\Skeleton\Behaviors\TimestampBehavior;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
+use Hirtz\Skeleton\Behaviors\TranslationBehavior;
 use yii\db\ActiveQuery;
 use Hirtz\Skeleton\Db\ActiveRecord;
 use Hirtz\Skeleton\Helpers\ArrayHelper;
@@ -22,10 +23,12 @@ use Hirtz\Skeleton\Helpers\CountryList;
 use Hirtz\Skeleton\Models\Interfaces\DraftStatusAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\I18nAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
+use Hirtz\Skeleton\Models\Interfaces\TranslationInterface;
 use Hirtz\Skeleton\Models\Interfaces\TypeAttributeInterface;
 use Hirtz\Skeleton\Models\Traits\DraftStatusAttributeTrait;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
 use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
+use Hirtz\Skeleton\Models\Traits\TranslationTrait;
 use Hirtz\Skeleton\Models\Traits\TypeAttributeTrait;
 use Hirtz\Skeleton\Models\Traits\UpdatedByUserTrait;
 use Hirtz\Skeleton\Validators\DynamicRangeValidator;
@@ -61,10 +64,12 @@ class Location extends ActiveRecord implements
     DraftStatusAttributeInterface,
     I18nAttributeInterface,
     TrailModelInterface,
+    TranslationInterface,
     TypeAttributeInterface
 {
     use DraftStatusAttributeTrait;
     use I18nAttributesTrait;
+    use TranslationTrait;
     use ModuleTrait;
     use TrailModelTrait;
     use TypeAttributeTrait;
@@ -80,6 +85,7 @@ class Location extends ActiveRecord implements
         return [
             ...parent::behaviors(),
             'DateTimeBehavior' => DateTimeBehavior::class,
+            'TranslationBehavior' => TranslationBehavior::class,
             'TrailBehavior' => TrailBehavior::class,
         ];
     }
@@ -310,6 +316,11 @@ class Location extends ActiveRecord implements
     public function formName(): string
     {
         return 'Location';
+    }
+
+    public function getTranslationModelClass(): string
+    {
+        return self::class;
     }
 
     #[Override]

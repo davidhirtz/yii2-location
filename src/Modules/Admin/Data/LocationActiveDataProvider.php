@@ -50,8 +50,8 @@ class LocationActiveDataProvider extends ActiveDataProvider
 
             $this->query->andFilterWhere([
                 'or',
-                ['like', $this->query->getI18nAttributeName('name'), $search],
-                ['like', $this->query->getI18nAttributeName('formatted_address'), $search],
+                ['like', $this->query->getI18nAttributeName('name', fallback: true), $search],
+                ['like', $this->query->getI18nAttributeName('formatted_address', fallback: true), $search],
                 ['provider_id' => $search],
             ]);
         }
