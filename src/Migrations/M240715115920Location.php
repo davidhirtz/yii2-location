@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Hirtz\Location\Migrations;
 
 use Hirtz\Skeleton\I18n\Lang;
-use Hirtz\Location\Migrations\Traits\I18nTablesTrait;
 use Hirtz\Location\Models\Location;
 use Hirtz\Skeleton\Db\Traits\MigrationTrait;
 use Hirtz\Skeleton\Models\User;
@@ -19,39 +18,36 @@ use yii\db\Migration;
 class M240715115920Location extends Migration
 {
     use MigrationTrait;
-    use I18nTablesTrait;
 
     public function safeUp(): void
     {
-        $this->i18nTablesCallback(function (): void {
-            $this->createTable(Location::tableName(), [
-                'id' => $this->primaryKey()->unsigned(),
-                'status' => $this->smallInteger()->notNull()->defaultValue(Location::STATUS_DEFAULT),
-                'type' => $this->smallInteger()->notNull()->defaultValue(Location::TYPE_DEFAULT),
-                'name' => $this->string()->null(),
-                'formatted_address' => $this->string()->null(),
-                'street' => $this->string()->null(),
-                'house_number' => $this->string()->null(),
-                'locality' => $this->string()->null(),
-                'postal_code' => $this->string()->null(),
-                'district' => $this->string()->null(),
-                'state' => $this->string()->null(),
-                'country_code' => $this->string(2)->null(),
-                'lat' => $this->decimal(10, 8)->null(),
-                'lng' => $this->decimal(11, 8)->null(),
-                'provider_id' => $this->text()->null(),
-                'updated_by_user_id' => $this->integer()->unsigned()->null(),
-                'updated_at' => $this->dateTime(),
-                'created_at' => $this->dateTime()->notNull(),
-            ]);
+        $this->createTable(Location::tableName(), [
+            'id' => $this->primaryKey()->unsigned(),
+            'status' => $this->smallInteger()->notNull()->defaultValue(Location::STATUS_DEFAULT),
+            'type' => $this->smallInteger()->notNull()->defaultValue(Location::TYPE_DEFAULT),
+            'name' => $this->string()->null(),
+            'formatted_address' => $this->string()->null(),
+            'street' => $this->string()->null(),
+            'house_number' => $this->string()->null(),
+            'locality' => $this->string()->null(),
+            'postal_code' => $this->string()->null(),
+            'district' => $this->string()->null(),
+            'state' => $this->string()->null(),
+            'country_code' => $this->string(2)->null(),
+            'lat' => $this->decimal(10, 8)->null(),
+            'lng' => $this->decimal(11, 8)->null(),
+            'provider_id' => $this->text()->null(),
+            'updated_by_user_id' => $this->integer()->unsigned()->null(),
+            'updated_at' => $this->dateTime(),
+            'created_at' => $this->dateTime()->notNull(),
+        ]);
 
-            $location = Location::create();
-            $this->addI18nColumns(Location::tableName(), $location->i18nAttributes);
+        $location = Location::create();
+        $this->addI18nColumns(Location::tableName(), $location->i18nAttributes);
 
-            foreach ($location->getI18nAttributesNames(['name', 'formatted_address']) as $attributeName) {
-                $this->createIndex($attributeName, Location::tableName(), [$attributeName, 'status', 'type']);
-            }
-        });
+        foreach ($location->getI18nAttributesNames(['name', 'formatted_address']) as $attributeName) {
+            $this->createIndex($attributeName, Location::tableName(), [$attributeName, 'status', 'type']);
+        }
 
         $auth = Yii::$app->getAuthManager();
         $admin = $auth->getRole(User::AUTH_ROLE_ADMIN);
@@ -84,8 +80,6 @@ class M240715115920Location extends Migration
         $this->delete($auth->itemTable, ['name' => Location::AUTH_LOCATION_CREATE]);
         $this->delete($auth->itemTable, ['name' => Location::AUTH_LOCATION_UPDATE]);
 
-        $this->i18nTablesCallback(function (): void {
-            $this->dropTable(Location::tableName());
-        });
+        $this->dropTable(Location::tableName());
     }
 }

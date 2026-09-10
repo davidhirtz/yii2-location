@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace Hirtz\Location;
 
 use Hirtz\Skeleton\Filters\PageCache;
-use Hirtz\Skeleton\Modules\ModuleTrait;
 use Yii;
 use yii\caching\CacheInterface;
 use yii\caching\TagDependency;
 
 class Module extends \Hirtz\Skeleton\Base\Module
 {
-    use ModuleTrait;
-
     /**
      * @var bool whether to enable the API route.
      */

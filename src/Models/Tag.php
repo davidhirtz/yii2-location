@@ -247,6 +247,6 @@ class Tag extends ActiveRecord implements
     #[Override]
     public static function tableName(): string
     {
-        return static::getModule()->getTableName('tag');
+        return '{{%tag}}';
     }
 }

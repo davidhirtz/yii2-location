@@ -201,6 +201,6 @@ class LocationTag extends ActiveRecord implements TrailModelInterface
     #[Override]
     public static function tableName(): string
     {
-        return static::getModule()->getTableName('location_tag');
+        return '{{%location_tag}}';
     }
 }

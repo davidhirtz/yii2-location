@@ -315,6 +315,6 @@ class Location extends ActiveRecord implements
     #[Override]
     public static function tableName(): string
     {
-        return static::getModule()->getTableName('location');
+        return '{{%location}}';
     }
 }
