@@ -3,7 +3,8 @@
 - `Models\Location` and `Models\Tag` implement `CustomAttributeInterface`. Added the `custom_attributes` column to
   `location` and `tag`, excluded from the trail. Their `rules()` spread `parent::rules()` now, which is what injects
   the custom attribute rules
-- The admin forms render the custom attribute fields, and `LocationController` and `TagController` guard their save
+- The admin forms render the custom attribute fields and their type select is a `TypeSelectField`, so a type change
+  reloads the form when the types render different fields; `LocationController` and `TagController` guard their save
   with `Request::isFormReload()`
 
 - Translated attributes of `Location` and `Tag` moved from their `_xx` columns into the skeleton's

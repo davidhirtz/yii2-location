@@ -9,6 +9,7 @@ use Hirtz\Skeleton\Helpers\CountryList;
 use Hirtz\Skeleton\Widgets\Forms\ActiveForm;
 use Hirtz\Skeleton\Widgets\Forms\Fields\InputField;
 use Hirtz\Skeleton\Widgets\Forms\Fields\SelectField;
+use Hirtz\Skeleton\Widgets\Forms\Fields\TypeSelectField;
 use Hirtz\Skeleton\Widgets\Forms\Traits\CustomAttributeFieldsTrait;
 use Override;
 use Stringable;
@@ -58,7 +59,7 @@ class LocationActiveForm extends ActiveForm
 
     protected function getTypeField(): ?Stringable
     {
-        return SelectField::make()
+        return TypeSelectField::make()
             ->property('type');
     }
 
