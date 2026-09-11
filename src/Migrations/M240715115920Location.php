@@ -42,10 +42,7 @@ class M240715115920Location extends Migration
             'created_at' => $this->dateTime()->notNull(),
         ]);
 
-        $location = Location::create();
-        $this->addI18nColumns(Location::tableName(), $location->i18nAttributes);
-
-        foreach ($location->getI18nAttributesNames(['name', 'formatted_address']) as $attributeName) {
+        foreach (['name', 'formatted_address'] as $attributeName) {
             $this->createIndex($attributeName, Location::tableName(), [$attributeName, 'status', 'type']);
         }
 

@@ -34,12 +34,7 @@ class M240731193312Tag extends Migration
             'created_at' => $this->dateTime()->notNull(),
         ]);
 
-        $tag = Tag::create();
-        $this->addI18nColumns(Tag::tableName(), $tag->i18nAttributes);
-
-        foreach ($tag->getI18nAttributesNames(['name']) as $attributeName) {
-            $this->createIndex($attributeName, Tag::tableName(), [$attributeName], true);
-        }
+        $this->createIndex('name', Tag::tableName(), ['name'], true);
 
         $this->createTable(LocationTag::tableName(), [
             'location_id' => $this->integer()->unsigned()->notNull(),
