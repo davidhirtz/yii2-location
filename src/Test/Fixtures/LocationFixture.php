@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Hirtz\Location\Test\Fixtures;
 
 use Hirtz\Location\Models\Location;
-use yii\test\ActiveFixture;
+use Hirtz\Skeleton\Test\Fixtures\ActiveFixture;
 
 class LocationFixture extends ActiveFixture
 {
