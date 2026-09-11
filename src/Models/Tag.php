@@ -16,6 +16,7 @@ use Hirtz\Skeleton\Behaviors\TimestampBehavior;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
 use yii\db\ActiveQuery;
 use Hirtz\Skeleton\Db\ActiveRecord;
+use Hirtz\Skeleton\Models\Interfaces\AdminRouteInterface;
 use Hirtz\Skeleton\Models\Interfaces\DraftStatusAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\I18nAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\CustomAttributeInterface;
@@ -46,6 +47,7 @@ use Yii;
  * @property-read Location[] $locations {@see static::getLocations()}
  */
 class Tag extends ActiveRecord implements
+    AdminRouteInterface,
     CustomAttributeInterface,
     DraftStatusAttributeInterface,
     I18nAttributeInterface,
@@ -220,17 +222,9 @@ class Tag extends ActiveRecord implements
         return Lang::t('location', 'COMMON_TAG');
     }
 
-    public function getAdminRoute(): array
+    public function getAdminRoute(): array|false
     {
-        return ['/admin/location/tag/update', 'id' => $this->id];
-    }
-
-    /**
-     * @noinspection PhpUnused
-     */
-    public function getTrailModelAdminRoute(): array|false
-    {
-        return $this->id ? $this->getAdminRoute() : false;
+        return $this->id ? ['/admin/location/tag/update', 'id' => $this->id] : false;
     }
 
     public function hasTagsEnabled(): bool

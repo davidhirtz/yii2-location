@@ -1,5 +1,8 @@
 ## 3.0.0 (in development)
 
+- `Models\Location::getAdminRoute()` and `Models\Tag::getAdminRoute()` return `false` for a record without an id
+  rather than a route with a null id — the guard moved here from `getTrailModelAdminRoute()`, which is gone. Both
+  models implement the skeleton `Models\Interfaces\AdminRouteInterface`
 - `Models\Location` and `Models\Tag` implement `CustomAttributeInterface`. Added the `custom_attributes` column to
   `location` and `tag`, excluded from the trail. Their `rules()` spread `parent::rules()` now, which is what injects
   the custom attribute rules

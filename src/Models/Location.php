@@ -19,6 +19,7 @@ use yii\db\ActiveQuery;
 use Hirtz\Skeleton\Db\ActiveRecord;
 use Hirtz\Skeleton\Helpers\ArrayHelper;
 use Hirtz\Skeleton\Helpers\CountryList;
+use Hirtz\Skeleton\Models\Interfaces\AdminRouteInterface;
 use Hirtz\Skeleton\Models\Interfaces\DraftStatusAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\I18nAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\CustomAttributeInterface;
@@ -62,6 +63,7 @@ use Yii;
  * @property-read Tag[] $tags {@see static::getTags()}
  */
 class Location extends ActiveRecord implements
+    AdminRouteInterface,
     CustomAttributeInterface,
     DraftStatusAttributeInterface,
     I18nAttributeInterface,
@@ -272,17 +274,9 @@ class Location extends ActiveRecord implements
         return Lang::t('location', 'COMMON_LOCATION');
     }
 
-    public function getAdminRoute(): array
+    public function getAdminRoute(): array|false
     {
-        return ['/admin/location/location/update', 'id' => $this->id];
-    }
-
-    /**
-     * @noinspection PhpUnused
-     */
-    public function getTrailModelAdminRoute(): array|false
-    {
-        return $this->id ? $this->getAdminRoute() : false;
+        return $this->id ? ['/admin/location/location/update', 'id' => $this->id] : false;
     }
 
     public function getCountryCodes(): array
