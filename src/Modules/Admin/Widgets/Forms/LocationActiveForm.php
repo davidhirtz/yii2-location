@@ -9,6 +9,7 @@ use Hirtz\Skeleton\Helpers\CountryList;
 use Hirtz\Skeleton\Widgets\Forms\ActiveForm;
 use Hirtz\Skeleton\Widgets\Forms\Fields\InputField;
 use Hirtz\Skeleton\Widgets\Forms\Fields\SelectField;
+use Hirtz\Skeleton\Widgets\Forms\Traits\CustomAttributeFieldsTrait;
 use Override;
 use Stringable;
 
@@ -17,6 +18,7 @@ use Stringable;
  */
 class LocationActiveForm extends ActiveForm
 {
+    use CustomAttributeFieldsTrait;
     #[Override]
     protected function configure(): void
     {
@@ -29,6 +31,7 @@ class LocationActiveForm extends ActiveForm
                 $this->getTypeField(),
                 $this->getNameField(),
                 $this->getFormattedAddressField(),
+                ...$this->getCustomAttributeFields(),
             ],
             [
                 $this->getStreetField(),

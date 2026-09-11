@@ -87,7 +87,7 @@ class LocationController extends Controller
             throw new ForbiddenHttpException();
         }
 
-        if ($location->load(Yii::$app->getRequest()->post()) && $location->insert()) {
+        if ($location->load(Yii::$app->getRequest()->post()) && !$this->request->isFormReload() && $location->insert()) {
             $this->success(Lang::t('location', 'LOCATION_SUCCESS_CREATED'));
             return $this->redirect(['index']);
         }
@@ -101,7 +101,7 @@ class LocationController extends Controller
     {
         $location = $this->findLocation($id, Location::AUTH_LOCATION_UPDATE);
 
-        if ($location->load(Yii::$app->getRequest()->post()) && $location->update()) {
+        if ($location->load(Yii::$app->getRequest()->post()) && !$this->request->isFormReload() && $location->update()) {
             $this->success(Lang::t('location', 'LOCATION_SUCCESS_UPDATED'));
             return $this->refresh();
         }

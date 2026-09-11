@@ -1,5 +1,11 @@
 ## 3.0.0 (in development)
 
+- `Models\Location` and `Models\Tag` implement `CustomAttributeInterface`. Added the `custom_attributes` column to
+  `location` and `tag`, excluded from the trail. Their `rules()` spread `parent::rules()` now, which is what injects
+  the custom attribute rules
+- The admin forms render the custom attribute fields, and `LocationController` and `TagController` guard their save
+  with `Request::isFormReload()`
+
 - Translated attributes of `Location` and `Tag` moved from their `_xx` columns into the skeleton's
   `translation` table (`M260910140000Translations`)
 - Changed the API URL rule to a `Route` registered via `Application::addRoutes()`

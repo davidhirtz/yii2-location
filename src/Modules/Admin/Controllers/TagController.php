@@ -88,7 +88,7 @@ class TagController extends Controller
             throw new ForbiddenHttpException();
         }
 
-        if ($tag->load(Yii::$app->getRequest()->post()) && $tag->insert()) {
+        if ($tag->load(Yii::$app->getRequest()->post()) && !$this->request->isFormReload() && $tag->insert()) {
             $this->success(Lang::t('location', 'TAG_SUCCESS_CREATED'));
             return $this->redirect(['index']);
         }
@@ -102,7 +102,7 @@ class TagController extends Controller
     {
         $tag = $this->findTag($id, Tag::AUTH_TAG_UPDATE);
 
-        if ($tag->load(Yii::$app->getRequest()->post()) && $tag->update()) {
+        if ($tag->load(Yii::$app->getRequest()->post()) && !$this->request->isFormReload() && $tag->update()) {
             $this->success(Lang::t('location', 'TAG_SUCCESS_UPDATED'));
             return $this->refresh();
         }

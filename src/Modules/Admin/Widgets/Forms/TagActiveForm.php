@@ -8,6 +8,7 @@ use Hirtz\Location\Models\Tag;
 use Hirtz\Skeleton\Widgets\Forms\ActiveForm;
 use Hirtz\Skeleton\Widgets\Forms\Fields\InputField;
 use Hirtz\Skeleton\Widgets\Forms\Fields\SelectField;
+use Hirtz\Skeleton\Widgets\Forms\Traits\CustomAttributeFieldsTrait;
 use Stringable;
 
 /**
@@ -15,6 +16,7 @@ use Stringable;
  */
 class TagActiveForm extends ActiveForm
 {
+    use CustomAttributeFieldsTrait;
     #[\Override]
     protected function configure(): void
     {
@@ -22,6 +24,7 @@ class TagActiveForm extends ActiveForm
             $this->getStatusField(),
             $this->getTypeField(),
             $this->getNameField(),
+            ...$this->getCustomAttributeFields(),
         ];
 
         parent::configure();

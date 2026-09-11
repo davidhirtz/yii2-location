@@ -21,9 +21,11 @@ use Hirtz\Skeleton\Helpers\ArrayHelper;
 use Hirtz\Skeleton\Helpers\CountryList;
 use Hirtz\Skeleton\Models\Interfaces\DraftStatusAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\I18nAttributeInterface;
+use Hirtz\Skeleton\Models\Interfaces\CustomAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
 use Hirtz\Skeleton\Models\Interfaces\TranslationInterface;
 use Hirtz\Skeleton\Models\Interfaces\TypeAttributeInterface;
+use Hirtz\Skeleton\Models\Traits\CustomAttributesTrait;
 use Hirtz\Skeleton\Models\Traits\DraftStatusAttributeTrait;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
 use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
@@ -60,12 +62,14 @@ use Yii;
  * @property-read Tag[] $tags {@see static::getTags()}
  */
 class Location extends ActiveRecord implements
+    CustomAttributeInterface,
     DraftStatusAttributeInterface,
     I18nAttributeInterface,
     TrailModelInterface,
     TranslationInterface,
     TypeAttributeInterface
 {
+    use CustomAttributesTrait;
     use DraftStatusAttributeTrait;
     use I18nAttributesTrait;
     use TranslationTrait;
@@ -105,6 +109,7 @@ class Location extends ActiveRecord implements
     public function rules(): array
     {
         return [
+            ...parent::rules(),
             [
                 ['status', 'type'],
                 DynamicRangeValidator::class,
@@ -238,6 +243,7 @@ class Location extends ActiveRecord implements
     public function getTrailAttributes(): array
     {
         return array_diff($this->attributes(), [
+            $this->getCustomAttributesColumn(),
             'tag_ids',
             'tag_count',
             'updated_by_user_id',
