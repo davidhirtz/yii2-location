@@ -17,9 +17,8 @@ use Hirtz\Skeleton\Web\View;
 use Hirtz\Skeleton\Widgets\Forms\FormContainer;
 
 echo TagHeader::make()
-    ->title(Yii::t('location', 'Create New Tag'));
+    ->title(Yii::t('location', 'TAG_CREATE_TITLE'));
 
 echo FormContainer::make()
-    ->title($this->title)
     ->form(TagActiveForm::make()
         ->model($tag));

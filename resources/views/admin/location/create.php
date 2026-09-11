@@ -17,9 +17,8 @@ use Hirtz\Skeleton\Web\View;
 use Hirtz\Skeleton\Widgets\Forms\FormContainer;
 
 echo LocationHeader::make()
-    ->title(Yii::t('location', 'Create New Location'));
+    ->title(Yii::t('location', 'LOCATION_CREATE_TITLE'));
 
 echo FormContainer::make()
-    ->title($this->title)
     ->form(LocationActiveForm::make()
         ->model($location));

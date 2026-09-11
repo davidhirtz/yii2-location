@@ -35,7 +35,7 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
     {
         return $dashboard->addItem(DashboardItem::make()
             ->icon('map-marker-alt')
-            ->label(Lang::t('location', 'MODULE_CREATE_NEW_LOCATION'))
+            ->label(Lang::t('location', 'LOCATION_CREATE_BUTTON'))
             ->roles([Location::AUTH_LOCATION_CREATE])
             ->url(['/admin/location/location/create']));
     }

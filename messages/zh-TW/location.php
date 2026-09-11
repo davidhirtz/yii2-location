@@ -43,7 +43,7 @@ return [
     'LOCATION_TAG_TAG_ID_LABEL' => '',
     'LOCATION_TAG_UPDATED_AT_LABEL' => '',
     'LOCATION_UNNAMED' => '',
-    'MODULE_CREATE_NEW_LOCATION' => '',
+    'LOCATION_CREATE_BUTTON' => '',
     'TAG_HEADER_NEW_TAG' => '',
     'TAG_LOCATION_COUNT_LABEL' => '',
     'TAG_NAME_LABEL' => '',

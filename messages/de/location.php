@@ -43,7 +43,7 @@ return [
     'LOCATION_TAG_TAG_ID_LABEL' => 'Tag',
     'LOCATION_TAG_UPDATED_AT_LABEL' => 'Hinzugefügt',
     'LOCATION_UNNAMED' => 'Unbenannt',
-    'MODULE_CREATE_NEW_LOCATION' => 'Neuen Ort erstellen',
+    'LOCATION_CREATE_BUTTON' => 'Neuen Ort erstellen',
     'TAG_HEADER_NEW_TAG' => 'Neues Tag',
     'TAG_LOCATION_COUNT_LABEL' => 'Orte',
     'TAG_NAME_LABEL' => 'Name',
