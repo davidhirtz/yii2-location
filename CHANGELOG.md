@@ -1,5 +1,8 @@
 ## 3.0.0 (in development)
 
+- `TagCollection::invalidateCache()` also drops the static list, which it left in place before, so a saved tag is seen
+  by the next `getAll()` in the same process; `reset()` drops the static alone and `Bootstrap` calls it, so an
+  application starts without the tags of the one before it. `$_tags` is `$tags`
 - `TagQuery::withLocationTag()` lost its `$eagerLoading` parameter and takes the join type second: the location tag
   is read off the joined row (`ActiveQuery::selectWith()`) rather than queried again; `LocationQuery::andWhereTagId()`
   does the same when called with eager loading

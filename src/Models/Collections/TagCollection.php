@@ -19,23 +19,23 @@ class TagCollection
 
     public const CACHE_KEY = 'tag-collection';
 
-    protected static ?array $_tags = null;
+    protected static ?array $tags = null;
 
     /**
      * @return array<int, T>
      */
     public static function getAll(bool $refresh = false): array
     {
-        if (null === static::$_tags || $refresh) {
+        if (null === static::$tags || $refresh) {
             $dependency = new TagDependency(['tags' => static::CACHE_KEY]);
             $duration = static::getModule()->tagCachedQueryDuration;
 
-            static::$_tags = (null !== $duration)
+            static::$tags = (null !== $duration)
                 ? Yii::$app->getDb()->cache(static::findAll(...), $duration, $dependency)
                 : static::findAll();
         }
 
-        return static::$_tags;
+        return static::$tags;
     }
 
     /**
@@ -66,5 +66,16 @@ class TagCollection
         if (null !== static::getModule()->tagCachedQueryDuration) {
             TagDependency::invalidate(Yii::$app->getCache(), static::CACHE_KEY);
         }
+
+        self::reset();
+    }
+
+    /**
+     * The static outlives the application; `Bootstrap` resets it, so a test's application does not start with the
+     * tags of the one before.
+     */
+    public static function reset(): void
+    {
+        self::$tags = null;
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Hirtz\Location;
 
 use Hirtz\Location\Controllers\ApiController;
+use Hirtz\Location\Models\Collections\TagCollection;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Skeleton\Modules\Admin\Controllers\DashboardController;
@@ -21,6 +22,7 @@ class Bootstrap implements BootstrapInterface
     public function bootstrap($app): void
     {
         Yii::setAlias('@location', __DIR__);
+        TagCollection::reset();
 
         $app->getI18n()->translations['location'] ??= [
             'class' => PhpMessageSource::class,
