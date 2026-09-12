@@ -1,5 +1,8 @@
 ## 3.0.0 (in development)
 
+- `esbuild.js` uses the skeleton's shared `esbuild.config.js`, so the styles are built by sass with autoprefixer
+  instead of esbuild's css loader. `resources/assets/src/css/autocomplete.css` is now `autocomplete.scss` — it
+  already nested with `&`, which sass flattens into plain selectors rather than shipping native CSS nesting
 - `Controllers\ApiController` extends the skeleton `Web\Controller` instead of `yii\web\Controller`, so `$this->request`
   is the skeleton `Request` and the hand-declared `@property Response $response` is gone
 - `TagCollection::invalidateCache()` also drops the static list, which it left in place before, so a saved tag is seen
