@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Models;
 
-use Hirtz\Skeleton\I18n\Lang;
 use davidhirtz\yii2\datetime\DateTime;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Behaviors\BlameableBehavior;
@@ -175,7 +174,7 @@ class LocationTag extends ActiveRecord implements TrailModelInterface
      */
     public function getTrailModelName(): string
     {
-        return Lang::t('location', 'LOCATION_TAG_LOCATION_TAG');
+        return Yii::t('location', 'LOCATION_TAG_LOCATION_TAG');
     }
 
     /**
@@ -183,13 +182,13 @@ class LocationTag extends ActiveRecord implements TrailModelInterface
      */
     public function getTrailModelType(): string
     {
-        return Lang::t('skeleton', 'COMMON_RELATION');
+        return Yii::t('skeleton', 'COMMON_RELATION');
     }
 
     #[Override]
     public function attributeLabels(): array
     {
-        return [...parent::attributeLabels(), 'location_id' => Lang::t('location', 'LOCATION_TAG_LOCATION_ID_LABEL'), 'tag_id' => Lang::t('location', 'LOCATION_TAG_TAG_ID_LABEL'), 'updated_at' => Lang::t('location', 'LOCATION_TAG_UPDATED_AT_LABEL')];
+        return [...parent::attributeLabels(), 'location_id' => Yii::t('location', 'LOCATION_TAG_LOCATION_ID_LABEL'), 'tag_id' => Yii::t('location', 'LOCATION_TAG_TAG_ID_LABEL'), 'updated_at' => Yii::t('location', 'LOCATION_TAG_UPDATED_AT_LABEL')];
     }
 
     #[Override]

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Migrations;
 
-use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Location\Models\Location;
 use Hirtz\Skeleton\Db\Traits\MigrationTrait;
 use Hirtz\Skeleton\Models\User;
@@ -50,20 +49,20 @@ class M240715115920Location extends Migration
         $admin = $auth->getRole(User::AUTH_ROLE_ADMIN);
 
         $locationUpdate = $auth->createPermission(Location::AUTH_LOCATION_UPDATE);
-        $locationUpdate->description = Lang::t('location', 'AUTH_LOCATION_UPDATE_DESCRIPTION', [], Yii::$app->sourceLanguage);
+        $locationUpdate->description = Yii::t('location', 'AUTH_LOCATION_UPDATE_DESCRIPTION', [], Yii::$app->sourceLanguage);
         $auth->add($locationUpdate);
 
         $auth->addChild($admin, $locationUpdate);
 
         $locationCreate = $auth->createPermission(Location::AUTH_LOCATION_CREATE);
-        $locationCreate->description = Lang::t('location', 'AUTH_LOCATION_CREATE_DESCRIPTION', [], Yii::$app->sourceLanguage);
+        $locationCreate->description = Yii::t('location', 'AUTH_LOCATION_CREATE_DESCRIPTION', [], Yii::$app->sourceLanguage);
         $auth->add($locationCreate);
 
         $auth->addChild($admin, $locationCreate);
         $auth->addChild($locationUpdate, $locationCreate);
 
         $locationDelete = $auth->createPermission(Location::AUTH_LOCATION_DELETE);
-        $locationDelete->description = Lang::t('location', 'AUTH_LOCATION_DELETE_DESCRIPTION', [], Yii::$app->sourceLanguage);
+        $locationDelete->description = Yii::t('location', 'AUTH_LOCATION_DELETE_DESCRIPTION', [], Yii::$app->sourceLanguage);
         $auth->add($locationDelete);
 
         $auth->addChild($admin, $locationDelete);

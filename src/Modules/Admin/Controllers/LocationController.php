@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Controllers;
 
-use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Controllers\Traits\LocationTrait;
@@ -83,12 +82,12 @@ class LocationController extends Controller
         $location->loadDefaultValues();
         $location->type ??= $type;
 
-        if (!Yii::$app->getUser()->can(Location::AUTH_LOCATION_CREATE, ['location' => $location])) {
+        if (!$this->webuser->can(Location::AUTH_LOCATION_CREATE, ['location' => $location])) {
             throw new ForbiddenHttpException();
         }
 
-        if ($location->load(Yii::$app->getRequest()->post()) && !$this->request->isFormReload() && $location->insert()) {
-            $this->success(Lang::t('location', 'LOCATION_SUCCESS_CREATED'));
+        if ($location->load($this->request->post()) && !$this->request->isFormReload() && $location->insert()) {
+            $this->success(Yii::t('location', 'LOCATION_SUCCESS_CREATED'));
             return $this->redirect(['index']);
         }
 
@@ -101,8 +100,8 @@ class LocationController extends Controller
     {
         $location = $this->findLocation($id, Location::AUTH_LOCATION_UPDATE);
 
-        if ($location->load(Yii::$app->getRequest()->post()) && !$this->request->isFormReload() && $location->update()) {
-            $this->success(Lang::t('location', 'LOCATION_SUCCESS_UPDATED'));
+        if ($location->load($this->request->post()) && !$this->request->isFormReload() && $location->update()) {
+            $this->success(Yii::t('location', 'LOCATION_SUCCESS_UPDATED'));
             return $this->refresh();
         }
 
@@ -116,7 +115,7 @@ class LocationController extends Controller
         $location = $this->findLocation($id, Location::AUTH_LOCATION_DELETE);
 
         if ($location->delete()) {
-            $this->success(Lang::t('location', 'LOCATION_SUCCESS_DELETED'));
+            $this->success(Yii::t('location', 'LOCATION_SUCCESS_DELETED'));
             return $this->redirect(['index']);
         }
 

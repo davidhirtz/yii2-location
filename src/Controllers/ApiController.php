@@ -6,18 +6,17 @@ namespace Hirtz\Location\Controllers;
 
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Queries\LocationQuery;
+use Hirtz\Location\Module;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Filters\PageCache;
+use Hirtz\Skeleton\Web\Controller;
 use Override;
-use Yii;
 use yii\web\BadRequestHttpException;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
- * @template T of Location
- * @property Response $response
+ * @extends Controller<Module>
  */
 class ApiController extends Controller
 {
@@ -95,7 +94,7 @@ class ApiController extends Controller
 
     protected function getLocationQuery(): LocationQuery
     {
-        $status = Yii::$app->getRequest()->getIsDraft() ? Location::STATUS_DRAFT : Location::STATUS_ENABLED;
+        $status = $this->request->getIsDraft() ? Location::STATUS_DRAFT : Location::STATUS_ENABLED;
 
         return Location::find()
             ->withTranslations()

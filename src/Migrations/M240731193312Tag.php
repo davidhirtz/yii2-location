@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Migrations;
 
-use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\LocationTag;
 use Hirtz\Location\Models\Tag;
@@ -59,20 +58,20 @@ class M240731193312Tag extends Migration
         $admin = $auth->getRole(User::AUTH_ROLE_ADMIN);
 
         $tagUpdate = $auth->createPermission(Tag::AUTH_TAG_UPDATE);
-        $tagUpdate->description = Lang::t('location', 'AUTH_TAG_UPDATE_DESCRIPTION', [], Yii::$app->sourceLanguage);
+        $tagUpdate->description = Yii::t('location', 'AUTH_TAG_UPDATE_DESCRIPTION', [], Yii::$app->sourceLanguage);
         $auth->add($tagUpdate);
 
         $auth->addChild($admin, $tagUpdate);
 
         $tagCreate = $auth->createPermission(Tag::AUTH_TAG_CREATE);
-        $tagCreate->description = Lang::t('location', 'AUTH_TAG_CREATE_DESCRIPTION', [], Yii::$app->sourceLanguage);
+        $tagCreate->description = Yii::t('location', 'AUTH_TAG_CREATE_DESCRIPTION', [], Yii::$app->sourceLanguage);
         $auth->add($tagCreate);
 
         $auth->addChild($admin, $tagCreate);
         $auth->addChild($tagUpdate, $tagCreate);
 
         $tagDelete = $auth->createPermission(Tag::AUTH_TAG_DELETE);
-        $tagDelete->description = Lang::t('location', 'AUTH_TAG_DELETE_DESCRIPTION', [], Yii::$app->sourceLanguage);
+        $tagDelete->description = Yii::t('location', 'AUTH_TAG_DELETE_DESCRIPTION', [], Yii::$app->sourceLanguage);
         $auth->add($tagDelete);
 
         $auth->addChild($admin, $tagDelete);

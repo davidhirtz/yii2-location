@@ -1,5 +1,7 @@
 ## 3.0.0 (in development)
 
+- `Controllers\ApiController` extends the skeleton `Web\Controller` instead of `yii\web\Controller`, so `$this->request`
+  is the skeleton `Request` and the hand-declared `@property Response $response` is gone
 - `TagCollection::invalidateCache()` also drops the static list, which it left in place before, so a saved tag is seen
   by the next `getAll()` in the same process; `reset()` drops the static alone and `Bootstrap` calls it, so an
   application starts without the tags of the one before it. `$_tags` is `$tags`

@@ -31,7 +31,7 @@ class TagCollection
             $duration = static::getModule()->tagCachedQueryDuration;
 
             static::$tags = (null !== $duration)
-                ? Yii::$app->getDb()->cache(static::findAll(...), $duration, $dependency)
+                ? Tag::getDb()->cache(static::findAll(...), $duration, $dependency)
                 : static::findAll();
         }
 

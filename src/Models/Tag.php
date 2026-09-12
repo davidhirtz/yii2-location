@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Models;
 
-use Hirtz\Skeleton\I18n\Lang;
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
 use Hirtz\Location\Models\Collections\TagCollection;
@@ -208,7 +207,7 @@ class Tag extends ActiveRecord implements
     public function getTrailModelName(): string
     {
         if ($this->id) {
-            return $this->getI18nAttribute('name') ?: Lang::t('skeleton', 'COMMON_MODEL_ID', [
+            return $this->getI18nAttribute('name') ?: Yii::t('skeleton', 'COMMON_MODEL_ID', [
                 'model' => $this->getTrailModelType(),
                 'id' => $this->id,
             ]);
@@ -219,7 +218,7 @@ class Tag extends ActiveRecord implements
 
     public function getTrailModelType(): string
     {
-        return Lang::t('location', 'COMMON_TAG');
+        return Yii::t('location', 'COMMON_TAG');
     }
 
     public function getAdminRoute(): array|false
@@ -237,8 +236,8 @@ class Tag extends ActiveRecord implements
     {
         return [
             ...parent::attributeLabels(),
-            'name' => Lang::t('location', 'TAG_NAME_LABEL'),
-            'location_count' => Lang::t('location', 'TAG_LOCATION_COUNT_LABEL'),
+            'name' => Yii::t('location', 'TAG_NAME_LABEL'),
+            'location_count' => Yii::t('location', 'TAG_LOCATION_COUNT_LABEL'),
         ];
     }
 

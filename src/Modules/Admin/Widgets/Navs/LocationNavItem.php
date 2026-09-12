@@ -7,9 +7,9 @@ namespace Hirtz\Location\Modules\Admin\Widgets\Navs;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\ModuleTrait;
-use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Skeleton\Widgets\Navs\NavItem;
 use Override;
+use Yii;
 
 class LocationNavItem extends NavItem
 {
@@ -19,7 +19,7 @@ class LocationNavItem extends NavItem
 
     public function __construct(array $config = [])
     {
-        $this->label ??= Lang::t('location', 'COMMON_LOCATIONS');
+        $this->label ??= Yii::t('location', 'COMMON_LOCATIONS');
         $this->icon ??= 'map-marker-alt';
         $this->order ??= 50;
         $this->url ??= ['/admin/location/location/index'];
@@ -51,7 +51,7 @@ class LocationNavItem extends NavItem
         return $this->showTags
             ? NavItem::make()
                 //->icon('tags')
-                ->label(Lang::t('location', 'COMMON_TAGS'))
+                ->label(Yii::t('location', 'COMMON_TAGS'))
                 ->url(['/admin/location/tag/index'])
                 ->order(20)
                 ->roles([Tag::AUTH_TAG_CREATE])

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Widgets\Navs;
 
-use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Skeleton\Widgets\Buttons\CreateButton;
 use Hirtz\Skeleton\Widgets\Navs\Header;
 use Hirtz\Skeleton\Widgets\Traits\ModelTrait;
@@ -30,7 +29,7 @@ class LocationHeader extends Header
     #[Override]
     protected function configure(): void
     {
-        $this->title ??= $this->model?->getOldAttribute('name') ?? Lang::t('location', 'COMMON_LOCATIONS');
+        $this->title ??= $this->model?->getOldAttribute('name') ?? Yii::t('location', 'COMMON_LOCATIONS');
 
         if ($this->model) {
             $this->addContent($this->getLocationActionDropdown());
@@ -42,7 +41,7 @@ class LocationHeader extends Header
         }
 
         if (!$this->provider) {
-            $this->view->addBreadcrumb(Lang::t('location', 'COMMON_LOCATIONS'), ['/admin/location/']);
+            $this->view->addBreadcrumb(Yii::t('location', 'COMMON_LOCATIONS'), ['/admin/location/']);
         }
 
         parent::configure();
@@ -60,7 +59,7 @@ class LocationHeader extends Header
     protected function getCreateLocationButton(): string|Stringable
     {
         return CreateButton::make()
-            ->label(Lang::t('location', 'LOCATION_HEADER_NEW_LOCATION'))
+            ->label(Yii::t('location', 'LOCATION_HEADER_NEW_LOCATION'))
             ->roles([Location::AUTH_LOCATION_CREATE]);
     }
 }

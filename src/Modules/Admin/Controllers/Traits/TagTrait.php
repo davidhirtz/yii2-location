@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Hirtz\Location\Modules\Admin\Controllers\Traits;
 
 use Hirtz\Location\Models\Tag;
-use Yii;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
@@ -19,7 +18,7 @@ trait TagTrait
             throw new NotFoundHttpException();
         }
 
-        if ($permissionName && !Yii::$app->getUser()->can($permissionName, ['tag' => $tag])) {
+        if ($permissionName && !$this->webuser->can($permissionName, ['tag' => $tag])) {
             throw new ForbiddenHttpException();
         }
 

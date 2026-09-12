@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Controllers;
 
-use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Controllers\Traits\TagTrait;
 use Hirtz\Location\Modules\Admin\Data\TagActiveDataProvider;
@@ -84,12 +83,12 @@ class TagController extends Controller
         $tag->loadDefaultValues();
         $tag->type ??= $type;
 
-        if (!Yii::$app->getUser()->can(Tag::AUTH_TAG_CREATE, ['tag' => $tag])) {
+        if (!$this->webuser->can(Tag::AUTH_TAG_CREATE, ['tag' => $tag])) {
             throw new ForbiddenHttpException();
         }
 
-        if ($tag->load(Yii::$app->getRequest()->post()) && !$this->request->isFormReload() && $tag->insert()) {
-            $this->success(Lang::t('location', 'TAG_SUCCESS_CREATED'));
+        if ($tag->load($this->request->post()) && !$this->request->isFormReload() && $tag->insert()) {
+            $this->success(Yii::t('location', 'TAG_SUCCESS_CREATED'));
             return $this->redirect(['index']);
         }
 
@@ -102,8 +101,8 @@ class TagController extends Controller
     {
         $tag = $this->findTag($id, Tag::AUTH_TAG_UPDATE);
 
-        if ($tag->load(Yii::$app->getRequest()->post()) && !$this->request->isFormReload() && $tag->update()) {
-            $this->success(Lang::t('location', 'TAG_SUCCESS_UPDATED'));
+        if ($tag->load($this->request->post()) && !$this->request->isFormReload() && $tag->update()) {
+            $this->success(Yii::t('location', 'TAG_SUCCESS_UPDATED'));
             return $this->refresh();
         }
 
@@ -117,7 +116,7 @@ class TagController extends Controller
         $tag = $this->findTag($id, Tag::AUTH_TAG_DELETE);
 
         if ($tag->delete()) {
-            $this->success(Lang::t('location', 'TAG_SUCCESS_DELETED'));
+            $this->success(Yii::t('location', 'TAG_SUCCESS_DELETED'));
             return $this->redirect(['index']);
         }
 

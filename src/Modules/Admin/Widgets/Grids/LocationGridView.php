@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Widgets\Grids;
 
-use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Location\Models\Collections\TagCollection;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Tag;
@@ -89,7 +88,7 @@ class LocationGridView extends GridView
     protected function getTagDropdown(): ?FilterDropdown
     {
         return FilterDropdown::make()
-            ->label(Lang::t('skeleton', 'LOCATION_TAGS'))
+            ->label(Yii::t('skeleton', 'LOCATION_TAGS'))
             ->items($this->getTagDropdownItems())
             ->visible($this->showTagDropdown)
             ->paramName('tag');
@@ -139,7 +138,7 @@ class LocationGridView extends GridView
                     ->addClass('small');
             }
         } else {
-            $name = $address ?: Lang::t('location', 'LOCATION_UNNAMED');
+            $name = $address ?: Yii::t('location', 'LOCATION_UNNAMED');
 
             $content = A::make()
                 ->class('strong')

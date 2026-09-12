@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Controllers;
 
-use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\LocationTag;
 use Hirtz\Location\Modules\Admin\Controllers\Traits\LocationTrait;
@@ -90,16 +89,16 @@ class LocationTagController extends Controller
 
         $locationTag = LocationTag::create();
         $locationTag->loadDefaultValues();
-        $locationTag->load(Yii::$app->getRequest()->post());
+        $locationTag->load($this->request->post());
 
         $locationTag->populateLocationRelation($location);
         $locationTag->tag_id = $tag;
 
         $locationTag->insert();
 
-        $this->errorOrSuccess($locationTag, Lang::t('location', 'LOCATION_TAG_SUCCESS_ADDED'));
+        $this->errorOrSuccess($locationTag, Yii::t('location', 'LOCATION_TAG_SUCCESS_ADDED'));
 
-        return $this->redirect(['index'] + Yii::$app->getRequest()->getQueryParams());
+        return $this->redirect(['index'] + $this->request->getQueryParams());
     }
 
     public function actionDelete(int $location, int $tag): Response|string
@@ -116,8 +115,8 @@ class LocationTagController extends Controller
         $this->checkLocationPermission($locationTag->location, Location::AUTH_LOCATION_UPDATE);
         $locationTag->delete();
 
-        $this->errorOrSuccess($locationTag, Lang::t('location', 'LOCATION_TAG_SUCCESS_REMOVED'));
+        $this->errorOrSuccess($locationTag, Yii::t('location', 'LOCATION_TAG_SUCCESS_REMOVED'));
 
-        return $this->redirect(['index'] + Yii::$app->getRequest()->getQueryParams());
+        return $this->redirect(['index'] + $this->request->getQueryParams());
     }
 }

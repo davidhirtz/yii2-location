@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Widgets\Buttons;
 
-use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Skeleton\Widgets\Buttons\DeleteButton;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Modules\Admin\Controllers\LocationController;
@@ -28,7 +27,7 @@ class LocationDeleteButton extends DeleteButton
     #[Override]
     protected function configure(): void
     {
-        $this->label ??= Lang::t('location', 'LOCATION_DELETE_DELETE_LOCATION');
+        $this->label ??= Yii::t('location', 'LOCATION_DELETE_DELETE_LOCATION');
 
         parent::configure();
     }
