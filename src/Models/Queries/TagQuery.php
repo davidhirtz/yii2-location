@@ -19,12 +19,12 @@ class TagQuery extends I18nActiveQuery
         return $this;
     }
 
-    public function withLocationTag(int $locationId, bool $eagerLoading = true, string $joinType = 'LEFT JOIN'): static
+    public function withLocationTag(int $locationId, string $joinType = 'LEFT JOIN'): static
     {
-        $with = [
-            'locationTag' => fn (ActiveQuery $query) => $query->onCondition([LocationTag::tableName() . '.[[location_id]]' => $locationId]),
-        ];
-
-        return $this->joinWith($with, $eagerLoading, $joinType);
+        return $this->selectWith(
+            'locationTag',
+            $joinType,
+            fn (ActiveQuery $query) => $query->onCondition([LocationTag::tableName() . '.[[location_id]]' => $locationId]),
+        );
     }
 }

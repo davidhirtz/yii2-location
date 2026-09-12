@@ -1,5 +1,8 @@
 ## 3.0.0 (in development)
 
+- `TagQuery::withLocationTag()` lost its `$eagerLoading` parameter and takes the join type second: the location tag
+  is read off the joined row (`ActiveQuery::selectWith()`) rather than queried again; `LocationQuery::andWhereTagId()`
+  does the same when called with eager loading
 - `Models\Location::getAdminRoute()` and `Models\Tag::getAdminRoute()` return `false` for a record without an id
   rather than a route with a null id — the guard moved here from `getTrailModelAdminRoute()`, which is gone. Both
   models implement the skeleton `Models\Interfaces\AdminRouteInterface`
