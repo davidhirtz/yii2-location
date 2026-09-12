@@ -18,6 +18,7 @@ use Hirtz\Skeleton\Db\ActiveRecord;
 use Hirtz\Skeleton\Models\Interfaces\AdminRouteInterface;
 use Hirtz\Skeleton\Models\Interfaces\DraftStatusAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\I18nAttributeInterface;
+use Hirtz\Skeleton\Models\Interfaces\SearchableInterface;
 use Hirtz\Skeleton\Models\Interfaces\CustomAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
 use Hirtz\Skeleton\Models\Interfaces\TranslationInterface;
@@ -25,6 +26,7 @@ use Hirtz\Skeleton\Models\Interfaces\TypeAttributeInterface;
 use Hirtz\Skeleton\Models\Traits\CustomAttributesTrait;
 use Hirtz\Skeleton\Models\Traits\DraftStatusAttributeTrait;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
+use Hirtz\Skeleton\Models\Traits\SearchableTrait;
 use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
 use Hirtz\Skeleton\Models\Traits\TranslationTrait;
 use Hirtz\Skeleton\Models\Traits\TypeAttributeTrait;
@@ -50,6 +52,7 @@ class Tag extends ActiveRecord implements
     CustomAttributeInterface,
     DraftStatusAttributeInterface,
     I18nAttributeInterface,
+    SearchableInterface,
     TrailModelInterface,
     TranslationInterface,
     TypeAttributeInterface
@@ -57,6 +60,7 @@ class Tag extends ActiveRecord implements
     use CustomAttributesTrait;
     use DraftStatusAttributeTrait;
     use I18nAttributesTrait;
+    use SearchableTrait;
     use TranslationTrait;
     use ModuleTrait;
     use TypeAttributeTrait;
@@ -224,6 +228,32 @@ class Tag extends ActiveRecord implements
     public function getAdminRoute(): array|false
     {
         return $this->id ? ['/admin/location/tag/update', 'id' => $this->id] : false;
+    }
+
+    public function getSearchAttributes(): array
+    {
+        return ['name'];
+    }
+
+    public function getSearchWeight(): float
+    {
+        return 0.5;
+    }
+
+    public function isSearchable(): bool
+    {
+        return $this->hasTagsEnabled();
+    }
+
+    /**
+     * The flag gates the hit as well as the write, so turning tags off hides the rows a rebuild has not
+     * removed yet.
+     */
+    protected function isSearchResultVisible(): bool
+    {
+        return $this->hasTagsEnabled()
+            && Yii::$app->has('user')
+            && Yii::$app->getUser()->can(static::AUTH_TAG_UPDATE);
     }
 
     public function hasTagsEnabled(): bool

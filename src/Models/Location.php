@@ -21,6 +21,7 @@ use Hirtz\Skeleton\Helpers\CountryList;
 use Hirtz\Skeleton\Models\Interfaces\AdminRouteInterface;
 use Hirtz\Skeleton\Models\Interfaces\DraftStatusAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\I18nAttributeInterface;
+use Hirtz\Skeleton\Models\Interfaces\SearchableInterface;
 use Hirtz\Skeleton\Models\Interfaces\CustomAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
 use Hirtz\Skeleton\Models\Interfaces\TranslationInterface;
@@ -28,6 +29,7 @@ use Hirtz\Skeleton\Models\Interfaces\TypeAttributeInterface;
 use Hirtz\Skeleton\Models\Traits\CustomAttributesTrait;
 use Hirtz\Skeleton\Models\Traits\DraftStatusAttributeTrait;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
+use Hirtz\Skeleton\Models\Traits\SearchableTrait;
 use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
 use Hirtz\Skeleton\Models\Traits\TranslationTrait;
 use Hirtz\Skeleton\Models\Traits\TypeAttributeTrait;
@@ -66,6 +68,7 @@ class Location extends ActiveRecord implements
     CustomAttributeInterface,
     DraftStatusAttributeInterface,
     I18nAttributeInterface,
+    SearchableInterface,
     TrailModelInterface,
     TranslationInterface,
     TypeAttributeInterface
@@ -73,6 +76,7 @@ class Location extends ActiveRecord implements
     use CustomAttributesTrait;
     use DraftStatusAttributeTrait;
     use I18nAttributesTrait;
+    use SearchableTrait;
     use TranslationTrait;
     use ModuleTrait;
     use TrailModelTrait;
@@ -276,6 +280,21 @@ class Location extends ActiveRecord implements
     public function getAdminRoute(): array|false
     {
         return $this->id ? ['/admin/location/location/update', 'id' => $this->id] : false;
+    }
+
+    public function getSearchAttributes(): array
+    {
+        return ['name', 'formatted_address', 'street', 'locality', 'postal_code', 'district', 'state'];
+    }
+
+    public function getSearchWeight(): float
+    {
+        return 0.6;
+    }
+
+    protected function isSearchResultVisible(): bool
+    {
+        return Yii::$app->has('user') && Yii::$app->getUser()->can(static::AUTH_LOCATION_UPDATE);
     }
 
     public function getCountryCodes(): array

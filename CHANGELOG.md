@@ -1,5 +1,10 @@
 ## 3.0.0 (in development)
 
+- `Models\Location` and `Models\Tag` are searchable: they implement the skeleton's
+  `Models\Interfaces\SearchableInterface`, and `Bootstrap` registers them on the `search` component. A location
+  indexes its name and address parts at weight 0.6, a tag its name at 0.5. `Module::$enableTags` gates the tag
+  both ways — while it is off nothing is written, and a row an earlier rebuild left behind stays out of the
+  results
 - `esbuild.js` uses the skeleton's shared `esbuild.config.js`, so the styles are built by sass with autoprefixer
   instead of esbuild's css loader. `resources/assets/src/css/autocomplete.css` is now `autocomplete.scss` — it
   already nested with `&`, which sass flattens into plain selectors rather than shipping native CSS nesting
