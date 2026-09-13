@@ -318,6 +318,37 @@ class LocationAdminTest extends TestCase
         self::assertStringContainsString('Alpha', $html);
     }
 
+    public function testTheTagUpdatePageRendersTheFormAndItsActions(): void
+    {
+        $this->login();
+        $tag = $this->createTag('Alpha');
+
+        $html = Yii::$app->runAction('admin/location/tag/update', ['id' => $tag->id]);
+
+        self::assertIsString($html);
+        self::assertStringContainsString('name="Tag[name]"', $html);
+        self::assertStringContainsString('Alpha', $html);
+    }
+
+    /**
+     * The tag filter of the location index joins the junction, and the grid then shows the tag buttons.
+     */
+    public function testTheLocationIndexFiltersByTag(): void
+    {
+        $this->login();
+        self::getModule()->enableTags = true;
+
+        $tag = $this->createTag('Alpha');
+        $this->post('admin/location/location-tag/create', ['location' => 1, 'tag' => $tag->id]);
+
+        $html = Yii::$app->runAction('admin/location/location/index', ['tag' => $tag->id]);
+
+        self::assertIsString($html);
+        self::assertStringContainsString('Test Location 1', $html);
+        self::assertStringNotContainsString('Test Location 2', $html);
+        self::assertStringContainsString('Alpha', $html);
+    }
+
     private function createTag(string $name): Tag
     {
         $tag = Tag::create();
