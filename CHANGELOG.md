@@ -1,5 +1,7 @@
 ## 3.0.0 (in development)
 
+- The tag index translates through `COMMON_TAGS`, and `TAG_CREATE_TITLE` had no English text. The stray
+  `src/messages/ru/location.php` left over from 2.x is gone
 - **One permission per admin-managed model.** `Models\Location::AUTH_LOCATION` (`location`) and
   `Models\Tag::AUTH_TAG` (`tag`) replace the three verb permissions each.
   `Migrations\M260914130000AuthItems` grants the new item to every parent and assignee of any old one.

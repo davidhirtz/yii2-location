@@ -2,18 +2,8 @@
 
 declare(strict_types=1);
 
-/**
- * This is the configuration for generating message translations
- * for the Yii framework. It is used by the 'yii message' command.
- */
-
-$config = require Yii::getAlias('@skeleton/../messages/config.php');
-
 return [
-    ...$config,
-    'sourcePath' => __DIR__ . '/../src/',
+    ...require Yii::getAlias('@skeleton/../messages/config.php'),
     'messagePath' => __DIR__,
-    // `Message::make()` stores a pointer instead of rendered text, so its keys live nowhere else
-    'translator' => ['Yii::t', '\\Yii::t', 'Message::make'],
-    'ignoreCategories' => ['yii', 'skeleton'],
+    'categories' => ['location'],
 ];

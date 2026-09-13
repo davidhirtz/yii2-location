@@ -16,7 +16,7 @@ use Hirtz\Location\Modules\Admin\Widgets\Navs\LocationSubmenu;
 use Hirtz\Skeleton\Web\View;
 use Hirtz\Skeleton\Widgets\Grids\GridContainer;
 
-$this->title(Yii::t('location', 'Tags'));
+$this->title(Yii::t('location', 'COMMON_TAGS'));
 
 echo LocationHeader::make()
     ->model($provider->location);
