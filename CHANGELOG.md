@@ -1,5 +1,8 @@
 ## 3.0.0 (in development)
 
+- `Models\Location`, `Models\Tag` and `Models\LocationTag` implement the skeleton's
+  `Models\Interfaces\AdminModelInterface`: `getTrailModelName()` and `getTrailModelType()` are `getAdminName()`
+  and `getAdminType()`, and the boilerplate name is `Models\Traits\AdminModelTrait`'s
 - `Models\Location` and `Models\Tag` are searchable: they implement the skeleton's
   `Models\Interfaces\SearchableInterface`, and `Bootstrap` registers them on the `search` component. A location
   indexes its name and address parts at weight 0.6, a tag its name at 0.5. `Module::$enableTags` gates the tag

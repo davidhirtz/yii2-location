@@ -9,6 +9,7 @@ use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Behaviors\BlameableBehavior;
 use Hirtz\Skeleton\Behaviors\TimestampBehavior;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
+use Hirtz\Skeleton\Models\Traits\AdminModelTrait;
 use yii\db\ActiveQuery;
 use Hirtz\Skeleton\Db\ActiveRecord;
 use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
@@ -31,6 +32,7 @@ use Yii;
  */
 class LocationTag extends ActiveRecord implements TrailModelInterface
 {
+    use AdminModelTrait;
     use ModuleTrait;
     use TrailModelTrait;
     use UpdatedByUserTrait;
@@ -172,7 +174,12 @@ class LocationTag extends ActiveRecord implements TrailModelInterface
     /**
      * @noinspection PhpUnused
      */
-    public function getTrailModelName(): string
+    public function getAdminRoute(): array|false
+    {
+        return false;
+    }
+
+    public function getAdminName(): string
     {
         return Yii::t('location', 'LOCATION_TAG_LOCATION_TAG');
     }
@@ -180,7 +187,7 @@ class LocationTag extends ActiveRecord implements TrailModelInterface
     /**
      * @noinspection PhpUnused
      */
-    public function getTrailModelType(): string
+    public function getAdminType(): string
     {
         return Yii::t('skeleton', 'COMMON_RELATION');
     }

@@ -13,9 +13,9 @@ use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Behaviors\BlameableBehavior;
 use Hirtz\Skeleton\Behaviors\TimestampBehavior;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
+use Hirtz\Skeleton\Models\Traits\AdminModelTrait;
 use yii\db\ActiveQuery;
 use Hirtz\Skeleton\Db\ActiveRecord;
-use Hirtz\Skeleton\Models\Interfaces\AdminRouteInterface;
 use Hirtz\Skeleton\Models\Interfaces\DraftStatusAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\I18nAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\SearchableInterface;
@@ -48,7 +48,6 @@ use Yii;
  * @property-read Location[] $locations {@see static::getLocations()}
  */
 class Tag extends ActiveRecord implements
-    AdminRouteInterface,
     CustomAttributeInterface,
     DraftStatusAttributeInterface,
     I18nAttributeInterface,
@@ -57,6 +56,7 @@ class Tag extends ActiveRecord implements
     TranslationInterface,
     TypeAttributeInterface
 {
+    use AdminModelTrait;
     use CustomAttributesTrait;
     use DraftStatusAttributeTrait;
     use I18nAttributesTrait;
@@ -205,22 +205,7 @@ class Tag extends ActiveRecord implements
         ]);
     }
 
-    /**
-     * @noinspection PhpUnused
-     */
-    public function getTrailModelName(): string
-    {
-        if ($this->id) {
-            return $this->getI18nAttribute('name') ?: Yii::t('skeleton', 'COMMON_MODEL_ID', [
-                'model' => $this->getTrailModelType(),
-                'id' => $this->id,
-            ]);
-        }
-
-        return $this->getTrailModelType();
-    }
-
-    public function getTrailModelType(): string
+    public function getAdminType(): string
     {
         return Yii::t('location', 'COMMON_TAG');
     }
