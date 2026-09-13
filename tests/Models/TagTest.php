@@ -15,6 +15,19 @@ class TagTest extends TestCase
     use LocationFixtureTrait;
     use ModuleTrait;
 
+    /**
+     * The serialized tag used to carry `formatted_address`, `lat` and `lng` — a copy of `Location::fields()`, always
+     * null on a tag — while leaving out the tag's own type.
+     */
+    public function testTheSerializedTagCarriesOnlyItsOwnAttributes(): void
+    {
+        $tag = Tag::create();
+        $tag->name = 'Serialized';
+
+        self::assertTrue($tag->save());
+        self::assertSame(['name' => 'Serialized'], $tag->toArray());
+    }
+
     public function testCreateLinkAndDelete(): void
     {
         $tag = Tag::create();

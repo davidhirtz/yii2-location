@@ -1,5 +1,10 @@
 ## 3.0.0 (in development)
 
+- `Models\Tag::fields()` returns the tag's own attributes. It was a copy of `Location::fields()`, so a serialized
+  tag carried `formatted_address`, `lat` and `lng` — always null on a tag — and left out its own `type`
+- `Modules\Admin\Widgets\Grids\LocationGridView::getNameColumnContent()` returns `string|Stringable`, as the cms
+  grids of the same shape already did. It declared `string` while composing the link from `Html\A`, so the whole
+  location index was a `TypeError` for a location with neither an address nor a tag
 - The tag index translates through `COMMON_TAGS`, and `TAG_CREATE_TITLE` had no English text. The stray
   `src/messages/ru/location.php` left over from 2.x is gone
 - **One permission per admin-managed model.** `Models\Location::AUTH_LOCATION` (`location`) and

@@ -118,7 +118,7 @@ class LocationGridView extends GridView
             ->content($this->getNameColumnContent(...));
     }
 
-    protected function getNameColumnContent(Location $location): string
+    protected function getNameColumnContent(Location $location): string|Stringable
     {
         if ($address = $location->formatted_address) {
             $address = $this->search->markKeywords($address);

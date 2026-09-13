@@ -82,12 +82,10 @@ class Tag extends ActiveRecord implements
     #[Override]
     public function fields(): array
     {
-        return [
+        return array_filter([
             'name',
-            'formatted_address',
-            'lat',
-            'lng',
-        ];
+            count(static::getTypes()) > 1 ? 'type' : null,
+        ]);
     }
 
     #[Override]
