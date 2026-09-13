@@ -83,9 +83,7 @@ class Location extends ActiveRecord implements
     use TypeAttributeTrait;
     use UpdatedByUserTrait;
 
-    public const string AUTH_LOCATION_CREATE = 'locationCreate';
-    public const string AUTH_LOCATION_DELETE = 'locationDelete';
-    public const string AUTH_LOCATION_UPDATE = 'locationUpdate';
+    public const string AUTH_LOCATION = 'location';
 
     #[Override]
     public function behaviors(): array
@@ -279,7 +277,7 @@ class Location extends ActiveRecord implements
 
     protected function isSearchResultVisible(): bool
     {
-        return Yii::$app->has('user') && Yii::$app->getUser()->can(static::AUTH_LOCATION_UPDATE);
+        return Yii::$app->has('user') && Yii::$app->getUser()->can(static::AUTH_LOCATION);
     }
 
     public function getCountryCodes(): array

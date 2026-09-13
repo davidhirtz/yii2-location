@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Hirtz\Location\Modules\Admin\Controllers\Traits;
 
 use Hirtz\Location\Models\Location;
-use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
 trait LocationTrait
 {
-    protected function findLocation(int $id, ?string $permissionName = null): Location
+    protected function findLocation(int $id): Location
     {
         $location = Location::findOne($id);
 
@@ -18,17 +17,6 @@ trait LocationTrait
             throw new NotFoundHttpException();
         }
 
-        if ($permissionName) {
-            $this->checkLocationPermission($location, $permissionName);
-        }
-
         return $location;
-    }
-
-    protected function checkLocationPermission($location, $permissionName): void
-    {
-        if (!$this->webuser->can($permissionName, ['location' => $location])) {
-            throw new ForbiddenHttpException();
-        }
     }
 }

@@ -106,7 +106,7 @@ class LocationSearchTest extends TestCase
         $user = User::findOne($fixture->data['admin']['id']);
 
         $auth = Yii::$app->getAuthManager();
-        $auth->assign($auth->getPermission(Tag::AUTH_TAG_UPDATE), $user->id);
+        $auth->assign($auth->getPermission(Tag::AUTH_TAG), $user->id);
 
         Yii::$app->getUser()->setIdentity($user);
     }

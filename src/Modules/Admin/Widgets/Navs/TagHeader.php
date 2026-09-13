@@ -62,7 +62,7 @@ class TagHeader extends Header
     {
         return CreateButton::make()
             ->label(Yii::t('location', 'TAG_HEADER_NEW_TAG'))
-            ->roles([Tag::AUTH_TAG_CREATE]);
+            ->roles([Tag::AUTH_TAG]);
     }
 
     protected function addLocationBreadcrumb(): void

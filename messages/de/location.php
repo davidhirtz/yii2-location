@@ -5,12 +5,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'AUTH_LOCATION_CREATE_DESCRIPTION' => 'Orte erstellen',
-    'AUTH_LOCATION_DELETE_DESCRIPTION' => 'Orte löschen',
-    'AUTH_LOCATION_UPDATE_DESCRIPTION' => 'Orte aktualisieren',
-    'AUTH_TAG_CREATE_DESCRIPTION' => 'Neue Ort-Tags erstellen',
-    'AUTH_TAG_DELETE_DESCRIPTION' => 'Ort-Tags löschen',
-    'AUTH_TAG_UPDATE_DESCRIPTION' => 'Ort-Tags aktualisieren',
+    'AUTH_LOCATION_DESCRIPTION' => 'Standorte verwalten',
+    'AUTH_TAG_DESCRIPTION' => 'Standort-Tags verwalten',
     'COMMON_LOCATION' => 'Ort',
     'COMMON_LOCATIONS' => 'Orte',
     'COMMON_TAG' => 'Tag',

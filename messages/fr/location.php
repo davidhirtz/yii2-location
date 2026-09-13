@@ -5,12 +5,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'AUTH_LOCATION_CREATE_DESCRIPTION' => '',
-    'AUTH_LOCATION_DELETE_DESCRIPTION' => '',
-    'AUTH_LOCATION_UPDATE_DESCRIPTION' => '',
-    'AUTH_TAG_CREATE_DESCRIPTION' => '',
-    'AUTH_TAG_DELETE_DESCRIPTION' => '',
-    'AUTH_TAG_UPDATE_DESCRIPTION' => '',
+    'AUTH_LOCATION_DESCRIPTION' => '',
+    'AUTH_TAG_DESCRIPTION' => '',
     'COMMON_LOCATION' => '',
     'COMMON_LOCATIONS' => '',
     'COMMON_TAG' => '',

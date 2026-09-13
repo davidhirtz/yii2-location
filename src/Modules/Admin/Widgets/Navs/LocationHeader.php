@@ -60,6 +60,6 @@ class LocationHeader extends Header
     {
         return CreateButton::make()
             ->label(Yii::t('location', 'LOCATION_HEADER_NEW_LOCATION'))
-            ->roles([Location::AUTH_LOCATION_CREATE]);
+            ->roles([Location::AUTH_LOCATION]);
     }
 }

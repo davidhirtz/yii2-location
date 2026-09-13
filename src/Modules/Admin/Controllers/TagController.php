@@ -36,18 +36,8 @@ class TagController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'update'],
-                        'roles' => [Tag::AUTH_TAG_UPDATE],
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['create'],
-                        'roles' => [Tag::AUTH_TAG_CREATE],
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['delete'],
-                        'roles' => [Tag::AUTH_TAG_DELETE],
+                        'actions' => ['create', 'delete', 'index', 'update'],
+                        'roles' => [Tag::AUTH_TAG],
                     ],
                 ],
             ],
@@ -83,7 +73,7 @@ class TagController extends Controller
         $tag->loadDefaultValues();
         $tag->type ??= $type;
 
-        if (!$this->webuser->can(Tag::AUTH_TAG_CREATE, ['tag' => $tag])) {
+        if (!$this->webuser->can(Tag::AUTH_TAG)) {
             throw new ForbiddenHttpException();
         }
 
@@ -99,7 +89,7 @@ class TagController extends Controller
 
     public function actionUpdate(int $id): Response|string
     {
-        $tag = $this->findTag($id, Tag::AUTH_TAG_UPDATE);
+        $tag = $this->findTag($id);
 
         if ($tag->load($this->request->post()) && !$this->request->isFormReload() && $tag->update()) {
             $this->success(Yii::t('location', 'TAG_SUCCESS_UPDATED'));
@@ -113,7 +103,7 @@ class TagController extends Controller
 
     public function actionDelete(int $id): Response|string
     {
-        $tag = $this->findTag($id, Tag::AUTH_TAG_DELETE);
+        $tag = $this->findTag($id);
 
         if ($tag->delete()) {
             $this->success(Yii::t('location', 'TAG_SUCCESS_DELETED'));

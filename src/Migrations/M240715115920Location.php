@@ -11,6 +11,9 @@ use Yii;
 use yii\db\Migration;
 
 /**
+ * The permission names and descriptions this creates are hardcoded: `M2609141[0-6]0000AuthItems` collapses them
+ * into one permission per model, so neither the constants nor the message keys exist any more.
+ *
  * @noinspection PhpUnused
  */
 
@@ -48,21 +51,21 @@ class M240715115920Location extends Migration
         $auth = Yii::$app->getAuthManager();
         $admin = $auth->getRole(User::AUTH_ROLE_ADMIN);
 
-        $locationUpdate = $auth->createPermission(Location::AUTH_LOCATION_UPDATE);
-        $locationUpdate->description = Yii::t('location', 'AUTH_LOCATION_UPDATE_DESCRIPTION', [], Yii::$app->sourceLanguage);
+        $locationUpdate = $auth->createPermission('locationUpdate');
+        $locationUpdate->description = 'Update locations';
         $auth->add($locationUpdate);
 
         $auth->addChild($admin, $locationUpdate);
 
-        $locationCreate = $auth->createPermission(Location::AUTH_LOCATION_CREATE);
-        $locationCreate->description = Yii::t('location', 'AUTH_LOCATION_CREATE_DESCRIPTION', [], Yii::$app->sourceLanguage);
+        $locationCreate = $auth->createPermission('locationCreate');
+        $locationCreate->description = 'Create locations';
         $auth->add($locationCreate);
 
         $auth->addChild($admin, $locationCreate);
         $auth->addChild($locationUpdate, $locationCreate);
 
-        $locationDelete = $auth->createPermission(Location::AUTH_LOCATION_DELETE);
-        $locationDelete->description = Yii::t('location', 'AUTH_LOCATION_DELETE_DESCRIPTION', [], Yii::$app->sourceLanguage);
+        $locationDelete = $auth->createPermission('locationDelete');
+        $locationDelete->description = 'Delete locations';
         $auth->add($locationDelete);
 
         $auth->addChild($admin, $locationDelete);
@@ -72,9 +75,9 @@ class M240715115920Location extends Migration
     public function safeDown(): void
     {
         $auth = Yii::$app->getAuthManager();
-        $this->delete($auth->itemTable, ['name' => Location::AUTH_LOCATION_DELETE]);
-        $this->delete($auth->itemTable, ['name' => Location::AUTH_LOCATION_CREATE]);
-        $this->delete($auth->itemTable, ['name' => Location::AUTH_LOCATION_UPDATE]);
+        $this->delete($auth->itemTable, ['name' => 'locationDelete']);
+        $this->delete($auth->itemTable, ['name' => 'locationCreate']);
+        $this->delete($auth->itemTable, ['name' => 'locationUpdate']);
 
         $this->dropTable(Location::tableName());
     }

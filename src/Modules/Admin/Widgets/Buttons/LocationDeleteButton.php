@@ -21,7 +21,7 @@ class LocationDeleteButton extends DeleteButton
     public function isVisible(): bool
     {
         return parent::isVisible()
-            && $this->webuser->can(Location::AUTH_LOCATION_DELETE, ['location' => $this->model]);
+            && $this->webuser->can(Location::AUTH_LOCATION);
     }
 
     #[Override]

@@ -19,6 +19,6 @@ class TagDeleteButton extends DeleteButton
     public function isVisible(): bool
     {
         return parent::isVisible()
-            && $this->webuser->can(Tag::AUTH_TAG_DELETE, ['tag' => $this->model]);
+            && $this->webuser->can(Tag::AUTH_TAG);
     }
 }

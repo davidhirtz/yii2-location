@@ -39,7 +39,7 @@ class LocationTagController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['create', 'delete', 'index'],
-                        'roles' => [Location::AUTH_LOCATION_UPDATE],
+                        'roles' => [Location::AUTH_LOCATION],
                     ],
                 ],
             ],
@@ -85,7 +85,7 @@ class LocationTagController extends Controller
 
     public function actionCreate(int $location, int $tag): Response|string
     {
-        $location = $this->findLocation($location, Location::AUTH_LOCATION_UPDATE);
+        $location = $this->findLocation($location);
 
         $locationTag = LocationTag::create();
         $locationTag->loadDefaultValues();
@@ -112,7 +112,6 @@ class LocationTagController extends Controller
             throw new NotFoundHttpException();
         }
 
-        $this->checkLocationPermission($locationTag->location, Location::AUTH_LOCATION_UPDATE);
         $locationTag->delete();
 
         $this->errorOrSuccess($locationTag, Yii::t('location', 'LOCATION_TAG_SUCCESS_REMOVED'));

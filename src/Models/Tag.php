@@ -67,9 +67,7 @@ class Tag extends ActiveRecord implements
     use TrailModelTrait;
     use UpdatedByUserTrait;
 
-    public const string AUTH_TAG_CREATE = 'tagCreate';
-    public const string AUTH_TAG_DELETE = 'tagDelete';
-    public const string AUTH_TAG_UPDATE = 'tagUpdate';
+    public const string AUTH_TAG = 'tag';
 
     #[Override]
     public function behaviors(): array
@@ -238,7 +236,7 @@ class Tag extends ActiveRecord implements
     {
         return $this->hasTagsEnabled()
             && Yii::$app->has('user')
-            && Yii::$app->getUser()->can(static::AUTH_TAG_UPDATE);
+            && Yii::$app->getUser()->can(static::AUTH_TAG);
     }
 
     public function hasTagsEnabled(): bool

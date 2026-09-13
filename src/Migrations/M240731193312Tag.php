@@ -13,6 +13,9 @@ use Yii;
 use yii\db\Migration;
 
 /**
+ * The permission names and descriptions this creates are hardcoded: `M2609141[0-6]0000AuthItems` collapses them
+ * into one permission per model, so neither the constants nor the message keys exist any more.
+ *
  * @noinspection PhpUnused
  */
 
@@ -57,21 +60,21 @@ class M240731193312Tag extends Migration
         $auth = Yii::$app->getAuthManager();
         $admin = $auth->getRole(User::AUTH_ROLE_ADMIN);
 
-        $tagUpdate = $auth->createPermission(Tag::AUTH_TAG_UPDATE);
-        $tagUpdate->description = Yii::t('location', 'AUTH_TAG_UPDATE_DESCRIPTION', [], Yii::$app->sourceLanguage);
+        $tagUpdate = $auth->createPermission('tagUpdate');
+        $tagUpdate->description = 'Update location tags';
         $auth->add($tagUpdate);
 
         $auth->addChild($admin, $tagUpdate);
 
-        $tagCreate = $auth->createPermission(Tag::AUTH_TAG_CREATE);
-        $tagCreate->description = Yii::t('location', 'AUTH_TAG_CREATE_DESCRIPTION', [], Yii::$app->sourceLanguage);
+        $tagCreate = $auth->createPermission('tagCreate');
+        $tagCreate->description = 'Create location tags';
         $auth->add($tagCreate);
 
         $auth->addChild($admin, $tagCreate);
         $auth->addChild($tagUpdate, $tagCreate);
 
-        $tagDelete = $auth->createPermission(Tag::AUTH_TAG_DELETE);
-        $tagDelete->description = Yii::t('location', 'AUTH_TAG_DELETE_DESCRIPTION', [], Yii::$app->sourceLanguage);
+        $tagDelete = $auth->createPermission('tagDelete');
+        $tagDelete->description = 'Delete location tags';
         $auth->add($tagDelete);
 
         $auth->addChild($admin, $tagDelete);
@@ -82,9 +85,9 @@ class M240731193312Tag extends Migration
     {
         $auth = Yii::$app->getAuthManager();
 
-        $this->delete($auth->itemTable, ['name' => Tag::AUTH_TAG_DELETE]);
-        $this->delete($auth->itemTable, ['name' => Tag::AUTH_TAG_CREATE]);
-        $this->delete($auth->itemTable, ['name' => Tag::AUTH_TAG_UPDATE]);
+        $this->delete($auth->itemTable, ['name' => 'tagDelete']);
+        $this->delete($auth->itemTable, ['name' => 'tagCreate']);
+        $this->delete($auth->itemTable, ['name' => 'tagUpdate']);
 
         $this->dropColumn(Location::tableName(), 'tag_ids');
         $this->dropColumn(Location::tableName(), 'tag_count');

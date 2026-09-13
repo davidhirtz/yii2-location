@@ -1,5 +1,10 @@
 ## 3.0.0 (in development)
 
+- **One permission per admin-managed model.** `Models\Location::AUTH_LOCATION` (`location`) and
+  `Models\Tag::AUTH_TAG` (`tag`) replace the three verb permissions each.
+  `Migrations\M260914130000AuthItems` grants the new item to every parent and assignee of any old one.
+  `findLocation()` and `findTag()` lost their permission argument, `LocationTrait::checkLocationPermission()` is
+  gone, and no `can()` call takes a record any more
 - `Models\Location`, `Models\Tag` and `Models\LocationTag` implement the skeleton's
   `Models\Interfaces\AdminModelInterface`: `getTrailModelName()` and `getTrailModelType()` are `getAdminName()`
   and `getAdminType()`, and the boilerplate name is `Models\Traits\AdminModelTrait`'s

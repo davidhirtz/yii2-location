@@ -24,7 +24,7 @@ class LocationNavItem extends NavItem
         $this->order ??= 50;
         $this->url ??= ['/admin/location/location/index'];
 
-        $this->roles([Location::AUTH_LOCATION_CREATE]);
+        $this->roles([Location::AUTH_LOCATION]);
         $this->routes(['admin/location/location/', 'admin/location/location-tag/']);
 
         parent::__construct($config);
@@ -54,7 +54,7 @@ class LocationNavItem extends NavItem
                 ->label(Yii::t('location', 'COMMON_TAGS'))
                 ->url(['/admin/location/tag/index'])
                 ->order(20)
-                ->roles([Tag::AUTH_TAG_CREATE])
+                ->roles([Tag::AUTH_TAG])
                 ->routes(['admin/location/tag'])
             : null;
     }

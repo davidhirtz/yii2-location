@@ -37,18 +37,8 @@ class LocationController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['autocomplete', 'index', 'update'],
-                        'roles' => [Location::AUTH_LOCATION_UPDATE],
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['create'],
-                        'roles' => [Location::AUTH_LOCATION_CREATE],
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['delete'],
-                        'roles' => [Location::AUTH_LOCATION_DELETE],
+                        'actions' => ['autocomplete', 'create', 'delete', 'index', 'update'],
+                        'roles' => [Location::AUTH_LOCATION],
                     ],
                 ],
             ],
@@ -82,7 +72,7 @@ class LocationController extends Controller
         $location->loadDefaultValues();
         $location->type ??= $type;
 
-        if (!$this->webuser->can(Location::AUTH_LOCATION_CREATE, ['location' => $location])) {
+        if (!$this->webuser->can(Location::AUTH_LOCATION)) {
             throw new ForbiddenHttpException();
         }
 
@@ -98,7 +88,7 @@ class LocationController extends Controller
 
     public function actionUpdate(int $id): Response|string
     {
-        $location = $this->findLocation($id, Location::AUTH_LOCATION_UPDATE);
+        $location = $this->findLocation($id);
 
         if ($location->load($this->request->post()) && !$this->request->isFormReload() && $location->update()) {
             $this->success(Yii::t('location', 'LOCATION_SUCCESS_UPDATED'));
@@ -112,7 +102,7 @@ class LocationController extends Controller
 
     public function actionDelete(int $id): Response|string
     {
-        $location = $this->findLocation($id, Location::AUTH_LOCATION_DELETE);
+        $location = $this->findLocation($id);
 
         if ($location->delete()) {
             $this->success(Yii::t('location', 'LOCATION_SUCCESS_DELETED'));

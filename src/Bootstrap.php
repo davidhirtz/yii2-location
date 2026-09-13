@@ -59,8 +59,8 @@ class Bootstrap implements BootstrapInterface
         }
 
         DashboardController::addRoles([
-            Location::AUTH_LOCATION_UPDATE,
-            Tag::AUTH_TAG_UPDATE,
+            Location::AUTH_LOCATION,
+            Tag::AUTH_TAG,
         ]);
 
         $app->setMigrationNamespace('Hirtz\Location\Migrations');
