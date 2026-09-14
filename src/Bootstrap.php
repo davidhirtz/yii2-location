@@ -58,7 +58,7 @@ class Bootstrap implements BootstrapInterface
             $app->addUrlManagerRules(['api/location/<action>.<format>' => 'location/api/<action>']);
         }
 
-        DashboardController::addRoles([
+        DashboardController::addRoles(static fn (): array => [
             Location::AUTH_LOCATION,
             Tag::AUTH_TAG,
         ]);
