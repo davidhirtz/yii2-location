@@ -31,7 +31,7 @@ class LocationSubmenu extends Submenu
     protected function getLocationItem(): ?NavItem
     {
         return NavItem::make()
-            ->label(Yii::t('skeleton', 'COMMON_GENERAL'))
+            ->label($this->model->getAdminType())
             ->url($this->model->getAdminRoute())
             ->routes(['admin/location/location/'])
             ->icon('cog');
