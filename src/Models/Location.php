@@ -271,7 +271,7 @@ class Location extends ActiveRecord implements
     public function getType(): ?LocationType
     {
         /** @var LocationType|null */
-        return static::findType($this->type ?? null);
+        return static::findType(static::normalizeTypeValue($this->type ?? null));
     }
 
     public function getAdminRoute(): array|false
