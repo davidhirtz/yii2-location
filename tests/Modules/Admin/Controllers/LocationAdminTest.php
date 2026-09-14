@@ -7,6 +7,7 @@ namespace Hirtz\Location\Tests\Modules\Admin\Controllers;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\LocationTag;
 use Hirtz\Location\Models\Tag;
+use Hirtz\Location\Modules\Admin\Interfaces\AutocompleteInterface;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Location\Test\Fixtures\LocationFixture;
 use Hirtz\Location\Test\Fixtures\Traits\LocationFixtureTrait;
@@ -14,6 +15,7 @@ use Hirtz\Location\Test\Models\TestLocation;
 use Hirtz\Location\Test\TestCase;
 use Hirtz\Skeleton\Models\User;
 use Hirtz\Skeleton\Test\Fixtures\UserFixture;
+use Hirtz\Skeleton\Widgets\Forms\Fields\AutocompleteField;
 use Override;
 use Yii;
 use yii\web\ForbiddenHttpException;
@@ -372,6 +374,61 @@ class LocationAdminTest extends TestCase
         }
 
         return Yii::$app->runAction($route, $params);
+    }
+
+    public function testTheAutocompleteIgnoresAShortQuery(): void
+    {
+        $this->login();
+
+        self::assertSame('', Yii::$app->runAction('admin/location/location/autocomplete', ['q' => 'Zu']));
+    }
+
+    public function testTheAutocompleteRendersTheProviderResultsAsOptions(): void
+    {
+        $this->login();
+        $this->setAutocomplete([['text' => 'Zürich, Switzerland', 'value' => 'ChIJ1']]);
+
+        $html = Yii::$app->runAction('admin/location/location/autocomplete', ['q' => 'Zurich']);
+
+        self::assertIsString($html);
+        self::assertStringContainsString('id="' . AutocompleteField::OPTIONS_ID . '"', $html);
+        self::assertStringContainsString('data-autocomplete-value="ChIJ1"', $html);
+        self::assertStringContainsString('Zürich, Switzerland', $html);
+    }
+
+    /**
+     * The list is rendered even when the provider has nothing, or the swap would leave the last options standing.
+     */
+    public function testTheAutocompleteAnswersAnEmptyList(): void
+    {
+        $this->login();
+        $this->setAutocomplete([]);
+
+        $html = Yii::$app->runAction('admin/location/location/autocomplete', ['q' => 'Zurich']);
+
+        self::assertIsString($html);
+        self::assertStringContainsString('id="' . AutocompleteField::OPTIONS_ID . '"', $html);
+        self::assertStringNotContainsString('data-autocomplete-value', $html);
+    }
+
+    /**
+     * @param list<array{text: string, value: int|string}> $results
+     */
+    private function setAutocomplete(array $results): void
+    {
+        Yii::$app->getModule('admin')->getModule('location')->set('autocomplete', new class ($results) implements AutocompleteInterface {
+            /**
+             * @param list<array{text: string, value: int|string}> $results
+             */
+            public function __construct(private readonly array $results)
+            {
+            }
+
+            public function getResults(string $input): array
+            {
+                return $this->results;
+            }
+        });
     }
 
     private function login(): User

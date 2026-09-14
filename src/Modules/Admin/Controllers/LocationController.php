@@ -11,6 +11,7 @@ use Hirtz\Location\Modules\Admin\Data\LocationActiveDataProvider;
 use Hirtz\Location\Modules\Admin\Module;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
+use Hirtz\Skeleton\Widgets\Forms\AutocompleteList;
 use Override;
 use Yii;
 use yii\filters\AccessControl;
@@ -26,6 +27,11 @@ class LocationController extends Controller
 {
     use LocationTrait;
     use ModuleTrait;
+
+    /**
+     * @var int a shorter query would ask the provider on every keystroke
+     */
+    public int $autocompleteMinLength = 3;
 
     #[Override]
     public function behaviors(): array
@@ -113,12 +119,18 @@ class LocationController extends Controller
         throw new ServerErrorHttpException(reset($errors));
     }
 
-    public function actionAutocomplete(string $q): Response
+    public function actionAutocomplete(?string $q = null): string
     {
+        $q = trim((string)$q);
+
+        if (mb_strlen($q) < $this->autocompleteMinLength) {
+            return '';
+        }
+
         /** @var Module $module */
         $module = Yii::$app->getModule('admin')->getModule('location');
-        $autocomplete = $module->getAutocomplete();
 
-        return $this->asJson($autocomplete?->getResults($q) ?? []);
+        return (string)AutocompleteList::make()
+            ->options($module->getAutocomplete()?->getResults($q) ?? []);
     }
 }

@@ -1,5 +1,11 @@
 ## 3.0.0 (in development)
 
+- **Tom Select is gone, and with it the bundle's whole asset pipeline** — `package.json`, `esbuild.js`,
+  `resources/assets` and `Modules\Admin\Assets\AutocompleteAssetBundle`. `Modules\Admin\Widgets\Forms\LocationProviderIdField`
+  extends the skeleton's `Widgets\Forms\Fields\AutocompleteField` instead, so the suggestions are rendered by the
+  server and look like every other dropdown in the admin. `LocationController::actionAutocomplete()` therefore
+  answers with the option list rather than JSON, and ignores a query shorter than `$autocompleteMinLength`.
+
 - `Models\Types\LocationType` is the location's type class and carries `slug()`, what
   `Controllers\ApiController::findTypeBySlug()` matches to give a type a URL of its own. See the skeleton's
   UPGRADE.md
