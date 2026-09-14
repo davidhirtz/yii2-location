@@ -84,7 +84,7 @@ class Tag extends ActiveRecord implements
     {
         return array_filter([
             'name',
-            count(static::getTypes()) > 1 ? 'type' : null,
+            count(static::getTypeDefinitions()) > 1 ? 'type' : null,
         ]);
     }
 

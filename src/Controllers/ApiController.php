@@ -6,6 +6,7 @@ namespace Hirtz\Location\Controllers;
 
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Queries\LocationQuery;
+use Hirtz\Location\Models\Types\LocationType;
 use Hirtz\Location\Module;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Filters\PageCache;
@@ -58,7 +59,7 @@ class ApiController extends Controller
     }
 
     /**
-     * Checks the `Location::getTypes()` array for a matching slug, sets the `type` parameter accordingly and calls the
+     * Checks the location types for a matching slug, sets the `type` parameter accordingly and calls the
      * default action. This allows for URLs like `/api/location/<type-slug>.json`.
      */
     #[Override]
@@ -103,9 +104,9 @@ class ApiController extends Controller
 
     protected function findTypeBySlug(string $slug): ?int
     {
-        foreach (Location::instance()::getTypes() as $type => $typeOptions) {
-            if ($slug === ($typeOptions['slug'] ?? null)) {
-                return $type;
+        foreach (Location::instance()::getTypeDefinitions() as $type => $definition) {
+            if ($definition instanceof LocationType && $slug === $definition->getSlug()) {
+                return (int)$type;
             }
         }
 

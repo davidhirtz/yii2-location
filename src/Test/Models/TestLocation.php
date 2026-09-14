@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Hirtz\Location\Test\Models;
 
 use Hirtz\Location\Models\Location;
+use Hirtz\Location\Models\Types\LocationType;
 
 final class TestLocation extends Location
 {
@@ -14,14 +15,12 @@ final class TestLocation extends Location
     public static function getTypes(): array
     {
         return [
-            self::TYPE_DEFAULT => [
-                'name' => 'Default',
-                'slug' => 'default',
-            ],
-            self::TYPE_TEST => [
-                'name' => 'Test',
-                'slug' => 'test',
-            ],
+            LocationType::make(self::TYPE_DEFAULT)
+                ->name('Default')
+                ->slug('default'),
+            LocationType::make(self::TYPE_TEST)
+                ->name('Test')
+                ->slug('test'),
         ];
     }
 }

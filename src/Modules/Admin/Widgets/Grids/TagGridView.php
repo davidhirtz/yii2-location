@@ -71,7 +71,7 @@ class TagGridView extends GridView
 
     protected function hasVisibleTypes(): bool
     {
-        return count(Tag::instance()::getTypes()) > 1;
+        return count(Tag::instance()::getTypeDefinitions()) > 1;
     }
 
     protected function getNameColumn(): ?Column

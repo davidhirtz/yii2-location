@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Models;
 
+use Hirtz\Location\Models\Types\LocationType;
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
 use Hirtz\Location\Models\Collections\TagCollection;
@@ -100,7 +101,7 @@ class Location extends ActiveRecord implements
     {
         return array_filter([
             'name',
-            count(static::getTypes()) > 1 ? 'type' : null,
+            count(static::getTypeDefinitions()) > 1 ? 'type' : null,
             'formatted_address',
             'tags' => static::getModule()->enableTags ? fn (self $location) => $location->getTagNames() : null,
             'lat',
@@ -258,6 +259,19 @@ class Location extends ActiveRecord implements
     public function getAdminType(): string
     {
         return Yii::t('location', 'COMMON_LOCATION');
+    }
+
+    #[Override]
+    public static function getTypeClass(): string
+    {
+        return LocationType::class;
+    }
+
+    #[Override]
+    public function getType(): ?LocationType
+    {
+        /** @var LocationType|null */
+        return static::findType($this->type ?? null);
     }
 
     public function getAdminRoute(): array|false

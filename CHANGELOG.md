@@ -1,5 +1,9 @@
 ## 3.0.0 (in development)
 
+- `Models\Types\LocationType` is the location's type class and carries `slug()`, what
+  `Controllers\ApiController::findTypeBySlug()` matches to give a type a URL of its own. See the skeleton's
+  UPGRADE.md
+
 - `Models\Tag::fields()` returns the tag's own attributes. It was a copy of `Location::fields()`, so a serialized
   tag carried `formatted_address`, `lat` and `lng` — always null on a tag — and left out its own `type`
 - `Modules\Admin\Widgets\Grids\LocationGridView::getNameColumnContent()` returns `string|Stringable`, as the cms

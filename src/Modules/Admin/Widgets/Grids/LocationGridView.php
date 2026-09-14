@@ -51,7 +51,7 @@ class LocationGridView extends GridView
         }
 
         if ($this->showTypeDropdown) {
-            $this->showTypeDropdown = count(Location::getTypes()) > 1;
+            $this->showTypeDropdown = count(Location::getTypeDefinitions()) > 1;
         }
 
         $this->header ??= [
