@@ -12,7 +12,7 @@ final class TestLocation extends Location
     public const int TYPE_TEST = 2;
 
     #[\Override]
-    public static function getTypes(): array
+    public function getTypes(): array
     {
         return [
             LocationType::make(self::TYPE_DEFAULT)
