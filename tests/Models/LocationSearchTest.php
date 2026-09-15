@@ -96,9 +96,9 @@ class LocationSearchTest extends TestCase
      */
     private function findTagDocuments(Tag $tag): array
     {
-        return Search::find()
+        return array_values(Search::find()
             ->where(['model_class' => $tag::class, 'model_id' => $tag->id])
-            ->all();
+            ->all());
     }
 
     private function loginTagEditor(): void
