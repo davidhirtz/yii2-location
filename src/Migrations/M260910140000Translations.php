@@ -21,26 +21,26 @@ class M260910140000Translations extends Migration
 
     public function safeUp(): void
     {
-        foreach ($this->getModels() as $model) {
-            $this->moveI18nColumnsToTranslations($model);
+        foreach ($this->getTables() as $table => $modelClass) {
+            $this->moveI18nColumnsToTranslations($table, $modelClass);
         }
     }
 
     public function safeDown(): void
     {
-        foreach ($this->getModels() as $model) {
-            $this->restoreI18nColumnsFromTranslations($model);
+        foreach ($this->getTables() as $table => $modelClass) {
+            $this->restoreI18nColumnsFromTranslations($table, $modelClass);
         }
     }
 
     /**
-     * @return list<Location|Tag>
+     * @return array<string, class-string>
      */
-    protected function getModels(): array
+    protected function getTables(): array
     {
         return [
-            Location::create(),
-            Tag::create(),
+            Location::tableName() => Location::class,
+            Tag::tableName() => Tag::class,
         ];
     }
 }
