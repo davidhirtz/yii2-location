@@ -10,6 +10,9 @@ use Override;
 
 trait LocationFixtureTrait
 {
+    /**
+     * @return array<string, mixed>
+     */
     #[Override]
     public function fixtures(): array
     {
@@ -25,6 +28,9 @@ trait LocationFixtureTrait
         return $fixture;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getLocationFixtureData(string $key): array
     {
         return $this->getLocationFixture()->data[$key];

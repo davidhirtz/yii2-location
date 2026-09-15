@@ -10,6 +10,7 @@ use Hirtz\Skeleton\Widgets\Buttons\Button;
 use Hirtz\Skeleton\Widgets\Grids\Columns\Column;
 use Hirtz\Skeleton\Widgets\Grids\Columns\RelativeTimeColumn;
 use Override;
+use Stringable;
 use Yii;
 
 /**
@@ -54,6 +55,9 @@ class LocationTagGridView extends TagGridView
             ->hiddenForMediumDevices();
     }
 
+    /**
+     * @return list<Stringable>
+     */
     #[Override]
     protected function getButtonColumnContent(Tag $tag): array
     {

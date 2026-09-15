@@ -23,6 +23,8 @@ class LocationSearchTest extends TestCase
     /**
      * Declared rather than merged from both fixture traits: their `fixtures()` carries `#[Override]`, and an
      * aliased copy of it is a fatal.
+     *
+     * @return array<string, mixed>
      */
     #[Override]
     public function fixtures(): array

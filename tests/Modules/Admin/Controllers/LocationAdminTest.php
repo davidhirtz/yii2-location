@@ -34,6 +34,8 @@ class LocationAdminTest extends TestCase
     /**
      * Declared rather than merged from both fixture traits: their `fixtures()` carries `#[Override]`, and an
      * aliased copy of it is a fatal.
+     *
+     * @return array<string, mixed>
      */
     #[Override]
     public function fixtures(): array
@@ -362,6 +364,10 @@ class LocationAdminTest extends TestCase
         return $tag;
     }
 
+    /**
+     * @param array<string, mixed> $params
+     * @param array<string, mixed> $bodyParams
+     */
     private function post(string $route, array $params = [], array $bodyParams = [], bool $reload = false): mixed
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
@@ -424,6 +430,9 @@ class LocationAdminTest extends TestCase
             {
             }
 
+            /**
+             * @return list<array{text: string, value: int|string}>
+             */
             public function getResults(string $input): array
             {
                 return $this->results;

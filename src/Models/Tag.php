@@ -79,6 +79,9 @@ class Tag extends ActiveRecord implements
         ];
     }
 
+    /**
+     * @return list<string>
+     */
     #[Override]
     public function fields(): array
     {
@@ -124,6 +127,9 @@ class Tag extends ActiveRecord implements
         return parent::beforeSave($insert);
     }
 
+    /**
+     * @param array<string, mixed> $changedAttributes
+     */
     #[Override]
     public function afterSave($insert, $changedAttributes): void
     {
@@ -142,9 +148,12 @@ class Tag extends ActiveRecord implements
         parent::afterDelete();
     }
 
+    /**
+     * @return LocationQuery<Location>
+     */
     public function getLocations(): LocationQuery
     {
-        /** @var LocationQuery $query */
+        /** @var LocationQuery<Location> $query */
         $query = $this->hasMany(Location::class, ['id' => 'location_id'])
             ->via('locationTags');
 
@@ -188,6 +197,7 @@ class Tag extends ActiveRecord implements
     }
 
     /**
+     * @return list<string>
      * @noinspection PhpUnused
      */
     public function getTrailAttributes(): array

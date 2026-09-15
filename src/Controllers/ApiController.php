@@ -23,6 +23,9 @@ class ApiController extends Controller
 {
     use ModuleTrait;
 
+    /**
+     * @var list<string>
+     */
     public array $allowedFormats = ['geojson', 'json'];
     public bool $allowAllTypes = true;
     public bool $enablePageCache = true;
@@ -73,6 +76,9 @@ class ApiController extends Controller
         return parent::runAction($id, $params);
     }
 
+    /**
+     * @return list<Location>
+     */
     public function actionIndex(string $format, ?int $type = null, ?int $tag = null): array
     {
         if (!in_array($format, $this->allowedFormats)) {
@@ -93,6 +99,9 @@ class ApiController extends Controller
         return $query->all();
     }
 
+    /**
+     * @return LocationQuery<Location>
+     */
     protected function getLocationQuery(): LocationQuery
     {
         $status = $this->request->getIsDraft() ? Location::STATUS_DRAFT : Location::STATUS_ENABLED;

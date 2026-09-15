@@ -8,6 +8,7 @@ use Hirtz\Location\Controllers\ApiController;
 use Hirtz\Location\Models\Collections\TagCollection;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Tag;
+use Hirtz\Skeleton\Models\User;
 use Hirtz\Skeleton\Modules\Admin\Controllers\DashboardController;
 use Hirtz\Skeleton\Web\Application;
 use Yii;
@@ -17,7 +18,7 @@ use yii\i18n\PhpMessageSource;
 class Bootstrap implements BootstrapInterface
 {
     /**
-     * @param Application $app
+     * @param Application<User> $app
      */
     public function bootstrap($app): void
     {

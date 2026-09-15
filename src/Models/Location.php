@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Models;
 
+use Closure;
 use Hirtz\Location\Models\Types\LocationType;
 use davidhirtz\yii2\datetime\DateTime;
 use davidhirtz\yii2\datetime\DateTimeBehavior;
@@ -55,7 +56,7 @@ use Yii;
  * @property string|null $state
  * @property string|null $country_code
  * @property string|null $provider_id
- * @property array|null $tag_ids
+ * @property list<int>|null $tag_ids
  * @property int $tag_count
  * @property DateTime|null $updated_at
  * @property DateTime $created_at
@@ -96,6 +97,9 @@ class Location extends ActiveRecord implements
         ];
     }
 
+    /**
+     * @return array<int|string, string|Closure(self): mixed>
+     */
     #[Override]
     public function fields(): array
     {
@@ -167,6 +171,9 @@ class Location extends ActiveRecord implements
         return parent::beforeSave($insert);
     }
 
+    /**
+     * @param array<string, mixed> $changedAttributes
+     */
     #[Override]
     public function afterSave($insert, $changedAttributes): void
     {
@@ -214,6 +221,9 @@ class Location extends ActiveRecord implements
             ->inverseOf('location');
     }
 
+    /**
+     * @return LocationQuery<static>
+     */
     #[Override]
     public static function find(): LocationQuery
     {
@@ -234,6 +244,9 @@ class Location extends ActiveRecord implements
         return $this->country_code ? CountryList::getName($this->country_code) : null;
     }
 
+    /**
+     * @return list<string>
+     */
     public function getTagNames(): array
     {
         return $this->tag_count
@@ -242,6 +255,7 @@ class Location extends ActiveRecord implements
     }
 
     /**
+     * @return list<string>
      * @noinspection PhpUnused
      */
     public function getTrailAttributes(): array
@@ -294,6 +308,9 @@ class Location extends ActiveRecord implements
         return Yii::$app->has('user') && Yii::$app->getUser()->can(static::AUTH_LOCATION);
     }
 
+    /**
+     * @return list<string>
+     */
     public function getCountryCodes(): array
     {
         return array_keys(CountryList::getNames());

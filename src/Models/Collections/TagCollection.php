@@ -19,6 +19,9 @@ class TagCollection
 
     public const CACHE_KEY = 'tag-collection';
 
+    /**
+     * @var array<int, T>|null
+     */
     protected static ?array $tags = null;
 
     /**

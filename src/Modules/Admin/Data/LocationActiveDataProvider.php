@@ -10,7 +10,8 @@ use Hirtz\Location\Models\Tag;
 use Hirtz\Skeleton\Data\ActiveDataProvider;
 
 /**
- * @property LocationQuery $query
+ * @extends ActiveDataProvider<Location>
+ * @property LocationQuery<Location> $query
  */
 class LocationActiveDataProvider extends ActiveDataProvider
 {

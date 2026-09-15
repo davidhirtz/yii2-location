@@ -94,6 +94,9 @@ class LocationGridView extends GridView
             ->paramName('tag');
     }
 
+    /**
+     * @return array<int, string>
+     */
     protected function getTagDropdownItems(): array
     {
         return array_map(fn (Tag $tag) => $tag->getI18nAttribute('name'), TagCollection::getAll());
@@ -173,6 +176,9 @@ class LocationGridView extends GridView
             ->content($this->getButtonColumnContent(...));
     }
 
+    /**
+     * @return list<Stringable>
+     */
     protected function getButtonColumnContent(Location $location): array
     {
         return [

@@ -94,6 +94,9 @@ class LocationTag extends ActiveRecord implements TrailModelInterface
         return parent::beforeSave($insert);
     }
 
+    /**
+     * @param array<string, mixed> $changedAttributes
+     */
     #[Override]
     public function afterSave($insert, $changedAttributes): void
     {
@@ -164,6 +167,7 @@ class LocationTag extends ActiveRecord implements TrailModelInterface
     }
 
     /**
+     * @return list<Location|Tag>
      * @noinspection PhpUnused
      */
     public function getTrailParents(): array

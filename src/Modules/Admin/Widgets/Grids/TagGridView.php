@@ -110,6 +110,9 @@ class TagGridView extends GridView
             ->content($this->getButtonColumnContent(...));
     }
 
+    /**
+     * @return list<Stringable>
+     */
     protected function getButtonColumnContent(Tag $tag): array
     {
         return [

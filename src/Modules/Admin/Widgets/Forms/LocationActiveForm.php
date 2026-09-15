@@ -112,6 +112,9 @@ class LocationActiveForm extends ActiveForm
             ->items($this->getCountyCodeItems());
     }
 
+    /**
+     * @return array<string, string>
+     */
     protected function getCountyCodeItems(): array
     {
         return CountryList::getNames();
