@@ -96,7 +96,7 @@ class LocationAdminTest extends TestCase
 
     public function testTheLocationIndexIsForbiddenWithoutThePermission(): void
     {
-        Yii::$app->getUser()->setIdentity($this->getUserFromFixture('admin'));
+        $this->getWebUser()->setIdentity($this->getUserFromFixture('admin'));
 
         $this->expectException(ForbiddenHttpException::class);
         Yii::$app->runAction('admin/location/location/index');
@@ -254,7 +254,7 @@ class LocationAdminTest extends TestCase
 
     public function testTheTagIndexIsForbiddenWithoutThePermission(): void
     {
-        Yii::$app->getUser()->setIdentity($this->getUserFromFixture('admin'));
+        $this->getWebUser()->setIdentity($this->getUserFromFixture('admin'));
 
         $this->expectException(ForbiddenHttpException::class);
         Yii::$app->runAction('admin/location/tag/index');
@@ -372,7 +372,7 @@ class LocationAdminTest extends TestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
 
-        $request = Yii::$app->getRequest();
+        $request = $this->getWebRequest();
         $request->setBodyParams([...$bodyParams, $request->csrfParam => $request->getCsrfToken()]);
 
         if ($reload) {
@@ -449,7 +449,7 @@ class LocationAdminTest extends TestCase
             $auth->assign($auth->getPermission($name), $user->id);
         }
 
-        Yii::$app->getUser()->setIdentity($user);
+        $this->getWebUser()->setIdentity($user);
 
         return $user;
     }

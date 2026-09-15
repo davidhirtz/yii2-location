@@ -110,7 +110,7 @@ class LocationSearchTest extends TestCase
         $auth = Yii::$app->getAuthManager();
         $auth->assign($auth->getPermission(Tag::AUTH_TAG), $user->id);
 
-        Yii::$app->getUser()->setIdentity($user);
+        $this->getWebUser()->setIdentity($user);
     }
 
     private function getLanguageCount(): int
