@@ -14,11 +14,11 @@ class LocationProviderIdField extends AutocompleteField
 {
     use ModuleTrait;
 
+    public ?string $property = 'provider_id';
+
     #[Override]
     protected function configure(): void
     {
-        $this->property ??= 'provider_id';
-
         if (!$this->model->{$this->property}) {
             $this->attributes['placeholder'] ??= Yii::t('location', 'LOCATION_PROVIDER_ID_SEARCH');
             $this->attributes['type'] ??= 'search';
