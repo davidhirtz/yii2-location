@@ -7,6 +7,7 @@ namespace Hirtz\Location\Test\Fixtures\Traits;
 use Hirtz\Location\Test\Fixtures\LocationFixture;
 use Hirtz\Location\Test\Models\TestLocation;
 use Override;
+use RuntimeException;
 
 trait LocationFixtureTrait
 {
@@ -38,6 +39,7 @@ trait LocationFixtureTrait
 
     protected function getLocationFromFixture(string $key): TestLocation
     {
-        return TestLocation::findOne($this->getLocationFixtureData($key)['id']);
+        return TestLocation::findOne($this->getLocationFixtureData($key)['id'])
+            ?? throw new RuntimeException("Location fixture \"$key\" was not loaded.");
     }
 }
