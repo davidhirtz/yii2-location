@@ -9,6 +9,7 @@ use Hirtz\Location\Models\LocationTag;
 use Hirtz\Location\Models\Queries\TagQuery;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Skeleton\Data\ActiveDataProvider;
+use yii\data\Sort;
 
 /**
  * @property TagQuery $query
@@ -34,8 +35,10 @@ class TagActiveDataProvider extends ActiveDataProvider
         parent::init();
         $this->initQuery();
 
-        if ($this->location && $this->sort) {
-            $this->sort->attributes['locationTag.updated_at'] ??= [
+        $sort = $this->getSort();
+
+        if ($this->location && $sort instanceof Sort) {
+            $sort->attributes['locationTag.updated_at'] ??= [
                 'asc' => [LocationTag::tableName() . '.[[updated_at]]' => SORT_ASC],
                 'desc' => [LocationTag::tableName() . '.[[updated_at]]' => SORT_DESC],
                 'default' => SORT_DESC,

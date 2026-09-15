@@ -96,7 +96,7 @@ class ApiController extends Controller
             $query->andWhereTagId($tag);
         }
 
-        return $query->all();
+        return array_values($query->all());
     }
 
     /**

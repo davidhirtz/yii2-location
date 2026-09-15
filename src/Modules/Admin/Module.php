@@ -22,7 +22,8 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
 {
     public function getAutocomplete(): ?AutocompleteInterface
     {
-        return $this->get('autocomplete', false);
+        $autocomplete = $this->get('autocomplete', false);
+        return $autocomplete instanceof AutocompleteInterface ? $autocomplete : null;
     }
 
     public function aside(Nav $nav): Nav

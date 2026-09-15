@@ -234,7 +234,7 @@ class Location extends ActiveRecord implements
     public function recalculateTagIds(): static
     {
         $tagIds = $this->getLocationTags()->select('tag_id')->column();
-        $this->tag_ids = $tagIds ?: null;
+        $this->tag_ids = $tagIds ? array_values(array_map(intval(...), $tagIds)) : null;
         $this->tag_count = count($tagIds);
 
         return $this;
@@ -251,7 +251,7 @@ class Location extends ActiveRecord implements
     public function getTagNames(): array
     {
         return $this->tag_count
-            ? ArrayHelper::getColumn(TagCollection::getByLocation($this), $this->getI18nAttributeName('name'), false)
+            ? array_values(ArrayHelper::getColumn(TagCollection::getByLocation($this), $this->getI18nAttributeName('name'), false))
             : [];
     }
 
@@ -261,14 +261,14 @@ class Location extends ActiveRecord implements
      */
     public function getTrailAttributes(): array
     {
-        return array_diff($this->attributes(), [
+        return array_values(array_diff($this->attributes(), [
             $this->getCustomAttributesColumn(),
             'tag_ids',
             'tag_count',
             'updated_by_user_id',
             'updated_at',
             'created_at',
-        ]);
+        ]));
     }
 
     public function getAdminType(): string

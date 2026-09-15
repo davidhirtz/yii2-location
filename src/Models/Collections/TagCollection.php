@@ -10,9 +10,6 @@ use Hirtz\Location\Modules\ModuleTrait;
 use Yii;
 use yii\caching\TagDependency;
 
-/**
- * @template T of Tag
- */
 class TagCollection
 {
     use ModuleTrait;
@@ -20,12 +17,12 @@ class TagCollection
     public const CACHE_KEY = 'tag-collection';
 
     /**
-     * @var array<int, T>|null
+     * @var array<int, Tag>|null
      */
     protected static ?array $tags = null;
 
     /**
-     * @return array<int, T>
+     * @return array<int, Tag>
      */
     public static function getAll(bool $refresh = false): array
     {
@@ -42,7 +39,7 @@ class TagCollection
     }
 
     /**
-     * @return array<int, T>
+     * @return array<int, Tag>
      * @noinspection PhpUnused
      */
     public static function getByLocation(Location $location): array
@@ -53,7 +50,7 @@ class TagCollection
     }
 
     /**
-     * @return array<int, T>
+     * @return array<int, Tag>
      */
     public static function findAll(): array
     {
