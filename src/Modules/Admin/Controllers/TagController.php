@@ -111,6 +111,6 @@ class TagController extends Controller
         }
 
         $errors = $tag->getFirstErrors();
-        throw new ServerErrorHttpException(reset($errors));
+        throw new ServerErrorHttpException(reset($errors) ?: null);
     }
 }

@@ -116,7 +116,7 @@ class LocationController extends Controller
         }
 
         $errors = $location->getFirstErrors();
-        throw new ServerErrorHttpException(reset($errors));
+        throw new ServerErrorHttpException(reset($errors) ?: null);
     }
 
     public function actionAutocomplete(?string $q = null): string

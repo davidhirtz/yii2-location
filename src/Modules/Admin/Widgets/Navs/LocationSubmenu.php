@@ -32,7 +32,7 @@ class LocationSubmenu extends Submenu
     {
         return NavItem::make()
             ->label($this->model->getAdminType())
-            ->url($this->model->getAdminRoute())
+            ->url($this->model->getAdminRoute() ?: null)
             ->routes(['admin/location/location/'])
             ->icon('cog');
     }

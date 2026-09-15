@@ -133,7 +133,7 @@ class LocationGridView extends GridView
             $content = A::make()
                 ->class('strong')
                 ->content($name)
-                ->href($location->getAdminRoute());
+                ->href($location->getAdminRoute() ?: null);
 
             if ($address) {
                 $content .= Div::make()
@@ -146,7 +146,7 @@ class LocationGridView extends GridView
             $content = A::make()
                 ->class('strong')
                 ->content($name)
-                ->href($location->getAdminRoute());
+                ->href($location->getAdminRoute() ?: null);
         }
 
         if ($this->showTags) {

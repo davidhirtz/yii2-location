@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Models;
 
-use davidhirtz\yii2\datetime\DateTime;
-use davidhirtz\yii2\datetime\DateTimeBehavior;
 use Hirtz\Location\Models\Collections\TagCollection;
 use Hirtz\Location\Models\Queries\LocationQuery;
 use Hirtz\Location\Models\Queries\TagQuery;
@@ -13,16 +11,15 @@ use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Behaviors\BlameableBehavior;
 use Hirtz\Skeleton\Behaviors\TimestampBehavior;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
-use Hirtz\Skeleton\Models\Traits\AdminModelTrait;
-use yii\db\ActiveQuery;
 use Hirtz\Skeleton\Db\ActiveRecord;
+use Hirtz\Skeleton\Models\Interfaces\CustomAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\DraftStatusAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\I18nAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\SearchableInterface;
-use Hirtz\Skeleton\Models\Interfaces\CustomAttributeInterface;
 use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
 use Hirtz\Skeleton\Models\Interfaces\TranslationInterface;
 use Hirtz\Skeleton\Models\Interfaces\TypeAttributeInterface;
+use Hirtz\Skeleton\Models\Traits\AdminModelTrait;
 use Hirtz\Skeleton\Models\Traits\CustomAttributesTrait;
 use Hirtz\Skeleton\Models\Traits\DraftStatusAttributeTrait;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
@@ -33,8 +30,12 @@ use Hirtz\Skeleton\Models\Traits\TypeAttributeTrait;
 use Hirtz\Skeleton\Models\Traits\UpdatedByUserTrait;
 use Hirtz\Skeleton\Validators\DynamicRangeValidator;
 use Hirtz\Skeleton\Validators\UniqueValidator;
+use Hirtz\Skeleton\Web\User as WebUser;
 use Override;
 use Yii;
+use davidhirtz\yii2\datetime\DateTime;
+use davidhirtz\yii2\datetime\DateTimeBehavior;
+use yii\db\ActiveQuery;
 
 /**
  * @property int $id
@@ -242,9 +243,7 @@ class Tag extends ActiveRecord implements
      */
     protected function isSearchResultVisible(): bool
     {
-        return $this->hasTagsEnabled()
-            && Yii::$app->has('user')
-            && Yii::$app->getUser()->can(static::AUTH_TAG);
+        return $this->hasTagsEnabled() && (WebUser::current()?->can(static::AUTH_TAG) ?? false);
     }
 
     public function hasTagsEnabled(): bool

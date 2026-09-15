@@ -87,7 +87,7 @@ class TagGridView extends GridView
 
         return A::make()
             ->content($content)
-            ->href($tag->getAdminRoute())
+            ->href($tag->getAdminRoute() ?: null)
             ->class('strong');
     }
 
