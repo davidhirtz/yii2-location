@@ -43,8 +43,6 @@ use yii\db\ActiveQuery;
 
 /**
  * @property int $id
- * @property int $status
- * @property int $type
  * @property string $name
  * @property string|null $formatted_address
  * @property float|null $lat
