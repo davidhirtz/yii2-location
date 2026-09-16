@@ -10,6 +10,16 @@ use Hirtz\Skeleton\Models\Types\Type;
 class LocationType extends Type
 {
     protected ?string $slug = null;
+    protected bool $allowsTags = true;
+
+    /**
+     * Whether a location of this type carries tags. The module's `enableTags` decides first.
+     */
+    public function allowTags(bool $allowTags = true): static
+    {
+        $this->allowsTags = $allowTags;
+        return $this;
+    }
 
     /**
      * @param string|null $slug what {@see ApiController::findTypeBySlug()} matches, so the type has a URL of its own
@@ -18,6 +28,11 @@ class LocationType extends Type
     {
         $this->slug = $slug;
         return $this;
+    }
+
+    public function allowsTags(): bool
+    {
+        return $this->allowsTags;
     }
 
     public function getSlug(): ?string

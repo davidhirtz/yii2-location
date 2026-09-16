@@ -44,7 +44,7 @@ class TagCollection
      */
     public static function getByLocation(Location $location): array
     {
-        return array_filter(static::getAll(), fn (Tag $tag) => $tag->hasTagsEnabled()
+        return array_filter(static::getAll(), fn (Tag $tag) => $tag->allowsTags()
             && $location->tag_ids
             && in_array($tag->id, $location->tag_ids));
     }

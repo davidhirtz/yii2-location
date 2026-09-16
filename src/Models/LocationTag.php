@@ -68,14 +68,14 @@ class LocationTag extends ActiveRecord implements TrailModelInterface
 
     protected function validateLocationId(): void
     {
-        if (!$this->location?->hasTagsEnabled()) {
+        if (!$this->location?->allowsTags()) {
             $this->addInvalidAttributeError('location_id');
         }
     }
 
     protected function validateTagId(): void
     {
-        if (!$this->tag?->hasTagsEnabled()) {
+        if (!$this->tag?->allowsTags()) {
             $this->addInvalidAttributeError('tag_id');
         }
     }

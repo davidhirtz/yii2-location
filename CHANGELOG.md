@@ -1,5 +1,9 @@
 ## 3.0.0 (in development)
 
+- **`Models\Location::hasTagsEnabled()` and `Models\Tag::hasTagsEnabled()` are `allowsTags()`**, matching the
+  platform's vocabulary for a capability a record has. The location's answers for its type too:
+  `Models\Types\LocationType::allowTags(false)` narrows the module's `enableTags`.
+
 - **Tom Select is gone, and with it the bundle's whole asset pipeline** — `package.json`, `esbuild.js`,
   `resources/assets` and `Modules\Admin\Assets\AutocompleteAssetBundle`. `Modules\Admin\Widgets\Forms\LocationProviderIdField`
   extends the skeleton's `Widgets\Forms\Fields\AutocompleteField` instead, so the suggestions are rendered by the

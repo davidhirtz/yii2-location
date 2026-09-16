@@ -234,7 +234,7 @@ class Tag extends ActiveRecord implements
 
     public function isSearchable(): bool
     {
-        return $this->hasTagsEnabled();
+        return $this->allowsTags();
     }
 
     /**
@@ -243,10 +243,10 @@ class Tag extends ActiveRecord implements
      */
     protected function isSearchResultVisible(): bool
     {
-        return $this->hasTagsEnabled() && (WebUser::current()?->can(static::AUTH_TAG) ?? false);
+        return $this->allowsTags() && (WebUser::current()?->can(static::AUTH_TAG) ?? false);
     }
 
-    public function hasTagsEnabled(): bool
+    public function allowsTags(): bool
     {
         return static::getModule()->enableTags;
     }

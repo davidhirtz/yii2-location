@@ -317,9 +317,9 @@ class Location extends ActiveRecord implements
         return array_keys(CountryList::getNames());
     }
 
-    public function hasTagsEnabled(): bool
+    public function allowsTags(): bool
     {
-        return static::getModule()->enableTags;
+        return static::getModule()->enableTags && ($this->getType()?->allowsTags() ?? true);
     }
 
     #[Override]
