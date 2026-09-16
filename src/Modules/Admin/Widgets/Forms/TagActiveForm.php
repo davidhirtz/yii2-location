@@ -10,6 +10,7 @@ use Hirtz\Skeleton\Widgets\Forms\Fields\InputField;
 use Hirtz\Skeleton\Widgets\Forms\Fields\SelectField;
 use Hirtz\Skeleton\Widgets\Forms\Fields\TypeSelectField;
 use Hirtz\Skeleton\Widgets\Forms\Traits\CustomAttributeFieldsTrait;
+use Override;
 use Stringable;
 
 /**
@@ -18,7 +19,8 @@ use Stringable;
 class TagActiveForm extends ActiveForm
 {
     use CustomAttributeFieldsTrait;
-    #[\Override]
+
+    #[Override]
     protected function getDefaultRows(): array
     {
         return [

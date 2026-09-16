@@ -32,6 +32,8 @@ class LocationActiveForm extends ActiveForm
                 $this->getTypeField(),
                 $this->getNameField(),
                 $this->getFormattedAddressField(),
+            ],
+            [
                 ...$this->getCustomAttributeFields(),
             ],
             [
