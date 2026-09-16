@@ -21,9 +21,9 @@ class LocationActiveForm extends ActiveForm
 {
     use CustomAttributeFieldsTrait;
     #[Override]
-    protected function configure(): void
+    protected function getDefaultRows(): array
     {
-        $this->rows ??= [
+        return [
             [
                 $this->getProviderIdField()
             ],
@@ -47,8 +47,6 @@ class LocationActiveForm extends ActiveForm
                 $this->getLngField(),
             ]
         ];
-
-        parent::configure();
     }
 
     protected function getStatusField(): ?Stringable

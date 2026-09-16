@@ -19,16 +19,14 @@ class TagActiveForm extends ActiveForm
 {
     use CustomAttributeFieldsTrait;
     #[\Override]
-    protected function configure(): void
+    protected function getDefaultRows(): array
     {
-        $this->rows ??= [
+        return [
             $this->getStatusField(),
             $this->getTypeField(),
             $this->getNameField(),
             ...$this->getCustomAttributeFields(),
         ];
-
-        parent::configure();
     }
 
     protected function getStatusField(): ?Stringable

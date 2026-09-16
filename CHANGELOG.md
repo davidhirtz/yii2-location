@@ -1,5 +1,10 @@
 ## 3.0.0 (in development)
 
+- `Modules\Admin\Widgets\Forms\LocationActiveForm` and `TagActiveForm` declare their fields in
+  `getDefaultRows()` instead of assigning `$this->rows ??=` in `configure()`, which the skeleton's
+  `Widgets\Forms\ActiveForm` needs to normalize them before an `EVENT_CONFIGURE` listener sees them (monorepo
+  issue #120). A subclass overriding `configure()` to change the fields has to move to the hook.
+
 - **`Models\Location::hasTagsEnabled()` and `Models\Tag::hasTagsEnabled()` are `allowsTags()`**, matching the
   platform's vocabulary for a capability a record has. The location's answers for its type too:
   `Models\Types\LocationType::allowTags(false)` narrows the module's `enableTags`.
