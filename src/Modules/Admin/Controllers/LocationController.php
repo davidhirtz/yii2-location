@@ -74,7 +74,6 @@ class LocationController extends Controller
 
     public function actionCreate(?int $type = null): Response|string
     {
-        // Before the defaults: the column carries one, and it would win over the type the request asked for.
         $location = Location::instantiateFromPost($this->request->post(), $type);
         $location->loadDefaultValues();
 

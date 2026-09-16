@@ -69,7 +69,6 @@ class TagController extends Controller
 
     public function actionCreate(?int $type = null): Response|string
     {
-        // Before the defaults: the column carries one, and it would win over the type the request asked for.
         $tag = Tag::instantiateFromPost($this->request->post(), $type);
         $tag->loadDefaultValues();
 
