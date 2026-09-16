@@ -69,9 +69,9 @@ class TagController extends Controller
 
     public function actionCreate(?int $type = null): Response|string
     {
-        $tag = Tag::create();
+        // Before the defaults: the column carries one, and it would win over the type the request asked for.
+        $tag = Tag::instantiateFromPost($this->request->post(), $type);
         $tag->loadDefaultValues();
-        $tag->type ??= $type;
 
         if (!$this->webuser->can(Tag::AUTH_TAG)) {
             throw new ForbiddenHttpException();

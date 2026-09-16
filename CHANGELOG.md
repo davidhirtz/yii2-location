@@ -1,5 +1,10 @@
 ## 3.0.0 (in development)
 
+- **`Modules\Admin\Controllers\LocationController::actionCreate()` and `TagController::actionCreate()` honour
+  their `type` parameter again**, building the record through `instantiate()` so the type decides the class
+  (monorepo issue #105), and take the type a form posted over it. The assignment was `$location->type ??= $type`
+  *after* `loadDefaultValues()`, and the column carries a default — so the parameter never applied.
+
 - **`Modules\Admin\Widgets\Grids\LocationTagGridView` is a picker**, as the cms and media pickers already were:
   the tag's name, type icon and location count badge no longer lead out of the grid, and the tag's own page is an
   external link button instead. `TagGridView::isPicker()` and `getRecordUrl()` are the hooks; a subclass that
