@@ -9,6 +9,7 @@ return [
     'AUTH_TAG_DESCRIPTION' => 'Gerir etiquetas de locais',
     'COMMON_LOCATION' => 'Local',
     'COMMON_LOCATIONS' => 'Locais',
+    'COMMON_OPEN_ADMIN' => 'Abrir num novo separador',
     'COMMON_TAG' => 'Etiqueta',
     'COMMON_TAGS' => 'Etiquetas',
     'LOCATION_COUNTRY_CODE_LABEL' => 'País',

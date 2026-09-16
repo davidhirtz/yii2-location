@@ -9,6 +9,7 @@ return [
     'AUTH_TAG_DESCRIPTION' => 'Standort-Tags verwalten',
     'COMMON_LOCATION' => 'Ort',
     'COMMON_LOCATIONS' => 'Orte',
+    'COMMON_OPEN_ADMIN' => 'In neuem Tab öffnen',
     'COMMON_TAG' => 'Tag',
     'COMMON_TAGS' => 'Tags',
     'LOCATION_COUNTRY_CODE_LABEL' => 'Land',

@@ -9,6 +9,7 @@ return [
     'AUTH_TAG_DESCRIPTION' => 'Manage location tags',
     'COMMON_LOCATION' => 'Location',
     'COMMON_LOCATIONS' => 'Locations',
+    'COMMON_OPEN_ADMIN' => 'Open in a new tab',
     'COMMON_TAG' => 'Tag',
     'COMMON_TAGS' => 'Tags',
     'LOCATION_COUNTRY_CODE_LABEL' => 'Country',

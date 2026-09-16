@@ -56,6 +56,12 @@ class LocationTagGridView extends TagGridView
             ->hiddenForMediumDevices();
     }
 
+    #[Override]
+    protected function isPicker(): bool
+    {
+        return true;
+    }
+
     /**
      * @return list<Stringable>
      */
@@ -63,6 +69,7 @@ class LocationTagGridView extends TagGridView
     protected function getButtonColumnContent(Tag $tag): array
     {
         return [
+            $this->getAdminLinkButton($tag),
             Button::make()
                 ->primary()
                 ->icon($tag->locationTag ? 'ban' : 'star')
@@ -73,5 +80,18 @@ class LocationTagGridView extends TagGridView
                     'tag' => $tag->id,
                 ]),
         ];
+    }
+
+    /**
+     * The tag's own page, which the name no longer leads to — in a new tab, so the picker survives the detour.
+     */
+    protected function getAdminLinkButton(Tag $tag): Stringable
+    {
+        return Button::make()
+            ->secondary()
+            ->icon('external-link-alt')
+            ->tooltip(Yii::t('location', 'COMMON_OPEN_ADMIN'))
+            ->url($tag->getAdminRoute() ?: null)
+            ->target('_blank');
     }
 }

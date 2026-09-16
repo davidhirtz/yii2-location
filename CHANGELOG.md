@@ -1,5 +1,10 @@
 ## 3.0.0 (in development)
 
+- **`Modules\Admin\Widgets\Grids\LocationTagGridView` is a picker**, as the cms and media pickers already were:
+  the tag's name, type icon and location count badge no longer lead out of the grid, and the tag's own page is an
+  external link button instead. `TagGridView::isPicker()` and `getRecordUrl()` are the hooks; a subclass that
+  linked the name itself moves to the latter.
+
 - `Modules\Admin\Widgets\Forms\LocationActiveForm` and `TagActiveForm` declare their fields in
   `getDefaultRows()` instead of assigning `$this->rows ??=` in `configure()`, which the skeleton's
   `Widgets\Forms\ActiveForm` needs to normalize them before an `EVENT_CONFIGURE` listener sees them (monorepo

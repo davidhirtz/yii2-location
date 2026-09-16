@@ -9,6 +9,7 @@ return [
     'AUTH_TAG_DESCRIPTION' => 'Gérer les étiquettes de lieux',
     'COMMON_LOCATION' => 'Lieu',
     'COMMON_LOCATIONS' => 'Lieux',
+    'COMMON_OPEN_ADMIN' => 'Ouvrir dans un nouvel onglet',
     'COMMON_TAG' => 'Étiquette',
     'COMMON_TAGS' => 'Étiquettes',
     'LOCATION_COUNTRY_CODE_LABEL' => 'Pays',

@@ -8,6 +8,7 @@ use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Data\TagActiveDataProvider;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Html\A;
+use Hirtz\Skeleton\Html\Div;
 use Hirtz\Skeleton\Widgets\Buttons\CreateButton;
 use Hirtz\Skeleton\Widgets\Grids\Columns\BadgeColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\ButtonColumn;
@@ -65,7 +66,7 @@ class TagGridView extends GridView
     protected function getTypeColumn(): ?Column
     {
         return TypeColumn::make()
-            ->url(fn (Tag $model) => $model->getAdminRoute())
+            ->url($this->getRecordUrl(...))
             ->visible($this->hasVisibleTypes());
     }
 
@@ -84,18 +85,40 @@ class TagGridView extends GridView
     protected function getNameColumnContent(Tag $tag): ?Stringable
     {
         $content = $this->search->markKeywords($tag->getI18nAttribute('name'));
+        $url = $this->getRecordUrl($tag);
 
-        return A::make()
-            ->content($content)
-            ->href($tag->getAdminRoute() ?: null)
-            ->class('strong');
+        return $url
+            ? A::make()->content($content)->href($url)->class('strong')
+            : Div::make()->content($content)->class('strong');
+    }
+
+    /**
+     * Whether the grid is a list to pick a tag *from* rather than to navigate. A picker must not lead away from
+     * itself — that cancels the flow the user is in — so its name and type icon carry no link, its location count
+     * badge carries none either, and the tag's own page is an external link button.
+     */
+    protected function isPicker(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Where the row's own links lead: the name and the type icon.
+     *
+     * @return array<array-key, mixed>|null
+     */
+    protected function getRecordUrl(Tag $tag): ?array
+    {
+        return $this->isPicker() ? null : ($tag->getAdminRoute() ?: null);
     }
 
     protected function getLocationCountColumn(): ?Column
     {
         return BadgeColumn::make()
             ->property('location_count')
-            ->url(fn (Tag $tag): array => ['/admin/location/location/index', 'tag' => $tag->id]);
+            ->url($this->isPicker()
+                ? null
+                : fn (Tag $tag): array => ['/admin/location/location/index', 'tag' => $tag->id]);
     }
 
     protected function getUpdatedAtColumn(): ?Column
