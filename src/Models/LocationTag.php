@@ -22,7 +22,6 @@ use Yii;
 /**
  * @property int $location_id
  * @property int $tag_id
- * @property int|null $updated_by_user_id
  * @property DateTime|null $updated_at
  *
  * @property-read Tag|null $tag {@see static::getTag()}

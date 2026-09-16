@@ -1,5 +1,9 @@
 ## 3.0.0 (in development)
 
+- **`Modules\Admin\Controllers\LocationController` and `TagController` gained a POST-only `status` action** that
+  cycles the record's status, which the grid's status icon posts to (monorepo issue #121). The location and tag
+  grids offer it; `LocationTagGridView`, being a picker, does not.
+
 - **`Modules\Admin\Controllers\LocationController::actionCreate()` and `TagController::actionCreate()` honour
   their `type` parameter again**, building the record through `instantiate()` so the type decides the class
   (monorepo issue #105), and take the type a form posted over it. The assignment was `$location->type ??= $type`

@@ -44,6 +44,8 @@ class LocationGridView extends GridView
     #[Override]
     protected function configure(): void
     {
+        $this->attributes['id'] ??= 'location-grid-view';
+
         $this->showTags = $this->showTags && static::getModule()->enableTags;
 
         if ($this->showTagDropdown) {
@@ -104,7 +106,8 @@ class LocationGridView extends GridView
 
     protected function getStatusColumn(): ?Column
     {
-        return StatusIconColumn::make();
+        return StatusIconColumn::make()
+            ->enableUpdate($this->enableStatusUpdate && $this->webuser->can(Location::AUTH_LOCATION));
     }
 
     protected function getTypeColumn(): ?Column

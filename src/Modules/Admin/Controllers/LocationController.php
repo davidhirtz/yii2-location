@@ -11,6 +11,7 @@ use Hirtz\Location\Modules\Admin\Data\LocationActiveDataProvider;
 use Hirtz\Location\Modules\Admin\Module;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
+use Hirtz\Skeleton\Web\Traits\StatusControllerTrait;
 use Hirtz\Skeleton\Widgets\Forms\AutocompleteList;
 use Override;
 use Yii;
@@ -26,6 +27,7 @@ use yii\web\ServerErrorHttpException;
 class LocationController extends Controller
 {
     use LocationTrait;
+    use StatusControllerTrait;
     use ModuleTrait;
 
     /**
@@ -43,7 +45,7 @@ class LocationController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['autocomplete', 'create', 'delete', 'index', 'update'],
+                        'actions' => ['autocomplete', 'create', 'delete', 'index', 'status', 'update'],
                         'roles' => [Location::AUTH_LOCATION],
                     ],
                 ],
@@ -53,6 +55,7 @@ class LocationController extends Controller
                 'actions' => [
                     'delete' => ['post'],
                     'order' => ['post'],
+                    'status' => ['post'],
                 ],
             ],
         ];
@@ -103,6 +106,11 @@ class LocationController extends Controller
         return $this->render('update', [
             'location' => $location,
         ]);
+    }
+
+    public function actionStatus(int $id): Response
+    {
+        return $this->updateStatus($this->findLocation($id));
     }
 
     public function actionDelete(int $id): Response|string

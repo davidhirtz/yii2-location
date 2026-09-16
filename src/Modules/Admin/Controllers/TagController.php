@@ -10,6 +10,7 @@ use Hirtz\Location\Modules\Admin\Data\TagActiveDataProvider;
 use Hirtz\Location\Modules\Admin\Module;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Web\Controller;
+use Hirtz\Skeleton\Web\Traits\StatusControllerTrait;
 use Override;
 use Yii;
 use yii\filters\AccessControl;
@@ -23,6 +24,7 @@ use yii\web\ServerErrorHttpException;
  */
 class TagController extends Controller
 {
+    use StatusControllerTrait;
     use TagTrait;
     use ModuleTrait;
 
@@ -36,7 +38,7 @@ class TagController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['create', 'delete', 'index', 'update'],
+                        'actions' => ['create', 'delete', 'index', 'status', 'update'],
                         'roles' => [Tag::AUTH_TAG],
                     ],
                 ],
@@ -46,6 +48,7 @@ class TagController extends Controller
                 'actions' => [
                     'delete' => ['post'],
                     'order' => ['post'],
+                    'status' => ['post'],
                 ],
             ],
         ];
@@ -98,6 +101,11 @@ class TagController extends Controller
         return $this->render('update', [
             'tag' => $tag,
         ]);
+    }
+
+    public function actionStatus(int $id): Response
+    {
+        return $this->updateStatus($this->findTag($id));
     }
 
     public function actionDelete(int $id): Response|string

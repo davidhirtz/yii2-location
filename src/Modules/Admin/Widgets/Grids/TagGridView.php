@@ -35,6 +35,8 @@ class TagGridView extends GridView
     #[Override]
     protected function configure(): void
     {
+        $this->attributes['id'] ??= 'tag-grid-view';
+
         $this->header ??= [
             $this->getStatusDropdown(),
             $this->getSearchInput(),
@@ -60,7 +62,10 @@ class TagGridView extends GridView
 
     protected function getStatusColumn(): ?Column
     {
-        return StatusIconColumn::make();
+        return StatusIconColumn::make()
+            ->enableUpdate($this->enableStatusUpdate
+                && !$this->isPicker()
+                && $this->webuser->can(Tag::AUTH_TAG));
     }
 
     protected function getTypeColumn(): ?Column
