@@ -7,20 +7,17 @@ namespace Hirtz\Location\Modules\Admin\Widgets\Navs;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Data\TagActiveDataProvider;
 use Hirtz\Skeleton\Widgets\Buttons\CreateButton;
-use Hirtz\Skeleton\Widgets\Navs\Header;
-use Hirtz\Skeleton\Widgets\Traits\ModelTrait;
+use Hirtz\Skeleton\Widgets\Navs\ModelHeader;
 use Hirtz\Skeleton\Widgets\Traits\ProviderTrait;
 use Override;
 use Stringable;
 use Yii;
 
-class TagHeader extends Header
+/**
+ * @extends ModelHeader<Tag|null>
+ */
+class TagHeader extends ModelHeader
 {
-    /**
-     * @use ModelTrait<Tag|null>
-     */
-    use ModelTrait;
-
     /**
      * @use ProviderTrait<TagActiveDataProvider|null>
      */
@@ -29,9 +26,8 @@ class TagHeader extends Header
     #[Override]
     protected function configure(): void
     {
-        $this->title ??= $this->model?->getOldAttribute('name') ?? Yii::t('location', 'COMMON_TAGS');
-
         if ($this->model) {
+            $this->title ??= $this->model->getOldAttribute('name');
             $this->addContent($this->getTagActionDropdown());
         }
 
@@ -40,11 +36,9 @@ class TagHeader extends Header
             $this->addContent($this->getCreateTagButton());
         }
 
-        $this->addLocationBreadcrumb();
+        $this->title ??= Yii::t('location', 'COMMON_TAGS');
 
-        if (!$this->provider) {
-            $this->addTagBreadcrumb();
-        }
+        $this->addLocationBreadcrumb();
 
         parent::configure();
     }
@@ -68,10 +62,5 @@ class TagHeader extends Header
     protected function addLocationBreadcrumb(): void
     {
         $this->addBreadcrumb(Yii::t('location', 'COMMON_LOCATIONS'), ['/admin/location/']);
-    }
-
-    protected function addTagBreadcrumb(): void
-    {
-        $this->addBreadcrumb(Yii::t('location', 'COMMON_TAGS'), ['/admin/location/tag/']);
     }
 }

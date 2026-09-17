@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Hirtz\Location\Modules\Admin\Widgets\Navs;
 
 use Hirtz\Skeleton\Widgets\Buttons\CreateButton;
-use Hirtz\Skeleton\Widgets\Navs\Header;
-use Hirtz\Skeleton\Widgets\Traits\ModelTrait;
+use Hirtz\Skeleton\Widgets\Navs\ModelHeader;
 use Hirtz\Skeleton\Widgets\Traits\ProviderTrait;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Modules\Admin\Data\LocationActiveDataProvider;
@@ -14,13 +13,11 @@ use Override;
 use Stringable;
 use Yii;
 
-class LocationHeader extends Header
+/**
+ * @extends ModelHeader<Location|null>
+ */
+class LocationHeader extends ModelHeader
 {
-    /**
-     * @use ModelTrait<Location|null>
-     */
-    use ModelTrait;
-
     /**
      * @use ProviderTrait<LocationActiveDataProvider|null>
      */
@@ -29,9 +26,8 @@ class LocationHeader extends Header
     #[Override]
     protected function configure(): void
     {
-        $this->title ??= $this->model?->getOldAttribute('name') ?? Yii::t('location', 'COMMON_LOCATIONS');
-
         if ($this->model) {
+            $this->title ??= $this->model->getOldAttribute('name');
             $this->addContent($this->getLocationActionDropdown());
         }
 
@@ -40,9 +36,7 @@ class LocationHeader extends Header
             $this->addContent($this->getCreateLocationButton());
         }
 
-        if (!$this->provider) {
-            $this->view->addBreadcrumb(Yii::t('location', 'COMMON_LOCATIONS'), ['/admin/location/']);
-        }
+        $this->title ??= Yii::t('location', 'COMMON_LOCATIONS');
 
         parent::configure();
     }

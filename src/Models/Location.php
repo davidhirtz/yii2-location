@@ -11,6 +11,7 @@ use Hirtz\Location\Models\Queries\TagQuery;
 use Hirtz\Location\Models\Types\LocationType;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Location\Validators\CoordinateValidator;
+use Hirtz\Skeleton\Models\Breadcrumb;
 use Hirtz\Skeleton\Behaviors\BlameableBehavior;
 use Hirtz\Skeleton\Behaviors\TimestampBehavior;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
@@ -290,6 +291,11 @@ class Location extends ActiveRecord implements
     public function getAdminRoute(): array|false
     {
         return $this->id ? ['/admin/location/location/update', 'id' => $this->id] : false;
+    }
+
+    public function getAdminIndexBreadcrumb(): Breadcrumb
+    {
+        return new Breadcrumb(Yii::t('location', 'COMMON_LOCATIONS'), ['/admin/location/']);
     }
 
     public function getPermissionName(): string

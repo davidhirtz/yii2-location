@@ -1,5 +1,10 @@
 ## 3.0.0 (in development)
 
+- **`Models\Location::getAdminIndexBreadcrumb()` and `Models\Tag::getAdminIndexBreadcrumb()` name their own
+  index**, and `Modules\Admin\Widgets\Navs\LocationHeader` and `TagHeader` extend the skeleton's
+  `Widgets\Navs\ModelHeader`. `TagHeader::addTagBreadcrumb()` is gone; its *Locations* crumb stays, that being
+  the nav item rather than the tag's own listing.
+
 - **`Modules\Admin\Controllers\LocationController` and `TagController` gained a POST-only `status` action** that
   cycles the record's status, which the grid's status icon posts to (monorepo issue #121). The location and tag
   grids offer it; `LocationTagGridView`, being a picker, does not.
