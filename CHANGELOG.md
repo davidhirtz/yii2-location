@@ -1,5 +1,9 @@
 ## 3.0.0 (in development)
 
+- **`Modules\Admin\Widgets\Forms\LocationProviderIdField` is a plain input where no provider is configured**
+  (monorepo issue #162). The search placeholder and `type="search"` were set whether or not
+  `Modules\Admin\Module::getAutocomplete()` answered one, so a field that could not search still invited it.
+
 - **`Models\Location::getAdminIndexBreadcrumb()` and `Models\Tag::getAdminIndexBreadcrumb()` name their own
   index**, and `Modules\Admin\Widgets\Navs\LocationHeader` and `TagHeader` extend the skeleton's
   `Widgets\Navs\ModelHeader`. `TagHeader::addTagBreadcrumb()` is gone; its *Locations* crumb stays, that being
