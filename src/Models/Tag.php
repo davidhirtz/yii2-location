@@ -222,6 +222,11 @@ class Tag extends ActiveRecord implements
         return $this->id ? ['/admin/location/tag/update', 'id' => $this->id] : false;
     }
 
+    public function getPermissionName(): string
+    {
+        return self::AUTH_TAG;
+    }
+
     public function getSearchAttributes(): array
     {
         return ['name'];

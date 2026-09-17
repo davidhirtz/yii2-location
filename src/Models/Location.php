@@ -292,6 +292,11 @@ class Location extends ActiveRecord implements
         return $this->id ? ['/admin/location/location/update', 'id' => $this->id] : false;
     }
 
+    public function getPermissionName(): string
+    {
+        return self::AUTH_LOCATION;
+    }
+
     public function getSearchAttributes(): array
     {
         return ['name', 'formatted_address', 'street', 'locality', 'postal_code', 'district', 'state'];
