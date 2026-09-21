@@ -79,6 +79,20 @@ class M260101000700LocationBaseline extends Migration
               PRIMARY KEY (`location_id`,`tag_id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
             SQL);
+
+        $this->execute(<<<'SQL'
+            INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `updated_at`, `created_at`) VALUES
+              ('location', '2', '{\"category\":\"location\",\"key\":\"AUTH_LOCATION_DESCRIPTION\"}', NULL, NULL, '1789985581', '1789985581'),
+              ('tag', '2', '{\"category\":\"location\",\"key\":\"AUTH_TAG_DESCRIPTION\"}', NULL, NULL, '1789985581', '1789985581')
+            SQL);
+
+        $this->execute(<<<'SQL'
+            INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+              ('admin', 'location'),
+              ('manager', 'location'),
+              ('admin', 'tag'),
+              ('manager', 'tag')
+            SQL);
     }
 
     public function safeDown(): bool
