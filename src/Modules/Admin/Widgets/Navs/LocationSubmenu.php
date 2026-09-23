@@ -20,11 +20,14 @@ class LocationSubmenu extends Submenu
     use ModelTrait;
     use ModuleTrait;
 
-
     #[Override]
     protected function configure(): void
     {
-        $this->addItem($this->getLocationItem(), $this->getLocationTagsItem());
+        $this->addItem(
+            location: $this->getLocationItem(),
+            tags: $this->getLocationTagsItem(),
+        );
+
         parent::configure();
     }
 
@@ -33,7 +36,7 @@ class LocationSubmenu extends Submenu
         return NavItem::make()
             ->label($this->model->getAdminType())
             ->url($this->model->getAdminRoute() ?: null)
-            ->routes(['admin/location/location/'])
+            ->addRoute('admin/location/location/')
             ->icon('cog');
     }
 
@@ -44,7 +47,7 @@ class LocationSubmenu extends Submenu
             ->url(['location-tag/index', 'location' => $this->model->id])
             ->visible(static::getModule()->enableTags)
             ->badge($this->model->tag_count ?: null)
-            ->routes(['admin/location/location-tag/'])
+            ->addRoute('admin/location/location-tag/')
             ->icon('tags');
     }
 }
