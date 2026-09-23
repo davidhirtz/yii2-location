@@ -1,91 +1,24 @@
 ## 3.0.0 (in development)
 
-- **`Modules\Admin\Widgets\Forms\LocationProviderIdField` is a plain input where no provider is configured**
-  (monorepo issue #162). The search placeholder and `type="search"` were set whether or not
-  `Modules\Admin\Module::getAutocomplete()` answered one, so a field that could not search still invited it.
-
-- **`Models\Location::getAdminIndexBreadcrumb()` and `Models\Tag::getAdminIndexBreadcrumb()` name their own
-  index**, and `Modules\Admin\Widgets\Navs\LocationHeader` and `TagHeader` extend the skeleton's
-  `Widgets\Navs\ModelHeader`. `TagHeader::addTagBreadcrumb()` is gone; its *Locations* crumb stays, that being
-  the nav item rather than the tag's own listing.
-
-- **`Modules\Admin\Controllers\LocationController` and `TagController` gained a POST-only `status` action** that
-  cycles the record's status, which the grid's status icon posts to (monorepo issue #121). The location and tag
-  grids offer it; `LocationTagGridView`, being a picker, does not.
-
-- **`Modules\Admin\Controllers\LocationController::actionCreate()` and `TagController::actionCreate()` honour
-  their `type` parameter again**, building the record through `instantiate()` so the type decides the class
-  (monorepo issue #105), and take the type a form posted over it. The assignment was `$location->type ??= $type`
-  *after* `loadDefaultValues()`, and the column carries a default — so the parameter never applied.
-
-- **`Modules\Admin\Widgets\Grids\LocationTagGridView` is a picker**, as the cms and media pickers already were:
-  the tag's name, type icon and location count badge no longer lead out of the grid, and the tag's own page is an
-  external link button instead. `TagGridView::isPicker()` and `getRecordUrl()` are the hooks; a subclass that
-  linked the name itself moves to the latter.
-
-- `Modules\Admin\Widgets\Forms\LocationActiveForm` and `TagActiveForm` declare their fields in
-  `getDefaultRows()` instead of assigning `$this->rows ??=` in `configure()`, which the skeleton's
-  `Widgets\Forms\ActiveForm` needs to normalize them before an `EVENT_CONFIGURE` listener sees them (monorepo
-  issue #120). A subclass overriding `configure()` to change the fields has to move to the hook.
-
-- **`Models\Location::hasTagsEnabled()` and `Models\Tag::hasTagsEnabled()` are `allowsTags()`**, matching the
-  platform's vocabulary for a capability a record has. The location's answers for its type too:
-  `Models\Types\LocationType::allowTags(false)` narrows the module's `enableTags`.
-
-- **Tom Select is gone, and with it the bundle's whole asset pipeline** — `package.json`, `esbuild.js`,
-  `resources/assets` and `Modules\Admin\Assets\AutocompleteAssetBundle`. `Modules\Admin\Widgets\Forms\LocationProviderIdField`
-  extends the skeleton's `Widgets\Forms\Fields\AutocompleteField` instead, so the suggestions are rendered by the
-  server and look like every other dropdown in the admin. `LocationController::actionAutocomplete()` therefore
-  answers with the option list rather than JSON, and ignores a query shorter than `$autocompleteMinLength`.
-
-- `Models\Types\LocationType` is the location's type class and carries `slug()`, what
-  `Controllers\ApiController::findTypeBySlug()` matches to give a type a URL of its own. See the skeleton's
-  UPGRADE.md
-
-- `Models\Tag::fields()` returns the tag's own attributes. It was a copy of `Location::fields()`, so a serialized
-  tag carried `formatted_address`, `lat` and `lng` — always null on a tag — and left out its own `type`
-- `Modules\Admin\Widgets\Grids\LocationGridView::getNameColumnContent()` returns `string|Stringable`, as the cms
-  grids of the same shape already did. It declared `string` while composing the link from `Html\A`, so the whole
-  location index was a `TypeError` for a location with neither an address nor a tag
-- The tag index translates through `COMMON_TAGS`, and `TAG_CREATE_TITLE` had no English text. The stray
-  `src/messages/ru/location.php` left over from 2.x is gone
-- **One permission per admin-managed model.** `Models\Location::AUTH_LOCATION` (`location`) and
-  `Models\Tag::AUTH_TAG` (`tag`) replace the three verb permissions each.
-  `Migrations\M260914130000AuthItems` grants the new item to every parent and assignee of any old one.
-  `findLocation()` and `findTag()` lost their permission argument, `LocationTrait::checkLocationPermission()` is
-  gone, and no `can()` call takes a record any more
-- `Models\Location`, `Models\Tag` and `Models\LocationTag` implement the skeleton's
-  `Models\Interfaces\AdminModelInterface`: `getTrailModelName()` and `getTrailModelType()` are `getAdminName()`
-  and `getAdminType()`, and the boilerplate name is `Models\Traits\AdminModelTrait`'s
-- `Models\Location` and `Models\Tag` are searchable: they implement the skeleton's
-  `Models\Interfaces\SearchableInterface`, and `Bootstrap` registers them on the `search` component. A location
-  indexes its name and address parts at weight 0.6, a tag its name at 0.5. `Module::$enableTags` gates the tag
-  both ways — while it is off nothing is written, and a row an earlier rebuild left behind stays out of the
-  results
-- `esbuild.js` uses the skeleton's shared `esbuild.config.js`, so the styles are built by sass with autoprefixer
-  instead of esbuild's css loader. `resources/assets/src/css/autocomplete.css` is now `autocomplete.scss` — it
-  already nested with `&`, which sass flattens into plain selectors rather than shipping native CSS nesting
-- `Controllers\ApiController` extends the skeleton `Web\Controller` instead of `yii\web\Controller`, so `$this->request`
-  is the skeleton `Request` and the hand-declared `@property Response $response` is gone
-- `TagCollection::invalidateCache()` also drops the static list, which it left in place before, so a saved tag is seen
-  by the next `getAll()` in the same process; `reset()` drops the static alone and `Bootstrap` calls it, so an
-  application starts without the tags of the one before it. `$_tags` is `$tags`
-- `TagQuery::withLocationTag()` lost its `$eagerLoading` parameter and takes the join type second: the location tag
-  is read off the joined row (`ActiveQuery::selectWith()`) rather than queried again; `LocationQuery::andWhereTagId()`
-  does the same when called with eager loading
-- `Models\Location::getAdminRoute()` and `Models\Tag::getAdminRoute()` return `false` for a record without an id
-  rather than a route with a null id — the guard moved here from `getTrailModelAdminRoute()`, which is gone. Both
-  models implement the skeleton `Models\Interfaces\AdminRouteInterface`
-- `Models\Location` and `Models\Tag` implement `CustomAttributeInterface`. Added the `custom_attributes` column to
-  `location` and `tag`, excluded from the trail. Their `rules()` spread `parent::rules()` now, which is what injects
-  the custom attribute rules
-- The admin forms render the custom attribute fields and their type select is a `TypeSelectField`, so a type change
-  reloads the form when the types render different fields; `LocationController` and `TagController` guard their save
-  with `Request::isFormReload()`
-
-- Translated attributes of `Location` and `Tag` moved from their `_xx` columns into the skeleton's
-  `translation` table (`M260910140000Translations`)
-- Changed the API URL rule to a `Route` registered via `Application::addRoutes()`
+- Renamed the namespace `davidhirtz\yii2\location\` to `Hirtz\Location\` and every directory to StudlyCase (`Models\`, `Modules\Admin\Widgets\Grids\`); requires PHP 8.3 and `davidhirtz/yii2-skeleton` 3.0
+- Replaced the three verb permissions per model with one: `Models\Location::AUTH_LOCATION` (`location`) and `Models\Tag::AUTH_TAG` (`tag`); `findLocation()` and `findTag()` take no permission and `LocationTrait::checkLocationPermission()` is gone
+- Moved the admin routes under the module: `/admin/location/location/*`, `/admin/location/tag/*` and `/admin/location/location-tag/*`
+- Replaced the array-based `getTypes()` with `Models\Types\LocationType` objects carrying `slug()` and `allowTags()`; `Controllers\ApiController::findTypeBySlug()` reads `getSlug()`
+- Renamed `Location::hasTagsEnabled()` and `Tag::hasTagsEnabled()` to `allowsTags()`; a location's answer also honours its type
+- Renamed `getTrailModelName()` and `getTrailModelType()` to `getAdminName()` and `getAdminType()`; removed `getTrailModelAdminRoute()`, `getAdminRoute()` returns `false` for an unsaved record (`Hirtz\Skeleton\Models\Interfaces\AdminModelInterface`)
+- Moved the translated attributes of `Location` and `Tag` from their `_<language>` columns into the skeleton's `translation` table; `TagQuery::withLocationTag()` lost its `$eagerLoading` parameter and takes the join type second
+- Removed the per-language tables (`migrations\traits\I18nTablesTrait`); `tableName()` is `{{%location}}`, `{{%tag}}` and `{{%location_tag}}`
+- Removed the jQuery autocomplete assets, `AutocompleteInputWidget` and `AutocompleteAssetBundle`; `Modules\Admin\Widgets\Forms\LocationProviderIdField` extends the skeleton's `Widgets\Forms\Fields\AutocompleteField` and `LocationController::actionAutocomplete()` answers an option list for `q`, ignoring a query shorter than `$autocompleteMinLength`
+- Changed `Modules\Admin\Interfaces\AutocompleteInterface::getResults()` to take `$input` and return `list<array{text: string, value: mixed}>`
+- Replaced the static `Location::getCountryCodes()` map with an instance method returning the codes; `getCountryName()` reads `Hirtz\Skeleton\Helpers\CountryList`
+- Replaced the English message texts with `UPPER_SNAKE_CASE` keys; removed the `ru`, `zh-CN` and `zh-TW` translations
+- Rewrote the admin on the skeleton's widget system: `Submenu` is `Modules\Admin\Widgets\Navs\LocationSubmenu`, added `LocationHeader`, `TagHeader`, `LocationNavItem`, `LocationActionDropdown`, `TagActionDropdown`, `LocationDeleteButton` and `TagDeleteButton`; forms declare their fields in `getDefaultRows()`, grids their columns in `configure()`, and `LocationGridView`'s `$show*` flags are protected
+- Changed `Modules\Admin\Module` to answer `aside()` and `dashboard()` instead of `getNavBarItems()`, `getName()`, `getRoute()` and `getDashboardPanels()`
+- Added `custom_attributes` to `location` and `tag` (`CustomAttributeInterface`); the forms render the fields and their type select reloads the form on a change
+- Added fulltext search for `Location` and `Tag` (`SearchableInterface`), a POST-only `status` action on `LocationController` and `TagController`, and `TagCollection::reset()`
+- Changed `Location::fields()` to include `type` when more than one type is declared, and `Tag::fields()` to return the tag's own attributes instead of the location's
+- Changed `LocationTagGridView` into a picker: the name, type icon and count badge no longer link out of the grid
+- Changed `ApiController` to extend `Hirtz\Skeleton\Web\Controller`
 
 ## 1.3.1 (Jan 11, 2025)
 
