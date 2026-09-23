@@ -1,7 +1,5 @@
 # Development
 node_modules
-tests/_output/coverage.xml
-tests/_output/coverage.serialized
 vendor
 .idea
 
