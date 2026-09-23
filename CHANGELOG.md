@@ -1,4 +1,4 @@
-## 3.0.0 (in development)
+## 3.0.0 (September 23, 2026)
 
 - Renamed the namespace `davidhirtz\yii2\location\` to `Hirtz\Location\` and every directory to StudlyCase (`Models\`, `Modules\Admin\Widgets\Grids\`); requires PHP 8.3 and `davidhirtz/yii2-skeleton` 3.0
 - Replaced the three verb permissions per model with one: `Models\Location::AUTH_LOCATION` (`location`) and `Models\Tag::AUTH_TAG` (`tag`); `findLocation()` and `findTag()` take no permission and `LocationTrait::checkLocationPermission()` is gone
