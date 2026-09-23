@@ -27,7 +27,8 @@ class LocationDeleteButton extends DeleteButton
     #[Override]
     protected function configure(): void
     {
-        $this->label ??= Yii::t('location', 'LOCATION_DELETE_DELETE_LOCATION');
+        $this->label ??= Yii::t('location', 'LOCATION_BUTTON_DELETE');
+        $this->title ??= Yii::t('location', 'LOCATION_CONFIRM_DELETE');
 
         parent::configure();
     }
