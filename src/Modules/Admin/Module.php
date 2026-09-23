@@ -19,6 +19,8 @@ use Yii;
  */
 class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
 {
+    public $defaultRoute = 'location';
+
     public function getAutocomplete(): ?AutocompleteInterface
     {
         $autocomplete = $this->get('autocomplete', false);

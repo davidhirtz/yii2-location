@@ -57,6 +57,19 @@ class LocationAdminTest extends TestCase
         self::assertStringContainsString('Test Location 4', $html);
     }
 
+    /**
+     * The breadcrumbs link to the module itself, which has to answer with the location index (monorepo issue #233).
+     */
+    public function testTheModuleRouteIsTheLocationIndex(): void
+    {
+        $this->login();
+
+        $html = Yii::$app->runAction('admin/location');
+
+        self::assertIsString($html);
+        self::assertStringContainsString('Test Location 1', $html);
+    }
+
     public function testTheLocationIndexFiltersByStatusAndType(): void
     {
         $this->login();
