@@ -435,11 +435,11 @@ class LocationAdminTest extends TestCase
      */
     private function setAutocomplete(array $results): void
     {
-        Yii::$app->getModule('admin')->getModule('location')->set('autocomplete', new class ($results) implements AutocompleteInterface {
+        Yii::$app->getModule('admin')->getModule('location')->set('autocomplete', new readonly class ($results) implements AutocompleteInterface {
             /**
              * @param list<array{text: string, value: int|string}> $results
              */
-            public function __construct(private readonly array $results)
+            public function __construct(private array $results)
             {
             }
 
