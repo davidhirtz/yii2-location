@@ -335,3 +335,5 @@ into `translation` by hand before running the above.
 - `LocationTrait::checkLocationPermission()` and the permission argument of `findLocation()` / `findTag()`.
 - `getTrailModelAdminRoute()` on `Location` and `Tag`.
 - The `Edit Location` / `Edit Tag` page titles; the header shows the record's name.
+- `Validators\CoordinateValidator`: `lat` and `lng` are formatted by the skeleton's `AttributeTypecastBehavior`
+  (a string at eight decimals); a coordinate of `0` is kept instead of stored as `null`.

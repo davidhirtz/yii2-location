@@ -10,7 +10,6 @@ use Hirtz\Location\Models\Queries\LocationQuery;
 use Hirtz\Location\Models\Queries\TagQuery;
 use Hirtz\Location\Models\Types\LocationType;
 use Hirtz\Location\Modules\ModuleTrait;
-use Hirtz\Location\Validators\CoordinateValidator;
 use Hirtz\Skeleton\Models\Breadcrumb;
 use Hirtz\Skeleton\Behaviors\BlameableBehavior;
 use Hirtz\Skeleton\Behaviors\TimestampBehavior;
@@ -46,8 +45,8 @@ use yii\db\ActiveQuery;
  * @property int $id
  * @property string $name
  * @property string|null $formatted_address
- * @property float|null $lat
- * @property float|null $lng
+ * @property float|string|null $lat
+ * @property float|string|null $lng
  * @property string|null $street
  * @property string|null $house_number
  * @property string|null $locality
@@ -130,10 +129,6 @@ class Location extends ActiveRecord implements
             [
                 ['provider_id'],
                 'string',
-            ],
-            [
-                ['lat', 'lng'],
-                CoordinateValidator::class,
             ],
             [
                 ['lat'],

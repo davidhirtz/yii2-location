@@ -40,4 +40,35 @@ class LocationTest extends TestCase
         self::assertSame('Test Location', $location->name);
         self::assertSame('United States', $location->getCountryName());
     }
+
+    public function testUnchangedCoordinatesAreNotDirty(): void
+    {
+        $location = Location::create();
+        $location->status = TestLocation::STATUS_ENABLED;
+        $location->type = TestLocation::TYPE_TEST;
+        $location->lat = 0;
+        $location->lng = -74.006;
+
+        self::assertTrue($location->save());
+        self::assertSame('0.00000000', $location->lat);
+
+        $location = Location::findOne($location->id);
+        self::assertNotNull($location);
+
+        $location->load(['lat' => '0', 'lng' => '-74.006'], '');
+
+        self::assertTrue($location->validate());
+        self::assertSame([], $location->getDirtyAttributes());
+    }
+
+    public function testInvalidCoordinateIsRejected(): void
+    {
+        $location = Location::create();
+        $location->status = TestLocation::STATUS_ENABLED;
+        $location->type = TestLocation::TYPE_TEST;
+        $location->lat = 'north';
+
+        self::assertFalse($location->validate());
+        self::assertArrayHasKey('lat', $location->getErrors());
+    }
 }

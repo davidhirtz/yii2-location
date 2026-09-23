@@ -11,6 +11,7 @@
 - Removed the jQuery autocomplete assets, `AutocompleteInputWidget` and `AutocompleteAssetBundle`; `Modules\Admin\Widgets\Forms\LocationProviderIdField` extends the skeleton's `Widgets\Forms\Fields\AutocompleteField` and `LocationController::actionAutocomplete()` answers an option list for `q`, ignoring a query shorter than `$autocompleteMinLength`
 - Changed `Modules\Admin\Interfaces\AutocompleteInterface::getResults()` to take `$input` and return `list<array{text: string, value: mixed}>`
 - Replaced the static `Location::getCountryCodes()` map with an instance method returning the codes; `getCountryName()` reads `Hirtz\Skeleton\Helpers\CountryList`
+- Removed `Validators\CoordinateValidator`; the skeleton's `AttributeTypecastBehavior` formats `lat` and `lng` at the column's scale, and `0` is no longer stored as `null`
 - Replaced the English message texts with `UPPER_SNAKE_CASE` keys; removed the `ru`, `zh-CN` and `zh-TW` translations
 - Rewrote the admin on the skeleton's widget system: `Submenu` is `Modules\Admin\Widgets\Navs\LocationSubmenu`, added `LocationHeader`, `TagHeader`, `LocationNavItem`, `LocationActionDropdown`, `TagActionDropdown`, `LocationDeleteButton` and `TagDeleteButton`; forms declare their fields in `getDefaultRows()`, grids their columns in `configure()`, and `LocationGridView`'s `$show*` flags are protected
 - Changed `Modules\Admin\Module` to answer `aside()` and `dashboard()` instead of `getNavBarItems()`, `getName()`, `getRoute()` and `getDashboardPanels()`
