@@ -155,14 +155,14 @@ class LocationTag extends ActiveRecord implements TrailModelInterface
         $this->tag_id = $tag->id;
     }
 
-    public function updateLocationTagIds(): bool|int
+    public function updateLocationTagIds(): int
     {
-        return $this->location->recalculateTagIds()->update();
+        return $this->location->updateTagIds();
     }
 
-    public function updateTagLocationCount(): bool|int
+    public function updateTagLocationCount(): int
     {
-        return $this->tag->recalculateLocationCount()->update();
+        return $this->tag->updateLocationCount();
     }
 
     /**

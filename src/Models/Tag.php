@@ -192,10 +192,11 @@ class Tag extends ActiveRecord implements
         TagCollection::invalidateCache();
     }
 
-    public function recalculateLocationCount(): static
+    public function updateLocationCount(): int
     {
-        $this->location_count = (int)$this->getLocationTags()->count();
-        return $this;
+        return $this->updateDenormalizedAttributes([
+            'location_count' => (int)$this->getLocationTags()->count(),
+        ]);
     }
 
     /**

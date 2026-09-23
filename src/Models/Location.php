@@ -230,13 +230,14 @@ class Location extends ActiveRecord implements
         return Yii::createObject(LocationQuery::class, [static::class]);
     }
 
-    public function recalculateTagIds(): static
+    public function updateTagIds(): int
     {
         $tagIds = $this->getLocationTags()->select('tag_id')->column();
-        $this->tag_ids = $tagIds ? array_values(array_map(intval(...), $tagIds)) : null;
-        $this->tag_count = count($tagIds);
 
-        return $this;
+        return $this->updateDenormalizedAttributes([
+            'tag_ids' => $tagIds ? array_values(array_map(intval(...), $tagIds)) : null,
+            'tag_count' => count($tagIds),
+        ]);
     }
 
     public function getCountryName(): ?string

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Tests\Models;
 
+use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\LocationTag;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\ModuleTrait;
@@ -62,5 +63,39 @@ class TagTest extends TestCase
 
         self::assertSame(0, $location->tag_count);
         self::assertNull($location->tag_ids);
+    }
+
+    /**
+     * The tag list is the location's bookkeeping: it is written even where the location no longer validates, and
+     * nothing else the in-memory location holds is written with it.
+     */
+    public function testALinkWritesTheTagsAloneWhateverTheLocationHolds(): void
+    {
+        self::getModule()->enableTags = true;
+
+        $tag = Tag::create();
+        $tag->name = 'Counted';
+        self::assertTrue($tag->save());
+
+        $location = $this->getLocationFromFixture('location-1');
+
+        // A country since dropped from the list, say.
+        $location->updateAttributes(['country_code' => 'XX']);
+        self::assertFalse($location->validate());
+
+        $location->street = 'Never saved';
+
+        $link = LocationTag::create();
+        $link->populateLocationRelation($location);
+        $link->populateTagRelation($tag);
+
+        self::assertTrue($link->insert(), print_r($link->getErrors(), true));
+
+        $row = Location::findOne($location->id);
+
+        self::assertSame(1, $row->tag_count);
+        self::assertSame([$tag->id], $row->tag_ids);
+        self::assertNotSame('Never saved', $row->street);
+        self::assertNotNull($row->updated_at);
     }
 }
