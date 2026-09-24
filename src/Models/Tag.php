@@ -219,6 +219,11 @@ class Tag extends ActiveRecord implements
         return Yii::t('location', 'COMMON_TAG');
     }
 
+    protected function getDefaultAdminIcon(): ?string
+    {
+        return 'tag';
+    }
+
     public function getAdminRoute(): array|false
     {
         return $this->id ? ['/admin/location/tag/update', 'id' => $this->id] : false;

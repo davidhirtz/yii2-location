@@ -271,6 +271,11 @@ class Location extends ActiveRecord implements
         return Yii::t('location', 'COMMON_LOCATION');
     }
 
+    protected function getDefaultAdminIcon(): ?string
+    {
+        return 'map-marker-alt';
+    }
+
     #[Override]
     public static function getTypeClass(): string
     {
