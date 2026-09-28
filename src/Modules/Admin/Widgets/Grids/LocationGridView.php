@@ -31,7 +31,7 @@ use Yii;
 
 /**
  * @extends GridView<Location>
- * @property LocationActiveDataProvider $dataProvider
+ * @property LocationActiveDataProvider $provider
  */
 class LocationGridView extends GridView
 {
@@ -46,10 +46,13 @@ class LocationGridView extends GridView
     {
         $this->attributes['id'] ??= 'location-grid-view';
 
-        $this->showTags = $this->showTags && static::getModule()->enableTags;
+        $type = Location::instance()::findType($this->provider->type);
 
-        if ($this->showTagDropdown) {
-            $this->showTagDropdown = static::getModule()->enableTags && count(TagCollection::getAll()) !== 0;
+        if (!static::getModule()->enableTags || ($type && !$type->allowsTags())) {
+            $this->showTags = false;
+            $this->showTagDropdown = false;
+        } elseif ($this->showTagDropdown) {
+            $this->showTagDropdown = count(TagCollection::getAll()) !== 0;
         }
 
         if ($this->showTypeDropdown) {
@@ -152,7 +155,7 @@ class LocationGridView extends GridView
                 ->href($location->getAdminRoute() ?: null);
         }
 
-        if ($this->showTags) {
+        if ($this->showTags && $location->allowsTags()) {
             $content .= $this->getTagButtons($location);
         }
 
@@ -163,8 +166,20 @@ class LocationGridView extends GridView
     {
         return BadgeColumn::make()
             ->property('tag_count')
-            ->visible(static::getModule()->enableTags)
+            ->visible($this->hasTaggableLocations())
+            ->value(fn (Location $location) => $location->allowsTags() ? $location->tag_count : null)
             ->url(fn (Location $location) => ['/admin/location/location-tag/index', 'location' => $location->id]);
+    }
+
+    protected function hasTaggableLocations(): bool
+    {
+        foreach ($this->provider->getModels() as $location) {
+            if ($location->allowsTags()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     protected function getUpdatedAtColumn(): ?Column

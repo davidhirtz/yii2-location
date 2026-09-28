@@ -1,3 +1,7 @@
+## Unreleased
+
+- Changed the admin to respect `LocationType::allowTags()`: `LocationGridView`, `LocationSubmenu` and `LocationTagController` (`LocationTrait::isLocationAllowed()`)
+
 ## 3.0.0 (September 23, 2026)
 
 - Renamed the namespace `davidhirtz\yii2\location\` to `Hirtz\Location\` and every directory to StudlyCase (`Models\`, `Modules\Admin\Widgets\Grids\`); requires PHP 8.3 and `davidhirtz/yii2-skeleton` 3.0

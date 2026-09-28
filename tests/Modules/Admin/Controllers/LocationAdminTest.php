@@ -7,6 +7,7 @@ namespace Hirtz\Location\Tests\Modules\Admin\Controllers;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\LocationTag;
 use Hirtz\Location\Models\Tag;
+use Hirtz\Location\Models\Types\LocationType;
 use Hirtz\Location\Modules\Admin\Interfaces\AutocompleteInterface;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Location\Test\Fixtures\LocationFixture;
@@ -366,6 +367,52 @@ class LocationAdminTest extends TestCase
         self::assertStringContainsString('Alpha', $html);
     }
 
+    /**
+     * A type without tags narrows what `enableTags` turned on: a grid filtered to it shows neither the tag buttons
+     * nor the tag dropdown, its locations have no tags tab, and the tag routes refuse them.
+     */
+    public function testATypeWithoutTagsOffersNoTags(): void
+    {
+        $this->login();
+        self::getModule()->enableTags = true;
+
+        $tag = $this->createTag('Alpha');
+
+        $locationTag = LocationTag::create();
+        $locationTag->loadDefaultValues();
+        $locationTag->populateLocationRelation(Location::findOne(1));
+        $locationTag->tag_id = $tag->id;
+        self::assertTrue($locationTag->insert(), print_r($locationTag->getErrors(), true));
+
+        Yii::$container->set(Location::class, UntaggedLocation::class);
+        Location::instance(true);
+
+        try {
+            $html = Yii::$app->runAction('admin/location/location/index', ['type' => Location::TYPE_DEFAULT]);
+            self::assertIsString($html);
+            self::assertStringContainsString('Test Location 1', $html);
+            self::assertStringNotContainsString('Alpha', $html);
+
+            $html = Yii::$app->runAction('admin/location/location/index', ['type' => TestLocation::TYPE_TEST]);
+            self::assertIsString($html);
+            self::assertStringContainsString('Alpha', $html);
+
+            $html = Yii::$app->runAction('admin/location/location/update', ['id' => 1]);
+            self::assertIsString($html);
+            self::assertStringNotContainsString('location-tag/index', $html);
+
+            $html = Yii::$app->runAction('admin/location/location/update', ['id' => 4]);
+            self::assertIsString($html);
+            self::assertStringContainsString('location-tag/index', $html);
+
+            $this->expectException(NotFoundHttpException::class);
+            Yii::$app->runAction('admin/location/location-tag/index', ['location' => 1]);
+        } finally {
+            Yii::$container->set(Location::class, TestLocation::class);
+            Location::instance(true);
+        }
+    }
+
     private function createTag(string $name): Tag
     {
         $tag = Tag::create();
@@ -473,5 +520,20 @@ class LocationAdminTest extends TestCase
         $fixture = $this->getFixture('user');
 
         return User::findOne($fixture->data[$key]['id']);
+    }
+}
+
+class UntaggedLocation extends Location
+{
+    #[Override]
+    public function getTypes(): array
+    {
+        return [
+            LocationType::make(self::TYPE_DEFAULT)
+                ->name('Default')
+                ->allowTags(false),
+            LocationType::make(TestLocation::TYPE_TEST)
+                ->name('Test'),
+        ];
     }
 }

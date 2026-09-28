@@ -45,7 +45,7 @@ class LocationSubmenu extends Submenu
         return NavItem::make()
             ->label(Yii::t('location', 'COMMON_TAGS'))
             ->url(['location-tag/index', 'location' => $this->model->id])
-            ->visible(static::getModule()->enableTags)
+            ->visible($this->model->allowsTags())
             ->badge($this->model->tag_count ?: null)
             ->addRoute('admin/location/location-tag/')
             ->icon('tags');

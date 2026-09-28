@@ -103,8 +103,10 @@ class LocationTagController extends Controller
 
     public function actionDelete(int $location, int $tag): Response|string
     {
+        $location = $this->findLocation($location);
+
         $locationTag = LocationTag::findOne([
-            'location_id' => $location,
+            'location_id' => $location->id,
             'tag_id' => $tag,
         ]);
 
@@ -117,5 +119,10 @@ class LocationTagController extends Controller
         $this->errorOrSuccess($locationTag, Yii::t('location', 'LOCATION_TAG_SUCCESS_REMOVED'));
 
         return $this->redirect(['index'] + $this->request->getQueryParams());
+    }
+
+    protected function isLocationAllowed(Location $location): bool
+    {
+        return $location->allowsTags();
     }
 }

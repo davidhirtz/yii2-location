@@ -283,9 +283,15 @@ class Location extends ActiveRecord implements
     }
 
     #[Override]
-    public function getType(): ?LocationType
+    public static function findType(?int $type): ?LocationType
     {
         /** @var LocationType|null */
+        return $type === null ? null : (static::getTypeDefinitions()[$type] ?? null);
+    }
+
+    #[Override]
+    public function getType(): ?LocationType
+    {
         return static::findType(static::normalizeTypeValue($this->type ?? null));
     }
 
