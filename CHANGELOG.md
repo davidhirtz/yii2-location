@@ -1,4 +1,4 @@
-## Unreleased
+## 3.1.0 (September 29, 2026)
 
 - Requires `davidhirtz/yii2-skeleton` `^3.6`, whose widget options are protected
 - Changed the admin to respect `LocationType::allowTags()`: `LocationGridView`, `LocationSubmenu` and `LocationTagController` (`LocationTrait::isLocationAllowed()`)
