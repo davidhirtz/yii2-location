@@ -8,15 +8,52 @@ use Hirtz\Location\Controllers\ApiController;
 use Hirtz\Location\Models\Collections\TagCollection;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Tag;
+use Hirtz\Skeleton\Base\ConfigBootstrapInterface;
 use Hirtz\Skeleton\Models\User;
 use Hirtz\Skeleton\Modules\Admin\Controllers\DashboardController;
 use Hirtz\Skeleton\Web\Application;
+use Override;
 use Yii;
-use yii\base\BootstrapInterface;
 use yii\i18n\PhpMessageSource;
 
-class Bootstrap implements BootstrapInterface
+class Bootstrap implements ConfigBootstrapInterface
 {
+    #[Override]
+    public static function getDefaultConfig(): array
+    {
+        return [
+            'components' => [
+                'i18n' => [
+                    'translations' => [
+                        'location' => [
+                            'class' => PhpMessageSource::class,
+                            'basePath' => '@location/../messages',
+                            'forceTranslation' => true,
+                        ],
+                    ],
+                ],
+                'search' => [
+                    'models' => [
+                        Location::class,
+                        Tag::class,
+                    ],
+                ],
+            ],
+            'modules' => [
+                'admin' => [
+                    'modules' => [
+                        'location' => [
+                            'class' => Modules\Admin\Module::class,
+                        ],
+                    ],
+                ],
+                'location' => [
+                    'class' => Module::class,
+                ],
+            ],
+        ];
+    }
+
     /**
      * @param Application<User> $app
      */
@@ -24,32 +61,6 @@ class Bootstrap implements BootstrapInterface
     {
         Yii::setAlias('@location', __DIR__);
         TagCollection::reset();
-
-        $app->getI18n()->translations['location'] ??= [
-            'class' => PhpMessageSource::class,
-            'basePath' => '@location/../messages',
-                    'forceTranslation' => true,
-];
-
-        $app->extendComponent('search', [
-            'models' => [
-                Location::class,
-                Tag::class,
-            ],
-        ]);
-
-        $app->extendModules([
-            'admin' => [
-                'modules' => [
-                    'location' => [
-                        'class' => Modules\Admin\Module::class,
-                    ],
-                ],
-            ],
-            'location' => [
-                'class' => Module::class,
-            ],
-        ]);
 
         /**
          * @see Module::$enableApiRoutes
