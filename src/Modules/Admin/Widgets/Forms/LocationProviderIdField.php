@@ -14,7 +14,7 @@ class LocationProviderIdField extends AutocompleteField
 {
     use ModuleTrait;
 
-    public ?string $property = 'provider_id';
+    protected ?string $property = 'provider_id';
 
     #[Override]
     protected function configure(): void
