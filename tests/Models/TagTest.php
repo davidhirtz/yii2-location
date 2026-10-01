@@ -29,6 +29,19 @@ class TagTest extends TestCase
         self::assertSame(['name' => 'Serialized'], $tag->toArray());
     }
 
+    public function testTheAdminRouteFollowsTheTagsFlag(): void
+    {
+        $tag = Tag::create();
+        $tag->name = 'Routed';
+        self::assertTrue($tag->save());
+
+        self::getModule()->enableTags = false;
+        self::assertFalse($tag->getAdminRoute());
+
+        self::getModule()->enableTags = true;
+        self::assertSame(['/admin/location/tag/update', 'id' => $tag->id], $tag->getAdminRoute());
+    }
+
     public function testCreateLinkAndDelete(): void
     {
         $tag = Tag::create();

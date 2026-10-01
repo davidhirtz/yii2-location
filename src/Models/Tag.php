@@ -224,7 +224,7 @@ class Tag extends ActiveRecord implements
 
     public function getAdminRoute(): array|false
     {
-        return $this->id ? ['/admin/location/tag/update', 'id' => $this->id] : false;
+        return $this->id && static::getModule()->enableTags ? ['/admin/location/tag/update', 'id' => $this->id] : false;
     }
 
     public function getAdminIndexBreadcrumb(): Breadcrumb
