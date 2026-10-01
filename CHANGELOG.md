@@ -1,3 +1,9 @@
+## Unreleased
+
+- Changed `admin/location/location-tag/create` to accept POST only
+- Fixed the location API page cache ignoring `?type=`
+- Fixed the tag admin answering, and `Tag::getAdminRoute()` naming it, while `enableTags` is off
+
 ## 3.3.0 (September 30, 2026)
 
 - Requires `davidhirtz/yii2-skeleton` `^3.8`: the bundle's defaults are `Bootstrap::getDefaultConfig()`, merged under the application's configuration, so a project's own configuration wins without the former "unless already set" guards
