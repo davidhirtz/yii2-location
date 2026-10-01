@@ -46,6 +46,7 @@ class LocationTagController extends Controller
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
+                    'create' => ['post'],
                     'delete' => ['post'],
                 ],
             ],

@@ -325,6 +325,17 @@ class LocationAdminTest extends TestCase
         self::assertSame(0, Tag::findOne($tag->id)->location_count);
     }
 
+    public function testAddingATagRefusesAGetRequest(): void
+    {
+        $this->login();
+        self::getModule()->enableTags = true;
+
+        $tag = $this->createTag('Alpha');
+
+        $this->expectException(MethodNotAllowedHttpException::class);
+        Yii::$app->runAction('admin/location/location-tag/create', ['location' => 1, 'tag' => $tag->id]);
+    }
+
     public function testRemovingATagThatIsNotThereIsNotFound(): void
     {
         $this->login();
