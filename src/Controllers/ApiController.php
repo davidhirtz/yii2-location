@@ -41,16 +41,15 @@ class ApiController extends Controller
                 'disableForUsers' => false,
                 'only' => [],
                 'params' => [
-                    'action',
                     'format',
                     'tag',
+                    'type',
                 ],
             ];
         }
 
         return $behaviors;
     }
-
 
     #[Override]
     public function init(): void
