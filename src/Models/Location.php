@@ -42,7 +42,7 @@ use yii\db\ActiveQuery;
 
 /**
  * @property int $id
- * @property string $name
+ * @property string|null $name
  * @property string|null $formatted_address
  * @property float|string|null $lat
  * @property float|string|null $lng
