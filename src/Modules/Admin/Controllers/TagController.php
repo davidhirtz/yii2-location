@@ -16,6 +16,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\web\ServerErrorHttpException;
 
@@ -52,6 +53,16 @@ class TagController extends Controller
                 ],
             ],
         ];
+    }
+
+    #[Override]
+    public function beforeAction($action): bool
+    {
+        if (!self::getModule()->enableTags) {
+            throw new NotFoundHttpException();
+        }
+
+        return parent::beforeAction($action);
     }
 
     public function actionIndex(?int $status = null, ?int $type = null, ?string $q = null): Response|string

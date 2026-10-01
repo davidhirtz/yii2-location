@@ -199,6 +199,7 @@ class LocationAdminTest extends TestCase
     public function testTheTagIndexListsTheTags(): void
     {
         $this->login();
+        self::getModule()->enableTags = true;
         $this->createTag('Alpha');
         $this->createTag('Beta');
 
@@ -218,6 +219,7 @@ class LocationAdminTest extends TestCase
     public function testATagIsCreatedUpdatedAndDeleted(): void
     {
         $this->login();
+        self::getModule()->enableTags = true;
 
         $response = $this->post('admin/location/tag/create', [], [
             'Tag' => [
@@ -252,6 +254,7 @@ class LocationAdminTest extends TestCase
     public function testTwoTagsCannotShareAName(): void
     {
         $this->login();
+        self::getModule()->enableTags = true;
         $this->createTag('Alpha');
 
         $html = $this->post('admin/location/tag/create', [], [
@@ -268,6 +271,7 @@ class LocationAdminTest extends TestCase
 
     public function testTheTagIndexIsForbiddenWithoutThePermission(): void
     {
+        self::getModule()->enableTags = true;
         $this->getWebUser()->setIdentity($this->getUserFromFixture('admin'));
 
         $this->expectException(ForbiddenHttpException::class);
@@ -284,6 +288,15 @@ class LocationAdminTest extends TestCase
 
         $this->expectException(NotFoundHttpException::class);
         Yii::$app->runAction('admin/location/location-tag/index', ['location' => 1]);
+    }
+
+    public function testTheTagControllerIsNotFoundWhileTagsAreOff(): void
+    {
+        $this->login();
+        self::getModule()->enableTags = false;
+
+        $this->expectException(NotFoundHttpException::class);
+        Yii::$app->runAction('admin/location/tag/index');
     }
 
     public function testATagIsAddedToALocationAndRemovedAgain(): void
@@ -339,6 +352,7 @@ class LocationAdminTest extends TestCase
     public function testTheTagUpdatePageRendersTheFormAndItsActions(): void
     {
         $this->login();
+        self::getModule()->enableTags = true;
         $tag = $this->createTag('Alpha');
 
         $html = Yii::$app->runAction('admin/location/tag/update', ['id' => $tag->id]);
