@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Tests\Models;
 
+use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Location\Test\Fixtures\LocationFixture;
@@ -56,7 +57,7 @@ class LocationSearchTest extends TestCase
         self::assertSame(1, $location->update());
 
         $documents = Search::find()
-            ->where(['model_class' => $location::class, 'model_id' => $location->id])
+            ->where(['model_class' => Location::class, 'model_id' => $location->id])
             ->all();
 
         self::assertCount($this->getLanguageCount(), $documents);
