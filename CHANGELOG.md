@@ -1,4 +1,4 @@
-## Unreleased
+## 3.4.0 (October 2, 2026)
 
 - Changed `admin/location/location-tag/create` to accept POST only
 - Fixed the location API page cache ignoring `?type=`
