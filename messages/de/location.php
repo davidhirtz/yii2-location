@@ -5,7 +5,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'AUTH_LOCATION_DESCRIPTION' => 'Standorte verwalten',
+    'AUTH_LOCATION_DESCRIPTION' => 'Orte verwalten',
     'AUTH_TAG_DESCRIPTION' => 'Standort-Tags verwalten',
     'COMMON_LOCATION' => 'Ort',
     'COMMON_LOCATIONS' => 'Orte',
