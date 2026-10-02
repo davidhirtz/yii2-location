@@ -33,6 +33,7 @@ return [
     'LOCATION_SUCCESS_CREATED' => 'Le lieu a été créé.',
     'LOCATION_SUCCESS_DELETED' => 'Le lieu a été supprimé.',
     'LOCATION_SUCCESS_UPDATED' => 'Le lieu a été mis à jour.',
+    'LOCATION_TAGS' => 'Étiquettes',
     'LOCATION_TAG_ADDED' => 'Ajoutée',
     'LOCATION_TAG_COUNT_LABEL' => 'Étiquettes',
     'LOCATION_TAG_LOCATION_ID_LABEL' => 'Lieu',

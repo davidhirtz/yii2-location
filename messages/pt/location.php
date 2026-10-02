@@ -33,6 +33,7 @@ return [
     'LOCATION_SUCCESS_CREATED' => 'O local foi criado.',
     'LOCATION_SUCCESS_DELETED' => 'O local foi eliminado.',
     'LOCATION_SUCCESS_UPDATED' => 'O local foi atualizado.',
+    'LOCATION_TAGS' => 'Etiquetas',
     'LOCATION_TAG_ADDED' => 'Adicionada',
     'LOCATION_TAG_COUNT_LABEL' => 'Etiquetas',
     'LOCATION_TAG_LOCATION_ID_LABEL' => 'Local',

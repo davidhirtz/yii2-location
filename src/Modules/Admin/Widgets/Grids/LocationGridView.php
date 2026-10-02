@@ -93,7 +93,7 @@ class LocationGridView extends GridView
     protected function getTagDropdown(): ?FilterDropdown
     {
         return FilterDropdown::make()
-            ->label(Yii::t('skeleton', 'LOCATION_TAGS'))
+            ->label(Yii::t('location', 'LOCATION_TAGS'))
             ->items($this->getTagDropdownItems())
             ->visible($this->showTagDropdown)
             ->paramName('tag');
