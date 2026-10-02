@@ -70,7 +70,7 @@ class LocationSearchTest extends TestCase
         $tag->name = 'Restaurant';
 
         self::assertFalse($tag->isSearchable());
-        self::assertTrue($tag->save());
+        self::assertTrue($tag->save(), print_r($tag->getErrors(), true));
         self::assertEmpty($this->findTagDocuments($tag));
 
         self::getModule()->enableTags = true;

@@ -19,7 +19,7 @@ final class TagCollectionTest extends TestCase
         $tag = Tag::create();
         $tag->name = 'Collected';
 
-        self::assertTrue($tag->save());
+        self::assertTrue($tag->save(), print_r($tag->getErrors(), true));
 
         $loaded = TagCollection::getAll()[$tag->id] ?? null;
         self::assertNotNull($loaded);

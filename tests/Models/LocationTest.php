@@ -19,7 +19,7 @@ class LocationTest extends TestCase
         $location->status = TestLocation::STATUS_ENABLED;
         $location->type = TestLocation::TYPE_TEST;
 
-        self::assertTrue($location->save());
+        self::assertTrue($location->save(), print_r($location->getErrors(), true));
 
         $location->name = 'Test Location';
         $location->formatted_address = '123 Main St, New York, NY 10001, US';
@@ -49,7 +49,7 @@ class LocationTest extends TestCase
         $location->lat = 0;
         $location->lng = -74.006;
 
-        self::assertTrue($location->save());
+        self::assertTrue($location->save(), print_r($location->getErrors(), true));
         self::assertSame('0.00000000', $location->lat);
 
         $location = Location::findOne($location->id);
@@ -57,7 +57,7 @@ class LocationTest extends TestCase
 
         $location->load(['lat' => '0', 'lng' => '-74.006'], '');
 
-        self::assertTrue($location->validate());
+        self::assertTrue($location->validate(), print_r($location->getErrors(), true));
         self::assertSame([], $location->getDirtyAttributes());
     }
 

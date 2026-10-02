@@ -25,7 +25,7 @@ class TagTest extends TestCase
         $tag = Tag::create();
         $tag->name = 'Serialized';
 
-        self::assertTrue($tag->save());
+        self::assertTrue($tag->save(), print_r($tag->getErrors(), true));
         self::assertSame(['name' => 'Serialized'], $tag->toArray());
     }
 
@@ -33,7 +33,7 @@ class TagTest extends TestCase
     {
         $tag = Tag::create();
         $tag->name = 'Routed';
-        self::assertTrue($tag->save());
+        self::assertTrue($tag->save(), print_r($tag->getErrors(), true));
 
         self::getModule()->enableTags = false;
         self::assertFalse($tag->getAdminRoute());
@@ -47,7 +47,7 @@ class TagTest extends TestCase
         $tag = Tag::create();
         $tag->name = 'Test Tag';
 
-        self::assertTrue($tag->save());
+        self::assertTrue($tag->save(), print_r($tag->getErrors(), true));
 
         $location = $this->getLocationFromFixture('location-1');
 
@@ -59,7 +59,7 @@ class TagTest extends TestCase
 
         self::getModule()->enableTags = true;
 
-        self::assertTrue($link->save());
+        self::assertTrue($link->save(), print_r($link->getErrors(), true));
         self::assertSame($location->id, $link->location_id);
         self::assertSame(1, $tag->location_count);
         self::assertSame(1, $location->tag_count);
@@ -88,7 +88,7 @@ class TagTest extends TestCase
 
         $tag = Tag::create();
         $tag->name = 'Counted';
-        self::assertTrue($tag->save());
+        self::assertTrue($tag->save(), print_r($tag->getErrors(), true));
 
         $location = $this->getLocationFromFixture('location-1');
 
