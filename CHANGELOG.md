@@ -1,4 +1,4 @@
-## Unreleased
+## 3.5.0 (October 3, 2026)
 
 - Added setters for `LocationGridView`'s `show*` options and `LocationNavItem::showTags()`, so the container can
   configure them
