@@ -33,6 +33,12 @@ class LocationNavItem extends NavItem
         parent::__construct($config);
     }
 
+    public function showTags(bool $showTags = true): static
+    {
+        $this->showTags = $showTags;
+        return $this;
+    }
+
     #[Override]
     protected function configure(): void
     {

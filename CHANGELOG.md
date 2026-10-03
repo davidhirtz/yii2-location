@@ -1,3 +1,8 @@
+## Unreleased
+
+- Added setters for `LocationGridView`'s `show*` options and `LocationNavItem::showTags()`, so the container can
+  configure them
+
 ## 3.4.0 (October 2, 2026)
 
 - Changed `admin/location/location-tag/create` to accept POST only

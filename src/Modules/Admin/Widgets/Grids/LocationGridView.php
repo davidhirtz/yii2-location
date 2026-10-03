@@ -41,6 +41,24 @@ class LocationGridView extends GridView
     protected bool $showTags = true;
     protected bool $showTypeDropdown = true;
 
+    public function showTagDropdown(bool $showTagDropdown = true): static
+    {
+        $this->showTagDropdown = $showTagDropdown;
+        return $this;
+    }
+
+    public function showTags(bool $showTags = true): static
+    {
+        $this->showTags = $showTags;
+        return $this;
+    }
+
+    public function showTypeDropdown(bool $showTypeDropdown = true): static
+    {
+        $this->showTypeDropdown = $showTypeDropdown;
+        return $this;
+    }
+
     #[Override]
     protected function configure(): void
     {
