@@ -74,8 +74,8 @@ class LocationTagGridView extends TagGridView
                 ->primary()
                 ->icon($tag->locationTag ? 'ban' : 'star')
                 ->post([
-                    ...Application::current()->getRequest()->getQueryParams(),
                     $tag->locationTag ? 'delete' : 'create',
+                    ...Application::current()->getRequest()->getQueryParams(),
                     'location' => $this->provider->location->id,
                     'tag' => $tag->id,
                 ]),

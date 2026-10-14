@@ -325,6 +325,21 @@ class LocationAdminTest extends TestCase
         self::assertSame(0, Tag::findOne($tag->id)->location_count);
     }
 
+    public function testANumericQueryKeyDoesNotSetTheRouteOfTheTagButtons(): void
+    {
+        $this->login();
+        self::getModule()->enableTags = true;
+        $this->createTag('Alpha');
+
+        $params = ['location' => 1, 0 => '/admin/user/delete', 'id' => 999];
+        $this->getWebRequest()->setQueryParams($params);
+
+        $html = (string)Yii::$app->runAction('admin/location/location-tag/index', $params);
+
+        self::assertStringContainsString('location-tag/create', $html);
+        self::assertStringNotContainsString('user/delete', $html);
+    }
+
     public function testAddingATagRefusesAGetRequest(): void
     {
         $this->login();
