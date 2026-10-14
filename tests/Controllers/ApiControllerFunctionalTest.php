@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Tests\Controllers;
 
+use Hirtz\Location\Models\Collections\TagCollection;
+use Hirtz\Location\Models\Location;
+use Hirtz\Location\Models\LocationTag;
+use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Test\Fixtures\Traits\LocationFixtureTrait;
 use Hirtz\Location\Test\TestCase;
 use Hirtz\Skeleton\Test\Traits\FunctionalTestTrait;
@@ -40,6 +44,34 @@ class ApiControllerFunctionalTest extends TestCase
 
         self::assertCount(2, $data);
         self::assertArrayHasKey('type', $data[0]);
+    }
+
+    public function testAnUnpublishedTagFiltersNothing(): void
+    {
+        Dependency::resetReusableData();
+        Location::getModule()->enableTags = true;
+
+        $tag = Tag::create();
+        $tag->loadDefaultValues();
+        $tag->name = 'Hidden';
+        $tag->status = Tag::STATUS_DISABLED;
+        self::assertTrue($tag->insert(), print_r($tag->getErrors(), true));
+
+        $locationTag = LocationTag::create();
+        $locationTag->populateLocationRelation(Location::findOne(1));
+        $locationTag->populateTagRelation($tag);
+        self::assertTrue($locationTag->insert(), print_r($locationTag->getErrors(), true));
+
+        TagCollection::invalidateCache();
+
+        $this->open("api/location/index.json?tag=$tag->id");
+        self::assertSame([], $this->getJsonResponseData());
+
+        $tag->updateAttributes(['status' => Tag::STATUS_ENABLED]);
+        TagCollection::invalidateCache();
+
+        $this->open("api/location/index.json?tag=$tag->id&nocache=1");
+        self::assertCount(1, $this->getJsonResponseData());
     }
 
     public function testIndexCacheVariesOnType(): void

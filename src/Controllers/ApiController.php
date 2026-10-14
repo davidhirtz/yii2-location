@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Controllers;
 
+use Hirtz\Location\Models\Collections\TagCollection;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Queries\LocationQuery;
 use Hirtz\Location\Models\Types\LocationType;
@@ -92,6 +93,11 @@ class ApiController extends Controller
             ->andFilterWhere(['type' => $type]);
 
         if ($tag && static::getModule()->enableTags) {
+            // An unpublished tag must not tell which public locations it groups
+            if (!isset(TagCollection::getAll()[$tag])) {
+                return [];
+            }
+
             $query->andWhereTagId($tag);
         }
 
