@@ -9,6 +9,7 @@ use Hirtz\Location\Models\Collections\TagCollection;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Skeleton\Base\ConfigBootstrapInterface;
+use Hirtz\Skeleton\Mcp\Resource;
 use Hirtz\Skeleton\Models\User;
 use Hirtz\Skeleton\Modules\Admin\Controllers\DashboardController;
 use Hirtz\Skeleton\Web\Application;
@@ -30,6 +31,12 @@ class Bootstrap implements ConfigBootstrapInterface
                             'basePath' => '@location/../messages',
                             'forceTranslation' => true,
                         ],
+                    ],
+                ],
+                'mcp' => [
+                    'resources' => [
+                        static fn (): Resource => Resource::make('location', Location::class),
+                        static fn (): Resource => Resource::make('tag', Tag::class),
                     ],
                 ],
                 'search' => [
