@@ -1,3 +1,8 @@
+## Unreleased
+
+- Changed the `davidhirtz/yii2-skeleton` requirement to `^3.19` (MCP resources)
+- Added the MCP resources `location` and `tag`
+
 ## 3.5.0 (October 3, 2026)
 
 - Added setters for `LocationGridView`'s `show*` options and `LocationNavItem::showTags()`, so the container can

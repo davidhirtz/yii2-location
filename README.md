@@ -76,6 +76,10 @@ code asks. Custom attribute values are stored in the `custom_attributes` column 
 
 None of its own. The skeleton's `search/rebuild` indexes locations and tags.
 
+## MCP
+
+The bundle registers the [MCP](https://github.com/davidhirtz/yii2-skeleton#mcp-server) resources `location` and `tag`.
+
 ## API
 
 With `enableApiRoutes` on, `Controllers\ApiController` answers:
