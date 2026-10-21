@@ -1,3 +1,7 @@
+## Unreleased
+
+- Fixed the location delete button on the tags tab posting to the location tag controller
+
 ## 3.6.0 (October 18, 2026)
 
 - Changed the `davidhirtz/yii2-skeleton` requirement to `^3.19` (MCP resources)

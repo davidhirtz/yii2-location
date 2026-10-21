@@ -340,6 +340,20 @@ class LocationAdminTest extends TestCase
         self::assertStringNotContainsString('user/delete', $html);
     }
 
+    public function testTheTagTabDeletesTheLocationThroughTheLocationController(): void
+    {
+        $this->login();
+        self::getModule()->enableTags = true;
+
+        $params = ['location' => 1];
+        $this->getWebRequest()->setQueryParams($params);
+
+        $html = (string)Yii::$app->runAction('admin/location/location-tag/index', $params);
+
+        self::assertStringContainsString('hx-post="/admin/location/location/delete?id=1"', $html);
+        self::assertStringNotContainsString('location-tag/delete?location=1', $html);
+    }
+
     public function testAddingATagRefusesAGetRequest(): void
     {
         $this->login();
