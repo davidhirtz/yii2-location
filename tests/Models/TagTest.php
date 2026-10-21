@@ -10,6 +10,8 @@ use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Location\Test\Fixtures\Traits\LocationFixtureTrait;
 use Hirtz\Location\Test\TestCase;
+use Hirtz\Skeleton\Models\Actions\RestoreTrail;
+use Hirtz\Skeleton\Models\Trail;
 
 class TagTest extends TestCase
 {
@@ -40,6 +42,28 @@ class TagTest extends TestCase
 
         self::getModule()->enableTags = true;
         self::assertSame(['/admin/location/tag/update', 'id' => $tag->id], $tag->getAdminRoute());
+    }
+
+    public function testATagIsNotRestoredWhileTagsAreOff(): void
+    {
+        self::getModule()->enableTags = true;
+
+        $tag = Tag::create();
+        $tag->name = 'Original';
+        self::assertTrue($tag->save(), print_r($tag->getErrors(), true));
+
+        $tag->name = 'Renamed';
+        self::assertTrue($tag->save(), print_r($tag->getErrors(), true));
+
+        $trail = Trail::find()
+            ->where(['model_class' => Tag::class, 'model_id' => (string)$tag->id, 'type' => Trail::TYPE_UPDATE])
+            ->one();
+
+        self::assertInstanceOf(Trail::class, $trail);
+        self::assertTrue(RestoreTrail::isRestorable($trail));
+
+        self::getModule()->enableTags = false;
+        self::assertFalse(RestoreTrail::isRestorable($trail));
     }
 
     public function testCreateLinkAndDelete(): void
