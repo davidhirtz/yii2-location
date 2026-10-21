@@ -389,6 +389,48 @@ class LocationAdminTest extends TestCase
         self::assertStringContainsString('Alpha', $html);
     }
 
+    public function testTheLocationTagIndexLinksToTheTagsOnlyWithTheirPermission(): void
+    {
+        self::getModule()->enableTags = true;
+        $tag = $this->createTag('Alpha');
+        $link = 'href="/admin/location/tag/update?id=' . $tag->id . '"';
+
+        $this->login(Location::AUTH_LOCATION);
+        $html = Yii::$app->runAction('admin/location/location-tag/index', ['location' => 1]);
+
+        self::assertIsString($html);
+        self::assertStringNotContainsString($link, $html);
+
+        $this->login(Tag::AUTH_TAG);
+        $html = Yii::$app->runAction('admin/location/location-tag/index', ['location' => 1]);
+
+        self::assertIsString($html);
+        self::assertStringContainsString($link, $html);
+    }
+
+    public function testTheTagPagesLinkToTheLocationsOnlyWithTheirPermission(): void
+    {
+        self::getModule()->enableTags = true;
+        $tag = $this->createTag('Alpha');
+        $tag->updateAttributes(['location_count' => 1]);
+
+        $this->login(Tag::AUTH_TAG);
+
+        foreach (['index' => [], 'update' => ['id' => $tag->id]] as $action => $params) {
+            $html = Yii::$app->runAction("admin/location/tag/$action", $params);
+
+            self::assertIsString($html);
+            self::assertStringNotContainsString('href="/admin/location/location', $html, $action);
+            self::assertStringNotContainsString('href="/admin/location/"', $html, $action);
+        }
+
+        $this->login(Location::AUTH_LOCATION);
+        $html = Yii::$app->runAction('admin/location/tag/index');
+
+        self::assertIsString($html);
+        self::assertStringContainsString('href="/admin/location/location/index?tag=' . $tag->id . '"', $html);
+    }
+
     public function testTheTagUpdatePageRendersTheFormAndItsActions(): void
     {
         $this->login();
@@ -554,12 +596,12 @@ class LocationAdminTest extends TestCase
         });
     }
 
-    private function login(): User
+    private function login(string ...$names): User
     {
         $user = $this->getUserFromFixture('admin');
         $auth = Yii::$app->getAuthManager();
 
-        foreach ([Location::AUTH_LOCATION, Tag::AUTH_TAG] as $name) {
+        foreach ($names ?: [Location::AUTH_LOCATION, Tag::AUTH_TAG] as $name) {
             $auth->assign($auth->getPermission($name), $user->id);
         }
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Widgets\Navs;
 
+use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Data\TagActiveDataProvider;
 use Hirtz\Skeleton\Widgets\Buttons\CreateButton;
@@ -61,6 +62,10 @@ class TagHeader extends ModelHeader
 
     protected function addLocationBreadcrumb(): void
     {
+        if (!$this->webuser->can(Location::AUTH_LOCATION)) {
+            return;
+        }
+
         $this->addBreadcrumb(Yii::t('location', 'COMMON_LOCATIONS'), ['/admin/location/']);
     }
 }

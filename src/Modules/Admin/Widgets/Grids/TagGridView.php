@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Location\Modules\Admin\Widgets\Grids;
 
+use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\Admin\Data\TagActiveDataProvider;
 use Hirtz\Location\Modules\ModuleTrait;
@@ -119,7 +120,7 @@ class TagGridView extends GridView
     {
         return BadgeColumn::make()
             ->property('location_count')
-            ->url($this->isPicker()
+            ->url($this->isPicker() || !$this->webuser->can(Location::AUTH_LOCATION)
                 ? null
                 : fn (Tag $tag): array => ['/admin/location/location/index', 'tag' => $tag->id]);
     }

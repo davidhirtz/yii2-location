@@ -92,6 +92,7 @@ class LocationTagGridView extends TagGridView
             ->icon('external-link-alt')
             ->tooltip(Yii::t('location', 'COMMON_OPEN_ADMIN'))
             ->url($tag->getAdminRoute() ?: null)
-            ->target('_blank');
+            ->target('_blank')
+            ->roles([Tag::AUTH_TAG]);
     }
 }
