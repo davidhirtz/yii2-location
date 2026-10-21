@@ -1,3 +1,7 @@
+## Unreleased
+
+- Changed `LocationGridView::getTagButtons()` to `getTagBadges()`, rendering the tags as badges
+
 ## 3.6.1 (October 21, 2026)
 
 - Fixed the location delete button on the tags tab posting to the location tag controller

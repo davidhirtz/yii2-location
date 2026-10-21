@@ -325,6 +325,19 @@ class LocationAdminTest extends TestCase
         self::assertSame(0, Tag::findOne($tag->id)->location_count);
     }
 
+    public function testTheLocationGridLinksTheTagsAsBadgesFilteringByTag(): void
+    {
+        $this->login();
+        self::getModule()->enableTags = true;
+
+        $tag = $this->createTag('Alpha');
+        $this->post('admin/location/location-tag/create', ['location' => 1, 'tag' => $tag->id]);
+
+        $html = (string)Yii::$app->runAction('admin/location/location/index');
+
+        self::assertStringContainsString('<div class="badge-list"><a class="badge" href="/admin/location/location/index?tag=' . $tag->id . '">Alpha</a></div>', $html);
+    }
+
     public function testANumericQueryKeyDoesNotSetTheRouteOfTheTagButtons(): void
     {
         $this->login();

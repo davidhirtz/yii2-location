@@ -11,8 +11,6 @@ use Hirtz\Location\Modules\Admin\Data\LocationActiveDataProvider;
 use Hirtz\Location\Modules\ModuleTrait;
 use Hirtz\Skeleton\Html\A;
 use Hirtz\Skeleton\Html\Div;
-use Hirtz\Skeleton\Widgets\Buttons\Button;
-use Hirtz\Skeleton\Widgets\Buttons\ButtonGroup;
 use Hirtz\Skeleton\Widgets\Grids\Columns\BadgeColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\ButtonColumn;
 use Hirtz\Skeleton\Widgets\Grids\Columns\Buttons\ViewGridButton;
@@ -174,7 +172,7 @@ class LocationGridView extends GridView
         }
 
         if ($this->showTags && $location->allowsTags()) {
-            $content .= $this->getTagButtons($location);
+            $content .= $this->getTagBadges($location);
         }
 
         return $content;
@@ -223,18 +221,17 @@ class LocationGridView extends GridView
         ];
     }
 
-    protected function getTagButtons(Location $location): ?Stringable
+    protected function getTagBadges(Location $location): ?Stringable
     {
         $tags = [];
 
         foreach (TagCollection::getByLocation($location) as $tag) {
-            $tags[] = Button::make()
-                ->secondary()
+            $tags[] = A::make()
+                ->class('badge')
                 ->text($tag->getI18nAttribute('name'))
-                ->current(['tag' => $tag->id, 'page' => null])
-                ->addClass('btn-sm');
+                ->current(['tag' => $tag->id, 'page' => null]);
         }
 
-        return $tags ? ButtonGroup::make()->content(...$tags) : null;
+        return $tags ? Div::make()->class('badge-list')->content(...$tags) : null;
     }
 }
