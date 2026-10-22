@@ -7,6 +7,7 @@ namespace Hirtz\Location\Models\Collections;
 use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\ModuleTrait;
+use Hirtz\Skeleton\Web\Application;
 use Yii;
 use Hirtz\Skeleton\Caching\TagDependency;
 
@@ -35,7 +36,12 @@ class TagCollection
                 : static::findAll();
         }
 
-        return static::$tags;
+        $status = Yii::$app instanceof Application ? Yii::$app->getVisibleStatus() : null;
+
+        // The website lists published ones on every page, not only those the cms controller serves; the admin all.
+        return $status !== null
+            ? array_filter(static::$tags, fn (Tag $tag): bool => $tag->status >= $status)
+            : static::$tags;
     }
 
     /**
