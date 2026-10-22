@@ -19,7 +19,6 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
 use yii\web\Response;
-use yii\web\ServerErrorHttpException;
 
 /**
  * @extends Controller<Module>
@@ -119,11 +118,11 @@ class LocationController extends Controller
 
         if ($location->delete()) {
             $this->success(Yii::t('location', 'LOCATION_SUCCESS_DELETED'));
-            return $this->redirect(['index']);
+        } elseif ($errors = $location->getFirstErrors()) {
+            $this->error($errors);
         }
 
-        $errors = $location->getFirstErrors();
-        throw new ServerErrorHttpException(reset($errors) ?: null);
+        return $this->redirect(['index']);
     }
 
     public function actionAutocomplete(?string $q = null): string

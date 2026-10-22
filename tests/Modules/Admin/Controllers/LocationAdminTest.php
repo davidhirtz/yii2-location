@@ -19,6 +19,9 @@ use Hirtz\Skeleton\Test\Fixtures\UserFixture;
 use Hirtz\Skeleton\Widgets\Forms\Fields\AutocompleteField;
 use Override;
 use Yii;
+use yii\base\Event;
+use yii\base\Model;
+use yii\base\ModelEvent;
 use yii\web\ForbiddenHttpException;
 use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
@@ -186,6 +189,54 @@ class LocationAdminTest extends TestCase
 
         self::assertInstanceOf(Response::class, $response);
         self::assertNull(Location::findOne(1));
+    }
+
+    public function testARefusedLocationDeleteFlashesTheReason(): void
+    {
+        $this->login();
+
+        $handler = function (ModelEvent $event): void {
+            self::assertInstanceOf(Model::class, $event->sender);
+            $event->sender->addError('id', 'Still in use.');
+            $event->isValid = false;
+        };
+
+        Event::on(Location::class, Location::EVENT_BEFORE_DELETE, $handler);
+
+        try {
+            $response = $this->post('admin/location/location/delete', ['id' => 1]);
+        } finally {
+            Event::off(Location::class, Location::EVENT_BEFORE_DELETE, $handler);
+        }
+
+        self::assertInstanceOf(Response::class, $response);
+        self::assertNotNull(Location::findOne(1));
+        self::assertSame([['id' => 'Still in use.']], $this->getWebSession()->getFlash('danger'));
+    }
+
+    public function testARefusedTagDeleteFlashesTheReason(): void
+    {
+        $this->login();
+        self::getModule()->enableTags = true;
+        $tag = $this->createTag('Kept');
+
+        $handler = function (ModelEvent $event): void {
+            self::assertInstanceOf(Model::class, $event->sender);
+            $event->sender->addError('id', 'Still in use.');
+            $event->isValid = false;
+        };
+
+        Event::on(Tag::class, Tag::EVENT_BEFORE_DELETE, $handler);
+
+        try {
+            $response = $this->post('admin/location/tag/delete', ['id' => $tag->id]);
+        } finally {
+            Event::off(Tag::class, Tag::EVENT_BEFORE_DELETE, $handler);
+        }
+
+        self::assertInstanceOf(Response::class, $response);
+        self::assertNotNull(Tag::findOne($tag->id));
+        self::assertSame([['id' => 'Still in use.']], $this->getWebSession()->getFlash('danger'));
     }
 
     public function testTheLocationDeleteRefusesAGetRequest(): void

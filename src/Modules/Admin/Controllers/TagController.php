@@ -18,7 +18,6 @@ use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
-use yii\web\ServerErrorHttpException;
 
 /**
  * @extends Controller<Module>
@@ -125,10 +124,10 @@ class TagController extends Controller
 
         if ($tag->delete()) {
             $this->success(Yii::t('location', 'TAG_SUCCESS_DELETED'));
-            return $this->redirect(['index']);
+        } elseif ($errors = $tag->getFirstErrors()) {
+            $this->error($errors);
         }
 
-        $errors = $tag->getFirstErrors();
-        throw new ServerErrorHttpException(reset($errors) ?: null);
+        return $this->redirect(['index']);
     }
 }
