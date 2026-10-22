@@ -8,7 +8,7 @@ use Hirtz\Location\Models\Location;
 use Hirtz\Location\Models\Tag;
 use Hirtz\Location\Modules\ModuleTrait;
 use Yii;
-use yii\caching\TagDependency;
+use Hirtz\Skeleton\Caching\TagDependency;
 
 class TagCollection
 {
