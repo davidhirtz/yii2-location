@@ -103,9 +103,15 @@ class TagController extends Controller
     {
         $tag = $this->findTag($id);
 
-        if ($tag->load($this->request->post()) && !$this->request->isFormReload() && $tag->update()) {
-            $this->success(Yii::t('location', 'TAG_SUCCESS_UPDATED'));
-            return $this->refresh();
+        if ($tag->load($this->request->post()) && !$this->request->isFormReload()) {
+            if ($tag->update()) {
+                $this->success(Yii::t('location', 'TAG_SUCCESS_UPDATED'));
+            }
+
+            // An unchanged save ends like a changed one rather than redrawing the posted form
+            if (!$tag->hasErrors()) {
+                return $this->refresh();
+            }
         }
 
         return $this->render('update', [

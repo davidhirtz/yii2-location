@@ -97,9 +97,15 @@ class LocationController extends Controller
     {
         $location = $this->findLocation($id);
 
-        if ($location->load($this->request->post()) && !$this->request->isFormReload() && $location->update()) {
-            $this->success(Yii::t('location', 'LOCATION_SUCCESS_UPDATED'));
-            return $this->refresh();
+        if ($location->load($this->request->post()) && !$this->request->isFormReload()) {
+            if ($location->update()) {
+                $this->success(Yii::t('location', 'LOCATION_SUCCESS_UPDATED'));
+            }
+
+            // An unchanged save ends like a changed one rather than redrawing the posted form
+            if (!$location->hasErrors()) {
+                return $this->refresh();
+            }
         }
 
         return $this->render('update', [
