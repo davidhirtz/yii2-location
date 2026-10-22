@@ -101,6 +101,7 @@ class TagGridView extends GridView
      * itself — that cancels the flow the user is in — so its name and type icon carry no link, its location count
      * badge carries none either, and the tag's own page is an external link button.
      */
+    #[Override]
     protected function isPicker(): bool
     {
         return false;

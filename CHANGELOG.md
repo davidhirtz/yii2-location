@@ -1,5 +1,6 @@
 ## Unreleased
 
+- Changed the `davidhirtz/yii2-skeleton` requirement to `^3.22` (`GridView::isPicker()`)
 - Changed `LocationGridView::getTagButtons()` to `getTagBadges()`, rendering the tags as badges
 
 ## 3.6.1 (October 21, 2026)
