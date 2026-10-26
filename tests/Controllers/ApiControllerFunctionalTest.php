@@ -69,8 +69,10 @@ class ApiControllerFunctionalTest extends TestCase
 
         $tag->updateAttributes(['status' => Tag::STATUS_ENABLED]);
         TagCollection::invalidateCache();
+        Location::getModule()->invalidatePageCache();
+        Dependency::resetReusableData();
 
-        $this->open("api/location/index.json?tag=$tag->id&nocache=1");
+        $this->open("api/location/index.json?tag=$tag->id");
         self::assertCount(1, $this->getJsonResponseData());
     }
 
