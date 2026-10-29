@@ -197,7 +197,7 @@ class LocationTag extends ActiveRecord implements TrailModelInterface
      */
     public function getAdminType(): string
     {
-        return Yii::t('skeleton', 'COMMON_RELATION');
+        return Yii::t('skeleton', 'RELATION_SINGULAR');
     }
 
     #[Override]
