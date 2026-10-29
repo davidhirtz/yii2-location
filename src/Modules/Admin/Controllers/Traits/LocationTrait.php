@@ -21,8 +21,8 @@ trait LocationTrait
     }
 
     /**
-     * Whether the controller works with this location at all. A controller behind a submenu tab answers with the
-     * capability that tab is shown for, so a route cannot do what the admin does not offer.
+     * A controller behind a submenu tab answers with the capability that tab is shown for, so a route cannot do what
+     * the admin does not offer.
      */
     protected function isLocationAllowed(Location $location): bool
     {

@@ -77,8 +77,7 @@ class TagCollection
     }
 
     /**
-     * The static outlives the application; `Bootstrap` resets it, so a test's application does not start with the
-     * tags of the one before.
+     * `Bootstrap` resets the static, since it outlives the application.
      */
     public static function reset(): void
     {

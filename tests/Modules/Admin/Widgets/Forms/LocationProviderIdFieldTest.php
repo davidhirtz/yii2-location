@@ -12,8 +12,7 @@ use Hirtz\Skeleton\Widgets\Forms\ActiveForm;
 use Yii;
 
 /**
- * An installation with no location provider — the Google bundle missing, or its API key unset — must still be able
- * to edit a location, so the field falls back to the plain input it inherits.
+ * Without a location provider (Google bundle missing, API key unset) the field falls back to the plain input.
  */
 class LocationProviderIdFieldTest extends TestCase
 {

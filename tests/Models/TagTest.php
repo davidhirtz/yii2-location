@@ -19,8 +19,7 @@ class TagTest extends TestCase
     use ModuleTrait;
 
     /**
-     * The serialized tag used to carry `formatted_address`, `lat` and `lng` — a copy of `Location::fields()`, always
-     * null on a tag — while leaving out the tag's own type.
+     * The serialized tag once carried a copy of `Location::fields()`, always null on a tag, and left out its type.
      */
     public function testTheSerializedTagCarriesOnlyItsOwnAttributes(): void
     {
@@ -103,8 +102,7 @@ class TagTest extends TestCase
     }
 
     /**
-     * The tag list is the location's bookkeeping: it is written even where the location no longer validates, and
-     * nothing else the in-memory location holds is written with it.
+     * The tag list is the location's bookkeeping, so it is written even where the location no longer validates.
      */
     public function testALinkWritesTheTagsAloneWhateverTheLocationHolds(): void
     {

@@ -11,14 +11,8 @@ use Hirtz\Skeleton\Caching\TagDependency;
 
 class Module extends \Hirtz\Skeleton\Base\Module
 {
-    /**
-     * @var bool whether to enable the API route.
-     */
     public bool $enableApiRoutes = true;
 
-    /**
-     * @var bool whether to enable location tags.
-     */
     public bool $enableTags = false;
 
     public ?int $tagCachedQueryDuration = 60;

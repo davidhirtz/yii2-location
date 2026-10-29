@@ -13,7 +13,7 @@ class LocationType extends Type
     protected bool $allowsTags = true;
 
     /**
-     * Whether a location of this type carries tags. The module's `enableTags` decides first.
+     * The module's `enableTags` decides first.
      */
     public function allowTags(bool $allowTags = true): static
     {
@@ -22,7 +22,7 @@ class LocationType extends Type
     }
 
     /**
-     * @param string|null $slug what {@see ApiController::findTypeBySlug()} matches, so the type has a URL of its own
+     * {@see ApiController::findTypeBySlug()} matches it, so the type has a URL of its own.
      */
     public function slug(?string $slug): static
     {

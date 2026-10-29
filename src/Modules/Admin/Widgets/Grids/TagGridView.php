@@ -97,9 +97,7 @@ class TagGridView extends GridView
     }
 
     /**
-     * Whether the grid is a list to pick a tag *from* rather than to navigate. A picker must not lead away from
-     * itself — that cancels the flow the user is in — so its name and type icon carry no link, its location count
-     * badge carries none either, and the tag's own page is an external link button.
+     * A picker must not lead away from itself, since that cancels the flow the user is in.
      */
     #[Override]
     protected function isPicker(): bool
@@ -108,8 +106,6 @@ class TagGridView extends GridView
     }
 
     /**
-     * Where the row's own links lead: the name and the type icon.
-     *
      * @return array<array-key, mixed>|null
      */
     protected function getRecordUrl(Tag $tag): ?array

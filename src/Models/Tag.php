@@ -253,8 +253,7 @@ class Tag extends ActiveRecord implements
     }
 
     /**
-     * The flag gates the hit as well as the write, so turning tags off hides the rows a rebuild has not
-     * removed yet.
+     * The flag gates the hit as well as the write, so turning tags off hides the rows a rebuild has not removed yet.
      */
     protected function isSearchResultVisible(): bool
     {

@@ -27,9 +27,6 @@ use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-/**
- * The location, tag and location-tag pages of the admin.
- */
 class LocationAdminTest extends TestCase
 {
     use LocationFixtureTrait;
@@ -62,7 +59,7 @@ class LocationAdminTest extends TestCase
     }
 
     /**
-     * The breadcrumbs link to the module itself, which has to answer with the location index (monorepo issue #233).
+     * The breadcrumbs link to the module itself (monorepo issue #233).
      */
     public function testTheModuleRouteIsTheLocationIndex(): void
     {
@@ -329,9 +326,6 @@ class LocationAdminTest extends TestCase
         Yii::$app->runAction('admin/location/tag/index');
     }
 
-    /**
-     * The whole controller is gone while the module says tags are off, not just the links to it.
-     */
     public function testTheLocationTagControllerIsNotFoundWhileTagsAreOff(): void
     {
         $this->login();
@@ -508,9 +502,6 @@ class LocationAdminTest extends TestCase
         self::assertStringContainsString('Alpha', $html);
     }
 
-    /**
-     * The tag filter of the location index joins the junction, and the grid then shows the tag buttons.
-     */
     public function testTheLocationIndexFiltersByTag(): void
     {
         $this->login();
@@ -527,10 +518,6 @@ class LocationAdminTest extends TestCase
         self::assertStringContainsString('Alpha', $html);
     }
 
-    /**
-     * A type without tags narrows what `enableTags` turned on: a grid filtered to it shows neither the tag buttons
-     * nor the tag dropdown, its locations have no tags tab, and the tag routes refuse them.
-     */
     public function testATypeWithoutTagsOffersNoTags(): void
     {
         $this->login();
@@ -623,7 +610,7 @@ class LocationAdminTest extends TestCase
     }
 
     /**
-     * The list is rendered even when the provider has nothing, or the swap would leave the last options standing.
+     * An empty list is still rendered, or the swap would leave the last options standing.
      */
     public function testTheAutocompleteAnswersAnEmptyList(): void
     {

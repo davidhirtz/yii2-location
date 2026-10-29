@@ -62,8 +62,7 @@ class ApiController extends Controller
     }
 
     /**
-     * Checks the location types for a matching slug, sets the `type` parameter accordingly and calls the
-     * default action. This allows for URLs like `/api/location/<type-slug>.json`.
+     * A type slug stands in for the action, for URLs like `/api/location/<type-slug>.json`.
      */
     #[Override]
     public function runAction($id, $params = [])

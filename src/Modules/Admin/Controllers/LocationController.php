@@ -30,7 +30,7 @@ class LocationController extends Controller
     use ModuleTrait;
 
     /**
-     * @var int a shorter query would ask the provider on every keystroke
+     * A shorter query would ask the provider on every keystroke.
      */
     public int $autocompleteMinLength = 3;
 
