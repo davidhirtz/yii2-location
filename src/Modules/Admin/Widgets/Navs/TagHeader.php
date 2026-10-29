@@ -37,7 +37,7 @@ class TagHeader extends ModelHeader
             $this->addContent($this->getCreateTagButton());
         }
 
-        $this->title ??= Yii::t('location', 'COMMON_TAGS');
+        $this->title ??= Yii::t('location', 'TAG_PLURAL');
 
         $this->addLocationBreadcrumb();
 
@@ -56,7 +56,7 @@ class TagHeader extends ModelHeader
     protected function getCreateTagButton(): string|Stringable
     {
         return CreateButton::make()
-            ->label(Yii::t('location', 'TAG_HEADER_NEW_TAG'))
+            ->label(Yii::t('location', 'TAG_CREATE_BUTTON'))
             ->roles([Tag::AUTH_TAG]);
     }
 
@@ -66,6 +66,6 @@ class TagHeader extends ModelHeader
             return;
         }
 
-        $this->addBreadcrumb(Yii::t('location', 'COMMON_LOCATIONS'), ['/admin/location/']);
+        $this->addBreadcrumb(Yii::t('location', 'LOCATION_PLURAL'), ['/admin/location/']);
     }
 }

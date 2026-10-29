@@ -214,7 +214,7 @@ class Tag extends ActiveRecord implements
 
     public function getAdminType(): string
     {
-        return Yii::t('location', 'COMMON_TAG');
+        return Yii::t('location', 'TAG_SINGULAR');
     }
 
     protected function getDefaultAdminIcon(): ?string
@@ -229,7 +229,7 @@ class Tag extends ActiveRecord implements
 
     public function getAdminIndexBreadcrumb(): Breadcrumb
     {
-        return new Breadcrumb(Yii::t('location', 'COMMON_TAGS'), ['/admin/location/tag/']);
+        return new Breadcrumb(Yii::t('location', 'TAG_PLURAL'), ['/admin/location/tag/']);
     }
 
     public function getPermissionName(): string

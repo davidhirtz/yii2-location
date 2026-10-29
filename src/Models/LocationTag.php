@@ -189,7 +189,7 @@ class LocationTag extends ActiveRecord implements TrailModelInterface
 
     public function getAdminName(): string
     {
-        return Yii::t('location', 'LOCATION_TAG_LOCATION_TAG');
+        return Yii::t('location', 'LOCATION_TAG_SINGULAR');
     }
 
     /**

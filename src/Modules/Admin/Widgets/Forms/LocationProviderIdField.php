@@ -27,7 +27,7 @@ class LocationProviderIdField extends AutocompleteField
             $this->url ??= ['/admin/location/location/autocomplete'];
 
             if (!$this->model->{$this->property}) {
-                $this->attributes['placeholder'] ??= Yii::t('location', 'LOCATION_PROVIDER_ID_SEARCH');
+                $this->attributes['placeholder'] ??= Yii::t('location', 'LOCATION_PROVIDER_ID_PLACEHOLDER');
                 $this->attributes['type'] ??= 'search';
             }
         }

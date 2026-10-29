@@ -22,7 +22,7 @@ class LocationNavItem extends NavItem
      */
     public function __construct(array $config = [])
     {
-        $this->label ??= Yii::t('location', 'COMMON_LOCATIONS');
+        $this->label ??= Yii::t('location', 'LOCATION_PLURAL');
         $this->icon ??= 'map-marker-alt';
         $this->order ??= 50;
         $this->url ??= ['/admin/location/location/index'];
@@ -60,7 +60,7 @@ class LocationNavItem extends NavItem
         return $this->showTags
             ? NavItem::make()
                 //->icon('tags')
-                ->label(Yii::t('location', 'COMMON_TAGS'))
+                ->label(Yii::t('location', 'TAG_PLURAL'))
                 ->url(['/admin/location/tag/index'])
                 ->order(20)
                 ->roles([Tag::AUTH_TAG])

@@ -109,7 +109,7 @@ class LocationGridView extends GridView
     protected function getTagDropdown(): ?FilterDropdown
     {
         return FilterDropdown::make()
-            ->label(Yii::t('location', 'LOCATION_TAGS'))
+            ->label(Yii::t('location', 'LOCATION_TAGS_LABEL'))
             ->items($this->getTagDropdownItems())
             ->visible($this->showTagDropdown)
             ->paramName('tag');
@@ -163,7 +163,7 @@ class LocationGridView extends GridView
                     ->addClass('small');
             }
         } else {
-            $name = $address ?: Yii::t('location', 'LOCATION_UNNAMED');
+            $name = $address ?: Yii::t('location', 'LOCATION_UNNAMED_TEXT');
 
             $content = A::make()
                 ->class('strong')

@@ -264,7 +264,7 @@ class Location extends ActiveRecord implements
 
     public function getAdminType(): string
     {
-        return Yii::t('location', 'COMMON_LOCATION');
+        return Yii::t('location', 'LOCATION_SINGULAR');
     }
 
     protected function getDefaultAdminIcon(): ?string
@@ -298,7 +298,7 @@ class Location extends ActiveRecord implements
 
     public function getAdminIndexBreadcrumb(): Breadcrumb
     {
-        return new Breadcrumb(Yii::t('location', 'COMMON_LOCATIONS'), ['/admin/location/']);
+        return new Breadcrumb(Yii::t('location', 'LOCATION_PLURAL'), ['/admin/location/']);
     }
 
     public function getPermissionName(): string

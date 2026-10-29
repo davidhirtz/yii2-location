@@ -84,7 +84,7 @@ class LocationController extends Controller
         }
 
         if ($location->load($this->request->post()) && !$this->request->isFormReload() && $location->insert()) {
-            $this->success(Yii::t('location', 'LOCATION_SUCCESS_CREATED'));
+            $this->success(Yii::t('location', 'LOCATION_CREATE_SUCCESS'));
             return $this->redirect(['index']);
         }
 
@@ -99,7 +99,7 @@ class LocationController extends Controller
 
         if ($location->load($this->request->post()) && !$this->request->isFormReload()) {
             if ($location->update()) {
-                $this->success(Yii::t('location', 'LOCATION_SUCCESS_UPDATED'));
+                $this->success(Yii::t('location', 'LOCATION_UPDATE_SUCCESS'));
             }
 
             // An unchanged save ends like a changed one rather than redrawing the posted form
@@ -123,7 +123,7 @@ class LocationController extends Controller
         $location = $this->findLocation($id);
 
         if ($location->delete()) {
-            $this->success(Yii::t('location', 'LOCATION_SUCCESS_DELETED'));
+            $this->success(Yii::t('location', 'LOCATION_DELETE_SUCCESS'));
         } elseif ($errors = $location->getFirstErrors()) {
             $this->error($errors);
         }

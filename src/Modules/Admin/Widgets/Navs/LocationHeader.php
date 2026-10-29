@@ -36,7 +36,7 @@ class LocationHeader extends ModelHeader
             $this->addContent($this->getCreateLocationButton());
         }
 
-        $this->title ??= Yii::t('location', 'COMMON_LOCATIONS');
+        $this->title ??= Yii::t('location', 'LOCATION_PLURAL');
 
         parent::configure();
     }
@@ -53,7 +53,7 @@ class LocationHeader extends ModelHeader
     protected function getCreateLocationButton(): string|Stringable
     {
         return CreateButton::make()
-            ->label(Yii::t('location', 'LOCATION_HEADER_NEW_LOCATION'))
+            ->label(Yii::t('location', 'LOCATION_CREATE_BUTTON'))
             ->roles([Location::AUTH_LOCATION]);
     }
 }

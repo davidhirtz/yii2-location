@@ -27,8 +27,8 @@ class LocationDeleteButton extends DeleteButton
     #[Override]
     protected function configure(): void
     {
-        $this->label ??= Yii::t('location', 'LOCATION_BUTTON_DELETE');
-        $this->title ??= Yii::t('location', 'LOCATION_CONFIRM_DELETE');
+        $this->label ??= Yii::t('location', 'LOCATION_DELETE_BUTTON');
+        $this->title ??= Yii::t('location', 'LOCATION_DELETE_CONFIRM');
 
         // `LocationHeader` renders on the tags tab too, where the parent's relative `delete` would be that tab's own
         $this->url ??= ['/admin/location/location/delete', 'id' => $this->model->id];

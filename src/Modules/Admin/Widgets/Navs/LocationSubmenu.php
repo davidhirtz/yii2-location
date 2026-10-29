@@ -43,7 +43,7 @@ class LocationSubmenu extends Submenu
     protected function getLocationTagsItem(): ?NavItem
     {
         return NavItem::make()
-            ->label(Yii::t('location', 'COMMON_TAGS'))
+            ->label(Yii::t('location', 'TAG_PLURAL'))
             ->url(['location-tag/index', 'location' => $this->model->id])
             ->visible($this->model->allowsTags())
             ->badge($this->model->tag_count ?: null)

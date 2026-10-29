@@ -26,8 +26,8 @@ class TagDeleteButton extends DeleteButton
     #[\Override]
     protected function configure(): void
     {
-        $this->label ??= Yii::t('location', 'TAG_BUTTON_DELETE');
-        $this->title ??= Yii::t('location', 'TAG_CONFIRM_DELETE');
+        $this->label ??= Yii::t('location', 'TAG_DELETE_BUTTON');
+        $this->title ??= Yii::t('location', 'TAG_DELETE_CONFIRM');
 
         parent::configure();
     }

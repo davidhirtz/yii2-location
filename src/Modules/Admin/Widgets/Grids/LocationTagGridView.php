@@ -50,7 +50,7 @@ class LocationTagGridView extends TagGridView
         );
 
         return RelativeTimeColumn::make()
-            ->title(Yii::t('location', 'LOCATION_TAG_ADDED'))
+            ->title(Yii::t('location', 'LOCATION_TAG_UPDATED_AT_LABEL'))
             ->visible($visible)
             ->value(fn (Tag $tag) => $tag->locationTag?->updated_at)
             ->hiddenForMediumDevices();
@@ -90,7 +90,7 @@ class LocationTagGridView extends TagGridView
         return Button::make()
             ->secondary()
             ->icon('external-link-alt')
-            ->tooltip(Yii::t('location', 'COMMON_OPEN_ADMIN'))
+            ->tooltip(Yii::t('skeleton', 'NAV_OPEN_NEW_TAB_TOOLTIP'))
             ->url($tag->getAdminRoute() ?: null)
             ->target('_blank')
             ->roles([Tag::AUTH_TAG]);

@@ -90,7 +90,7 @@ class TagController extends Controller
         }
 
         if ($tag->load($this->request->post()) && !$this->request->isFormReload() && $tag->insert()) {
-            $this->success(Yii::t('location', 'TAG_SUCCESS_CREATED'));
+            $this->success(Yii::t('location', 'TAG_CREATE_SUCCESS'));
             return $this->redirect(['index']);
         }
 
@@ -105,7 +105,7 @@ class TagController extends Controller
 
         if ($tag->load($this->request->post()) && !$this->request->isFormReload()) {
             if ($tag->update()) {
-                $this->success(Yii::t('location', 'TAG_SUCCESS_UPDATED'));
+                $this->success(Yii::t('location', 'TAG_UPDATE_SUCCESS'));
             }
 
             // An unchanged save ends like a changed one rather than redrawing the posted form
@@ -129,7 +129,7 @@ class TagController extends Controller
         $tag = $this->findTag($id);
 
         if ($tag->delete()) {
-            $this->success(Yii::t('location', 'TAG_SUCCESS_DELETED'));
+            $this->success(Yii::t('location', 'TAG_DELETE_SUCCESS'));
         } elseif ($errors = $tag->getFirstErrors()) {
             $this->error($errors);
         }
