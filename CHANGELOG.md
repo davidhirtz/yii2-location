@@ -1,3 +1,8 @@
+## Unreleased
+
+- Added locations to the dashboard's "recently edited" panel
+- Changed the `davidhirtz/yii2-skeleton` requirement to `^3.27`
+
 ## 3.8.0 (October 31, 2026)
 
 - Changed every message key to the `{DOMAIN}_{SUBJECT}_{KIND}` scheme
