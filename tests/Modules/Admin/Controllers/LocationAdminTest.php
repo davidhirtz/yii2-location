@@ -500,6 +500,7 @@ class LocationAdminTest extends TestCase
         self::assertIsString($html);
         self::assertStringContainsString('name="Tag[name]"', $html);
         self::assertStringContainsString('Alpha', $html);
+        self::assertStringContainsString('class="btn btn-primary" href="/admin/location/tag/create?type=' . $tag->type . '"', $html);
     }
 
     public function testTheLocationIndexFiltersByTag(): void

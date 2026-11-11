@@ -38,7 +38,7 @@ return [
     'LOCATION_TAG_UPDATED_AT_LABEL' => 'Added',
     'LOCATION_UNNAMED_TEXT' => 'Unnamed',
     'LOCATION_UPDATE_SUCCESS' => 'The location was updated.',
-    'TAG_CREATE_BUTTON' => 'New Tag',
+    'TAG_CREATE_BUTTON' => 'New tag',
     'TAG_CREATE_SUCCESS' => 'The tag was created.',
     'TAG_CREATE_TITLE' => 'Create new tag',
     'TAG_DELETE_BUTTON' => 'Delete tag',
