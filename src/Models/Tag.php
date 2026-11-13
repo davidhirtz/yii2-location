@@ -201,6 +201,7 @@ class Tag extends ActiveRecord implements
      * @return list<string>
      * @noinspection PhpUnused
      */
+    #[Override]
     public function getTrailAttributes(): array
     {
         return array_values(array_diff($this->attributes(), [
@@ -212,6 +213,7 @@ class Tag extends ActiveRecord implements
         ]));
     }
 
+    #[Override]
     public function getAdminType(): string
     {
         return Yii::t('location', 'TAG_SINGULAR');
@@ -222,31 +224,37 @@ class Tag extends ActiveRecord implements
         return 'tag';
     }
 
+    #[Override]
     public function getAdminRoute(): array|false
     {
         return $this->id && static::getModule()->enableTags ? ['/admin/location/tag/update', 'id' => $this->id] : false;
     }
 
+    #[Override]
     public function getAdminIndexBreadcrumb(): Breadcrumb
     {
         return new Breadcrumb(Yii::t('location', 'TAG_PLURAL'), ['/admin/location/tag/']);
     }
 
+    #[Override]
     public function getPermissionName(): string
     {
         return self::AUTH_TAG;
     }
 
+    #[Override]
     public function getSearchAttributes(): array
     {
         return ['name'];
     }
 
+    #[Override]
     public function getSearchWeight(): float
     {
         return 0.5;
     }
 
+    #[Override]
     public function isSearchable(): bool
     {
         return $this->allowsTags();
@@ -281,6 +289,7 @@ class Tag extends ActiveRecord implements
         return 'Tag';
     }
 
+    #[Override]
     public function getTranslationModelClass(): string
     {
         return self::class;

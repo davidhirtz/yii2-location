@@ -11,6 +11,7 @@ use Hirtz\Skeleton\Modules\Admin\ModuleInterface;
 use Hirtz\Skeleton\Widgets\Navs\Nav;
 use Hirtz\Skeleton\Widgets\Panels\Dashboard;
 use Hirtz\Skeleton\Widgets\Panels\DashboardItem;
+use Override;
 use Yii;
 
 /**
@@ -27,11 +28,13 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
         return $autocomplete instanceof AutocompleteInterface ? $autocomplete : null;
     }
 
+    #[Override]
     public function aside(Nav $nav): Nav
     {
         return $nav->addItem(LocationNavItem::make());
     }
 
+    #[Override]
     public function dashboard(Dashboard $dashboard): Dashboard
     {
         return $dashboard->addItem(DashboardItem::make()

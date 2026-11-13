@@ -250,6 +250,7 @@ class Location extends ActiveRecord implements
      * @return list<string>
      * @noinspection PhpUnused
      */
+    #[Override]
     public function getTrailAttributes(): array
     {
         return array_values(array_diff($this->attributes(), [
@@ -262,6 +263,7 @@ class Location extends ActiveRecord implements
         ]));
     }
 
+    #[Override]
     public function getAdminType(): string
     {
         return Yii::t('location', 'LOCATION_SINGULAR');
@@ -291,26 +293,31 @@ class Location extends ActiveRecord implements
         return static::findType(static::normalizeTypeValue($this->type ?? null));
     }
 
+    #[Override]
     public function getAdminRoute(): array|false
     {
         return $this->id ? ['/admin/location/location/update', 'id' => $this->id] : false;
     }
 
+    #[Override]
     public function getAdminIndexBreadcrumb(): Breadcrumb
     {
         return new Breadcrumb(Yii::t('location', 'LOCATION_PLURAL'), ['/admin/location/']);
     }
 
+    #[Override]
     public function getPermissionName(): string
     {
         return self::AUTH_LOCATION;
     }
 
+    #[Override]
     public function getSearchAttributes(): array
     {
         return ['name', 'formatted_address', 'street', 'locality', 'postal_code', 'district', 'state'];
     }
 
+    #[Override]
     public function getSearchWeight(): float
     {
         return 0.6;
@@ -361,6 +368,7 @@ class Location extends ActiveRecord implements
         return 'Location';
     }
 
+    #[Override]
     public function getTranslationModelClass(): string
     {
         return self::class;

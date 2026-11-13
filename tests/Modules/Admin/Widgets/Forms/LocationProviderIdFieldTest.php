@@ -9,6 +9,7 @@ use Hirtz\Location\Modules\Admin\Interfaces\AutocompleteInterface;
 use Hirtz\Location\Modules\Admin\Widgets\Forms\LocationProviderIdField;
 use Hirtz\Location\Test\TestCase;
 use Hirtz\Skeleton\Widgets\Forms\ActiveForm;
+use Override;
 use Yii;
 
 /**
@@ -51,6 +52,7 @@ class LocationProviderIdFieldTest extends TestCase
             /**
              * @return list<array{text: string, value: mixed}>
              */
+            #[Override]
             public function getResults(string $input): array
             {
                 return [];

@@ -169,6 +169,7 @@ class LocationTag extends ActiveRecord implements TrailModelInterface
      * @return list<Location|Tag>
      * @noinspection PhpUnused
      */
+    #[Override]
     public function getTrailParents(): array
     {
         return [$this->location, $this->tag];
@@ -177,16 +178,19 @@ class LocationTag extends ActiveRecord implements TrailModelInterface
     /**
      * @noinspection PhpUnused
      */
+    #[Override]
     public function getAdminRoute(): array|false
     {
         return false;
     }
 
+    #[Override]
     public function getPermissionName(): string
     {
         return Location::AUTH_LOCATION;
     }
 
+    #[Override]
     public function getAdminName(): string
     {
         return Yii::t('location', 'LOCATION_TAG_SINGULAR');
@@ -195,6 +199,7 @@ class LocationTag extends ActiveRecord implements TrailModelInterface
     /**
      * @noinspection PhpUnused
      */
+    #[Override]
     public function getAdminType(): string
     {
         return Yii::t('skeleton', 'RELATION_SINGULAR');

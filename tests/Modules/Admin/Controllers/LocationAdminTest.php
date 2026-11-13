@@ -641,6 +641,7 @@ class LocationAdminTest extends TestCase
             /**
              * @return list<array{text: string, value: int|string}>
              */
+            #[Override]
             public function getResults(string $input): array
             {
                 return $this->results;
